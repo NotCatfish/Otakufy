@@ -1,0 +1,22 @@
+{
+  "name": "Otakufy | Gamified Japanese Learning",
+  "short_name": "Otakufy",
+  "description": "Master Japanese Kanji, Vocabulary, and Grammar with intelligent SRS flashcards and gamified learning.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-icon",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

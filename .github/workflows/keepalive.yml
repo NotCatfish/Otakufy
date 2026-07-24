@@ -1,0 +1,22 @@
+name: Supabase Database Keep-Alive
+
+on:
+  schedule:
+    # Runs automatically every 2 days at midnight UTC (00:00)
+    - cron: '0 0 */2 * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI anytime
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Keep-Alive Ping to Next.js Cron Route
+        env:
+          SITE_URL: ${{ secrets.SITE_URL || 'https://otakufy.app' }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET || '' }}
+        run: |
+          URL="$SITE_URL/api/cron/keepalive"
+          [ -n "$CRON_SECRET" ] && URL="$URL?secret=$CRON_SECRET"
+          echo "Pinging keep-alive endpoint: $SITE_URL/api/cron/keepalive"
+          curl -f -s -X GET "$URL" || echo "Warning: Keep-alive ping returned non-200 or site unreachable"
+          echo "Ping workflow completed."
