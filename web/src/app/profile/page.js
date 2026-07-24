@@ -1,4 +1,4 @@
-import ProfileSettings from '../../../../features/profile/frontend/ProfileSettings';
+import ProfileSettings from '@/features/profile/frontend/ProfileSettings';
 import PageContainer from '../../components/PageContainer';
 
 export const metadata = {

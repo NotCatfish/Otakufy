@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../auth/frontend/supabaseClient';
 import SuggestionCard from './SuggestionCard';
 import SuggestionForm from './SuggestionForm';
-import Toast from '../../../web/src/components/ui/Toast';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import Toast from '@/components/ui/Toast';
+import { useLanguage } from '@/context/LanguageContext';
 import { useSuggestions } from '../hooks/useSuggestions';
 
 export default function SuggestionsBoard() {

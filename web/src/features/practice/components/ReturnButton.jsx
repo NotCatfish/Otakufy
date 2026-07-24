@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ReturnButton({ onClick, className = 'mb-12' }) {
   const { lang } = useLanguage();

@@ -1,10 +1,10 @@
 import React from 'react';
 import { VOCAB_TYPES_CONFIG, GRAMMAR_TYPES_CONFIG } from '../config/quizConfig';
 import ReturnButton from './ReturnButton';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
-import SmoothFade from '../../../web/src/components/SmoothFade';
-import RevealText from '../../../web/src/components/RevealText';
-import { useTransitionContext } from '../../../web/src/context/TransitionContext';
+import { useLanguage } from '@/context/LanguageContext';
+import SmoothFade from '@/components/SmoothFade';
+import RevealText from '@/components/RevealText';
+import { useTransitionContext } from '@/context/TransitionContext';
 
 export default function QuizSetup({ category, currentTheme, engineState }) {
   const { t, lang } = useLanguage();

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, memo, useState } from "react";
-import { SETTINGS_KEYS, getSetting } from "../../../features/profile/utils/settingsUtils";
+import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 
 const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
   const canvasRef = useRef(null);

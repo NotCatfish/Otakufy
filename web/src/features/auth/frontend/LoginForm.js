@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import PasswordChecklist, { isPasswordValid } from './PasswordChecklist';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { EyeOpenIcon, EyeClosedIcon, GoogleIcon, AlertError, AlertSuccess } from './AuthUIHelpers';
 
 export default function LoginForm() {

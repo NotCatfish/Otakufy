@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { supabase } from './supabaseClient';
 import DefaultAvatar from '../../profile/frontend/DefaultAvatar';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function UserMenu() {
   const { t } = useLanguage();

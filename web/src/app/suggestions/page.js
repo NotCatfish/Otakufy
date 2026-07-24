@@ -1,5 +1,5 @@
-import { createClient } from '../../../../features/auth/backend/supabaseServer';
-import SuggestionsBoard from '../../../../features/suggestions/frontend/SuggestionsBoard';
+import { createClient } from '@/features/auth/backend/supabaseServer';
+import SuggestionsBoard from '@/features/suggestions/frontend/SuggestionsBoard';
 import PageContainer from '../../components/PageContainer';
 
 export const metadata = {

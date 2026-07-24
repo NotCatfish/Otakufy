@@ -12,9 +12,7 @@ const nextConfig = {
     }
     return config;
   },
-  turbopack: {
-    root: '../',
-  },
+
   images: {
     remotePatterns: [
       {
@@ -27,9 +25,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    externalDir: true,
-  },
+
   async headers() {
     return [
       {

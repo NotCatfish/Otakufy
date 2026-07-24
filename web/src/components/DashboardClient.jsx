@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import TransitionLink from '@/components/TransitionLink';
 import { PenTool, BookOpen, Asterisk, BookText, Headphones, Shuffle, Play } from 'lucide-react';
-import DailyObjectives from '../../../features/quests/frontend/DailyObjectives';
-import { prefetchCategory } from '../../../features/practice/utils/prefetchCategory';
-import { calculateLevelStats, getAutoJlptLevel } from '../../../features/profile/utils/levelUtils';
+import DailyObjectives from '@/features/quests/frontend/DailyObjectives';
+import { prefetchCategory } from '@/features/practice/utils/prefetchCategory';
+import { calculateLevelStats, getAutoJlptLevel } from '@/features/profile/utils/levelUtils';
 import PageContainer from './PageContainer';
 import RevealText from './RevealText';
 import SmoothFade from './SmoothFade';
 
-import { supabase } from '../../../features/auth/frontend/supabaseClient';
+import { supabase } from '@/features/auth/frontend/supabaseClient';
 import { useLanguage } from '@/context/LanguageContext';
-import { SETTINGS_KEYS, getSetting } from '../../../features/profile/utils/settingsUtils';
+import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 
 export default function DashboardClient({ initialProfile }) {
   const { lang, t } = useLanguage();

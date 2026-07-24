@@ -5,7 +5,7 @@ import ToggleSwitch from '../../components/ui/ToggleSwitch';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
 import PageContainer from '../../components/PageContainer';
-import { SETTINGS_KEYS, getSetting, saveSetting } from '../../../../features/profile/utils/settingsUtils';
+import { SETTINGS_KEYS, getSetting, saveSetting } from '@/features/profile/utils/settingsUtils';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function SettingsPage() {

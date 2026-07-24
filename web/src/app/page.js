@@ -1,4 +1,4 @@
-import { createClient } from '../../../features/auth/backend/supabaseServer';
+import { createClient } from '@/features/auth/backend/supabaseServer';
 import DashboardClient from '../components/DashboardClient';
 
 export const metadata = {

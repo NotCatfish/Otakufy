@@ -1,7 +1,7 @@
 import React from 'react';
 import DefaultAvatar from '../../profile/frontend/DefaultAvatar';
 import { getRelativeTime } from '../../profile/utils/timeUtils';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 const STATUS_COLORS = {
   new: 'bg-[var(--surface-hover)] text-white border-[var(--strong-border)]',

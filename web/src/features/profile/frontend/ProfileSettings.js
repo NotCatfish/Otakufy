@@ -6,7 +6,7 @@ import ProfileRepository from '../repositories/ProfileRepository';
 import DefaultAvatar from './DefaultAvatar';
 import { calculateLevelStats } from '../utils/levelUtils';
 import PasswordChecklist, { isPasswordValid } from '../../auth/frontend/PasswordChecklist';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { EyeOpenIcon, EyeClosedIcon, AlertError, AlertSuccess } from '../../auth/frontend/AuthUIHelpers';
 
 export default function ProfileSettings() {

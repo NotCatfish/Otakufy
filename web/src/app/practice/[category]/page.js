@@ -1,4 +1,4 @@
-import QuizEngine from '../../../../../features/practice/frontend/QuizEngine';
+import QuizEngine from '@/features/practice/frontend/QuizEngine';
 import Link from 'next/link';
 import PageContainer from '../../../components/PageContainer';
 

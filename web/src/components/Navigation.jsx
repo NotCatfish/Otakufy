@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 import LanguageToggle from "./LanguageToggle";
 import { useLanguage } from "@/context/LanguageContext";
-import UserMenu from "../../../features/auth/frontend/UserMenu";
+import UserMenu from '@/features/auth/frontend/UserMenu';
 import SmoothFade from "./SmoothFade";
 import RevealText from "./RevealText";
 import AnimatedLogo from "./AnimatedLogo";

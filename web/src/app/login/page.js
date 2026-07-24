@@ -1,4 +1,4 @@
-import LoginForm from '../../../../features/auth/frontend/LoginForm';
+import LoginForm from '@/features/auth/frontend/LoginForm';
 import PageContainer from '../../components/PageContainer';
 
 export const metadata = {

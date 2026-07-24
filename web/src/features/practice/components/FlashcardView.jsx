@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../auth/frontend/supabaseClient';
 import * as wanakana from 'wanakana';
 import { SETTINGS_KEYS, getSetting, saveSetting } from '../../profile/utils/settingsUtils';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 import { FuriganaText, updateFuriganaBatch } from './FuriganaText';
 import SaveProgressModal from './SaveProgressModal';
 

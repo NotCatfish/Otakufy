@@ -1,8 +1,8 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 import { useQuests } from '../hooks/useQuests';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
-import RevealText from '../../../web/src/components/RevealText';
+import { useLanguage } from '@/context/LanguageContext';
+import RevealText from '@/components/RevealText';
 
 
 export const toKanji = (str, lang) => {

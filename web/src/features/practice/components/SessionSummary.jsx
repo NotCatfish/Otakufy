@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { supabase } from '../../auth/frontend/supabaseClient';
 import PracticeRepository from '../repositories/PracticeRepository';
-import Toast from '../../../web/src/components/ui/Toast';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import Toast from '@/components/ui/Toast';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function SessionSummary({ currentTheme, engineState }) {
   const { t } = useLanguage();

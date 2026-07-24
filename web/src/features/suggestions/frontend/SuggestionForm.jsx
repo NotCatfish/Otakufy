@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function SuggestionForm({ onSubmit, existingSuggestions, onClose }) {
   const { t } = useLanguage();

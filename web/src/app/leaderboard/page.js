@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../../features/auth/frontend/supabaseClient';
+import { supabase } from '@/features/auth/frontend/supabaseClient';
 import Link from 'next/link';
 import PageContainer from '../../components/PageContainer';
-import DefaultAvatar from '../../../../features/profile/frontend/DefaultAvatar';
+import DefaultAvatar from '@/features/profile/frontend/DefaultAvatar';
 import { useLanguage } from '../../context/LanguageContext';
 import Button from '../../components/ui/Button';
 

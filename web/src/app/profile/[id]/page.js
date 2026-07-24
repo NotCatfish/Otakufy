@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../../../features/auth/frontend/supabaseClient';
+import { supabase } from '@/features/auth/frontend/supabaseClient';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import DefaultAvatar from '../../../../../features/profile/frontend/DefaultAvatar';
-import { calculateLevelStats } from '../../../../../features/profile/utils/levelUtils';
+import DefaultAvatar from '@/features/profile/frontend/DefaultAvatar';
+import { calculateLevelStats } from '@/features/profile/utils/levelUtils';
 import PageContainer from '../../../components/PageContainer';
 import { useLanguage } from '@/context/LanguageContext';
 

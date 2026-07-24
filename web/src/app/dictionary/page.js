@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../../../../features/auth/frontend/supabaseClient';
+import { supabase } from '@/features/auth/frontend/supabaseClient';
 import { toRomaji } from 'wanakana';
 import PageContainer from '../../components/PageContainer';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
-import { SETTINGS_KEYS, getSetting } from '../../../../features/profile/utils/settingsUtils';
+import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function DictionaryPage() {

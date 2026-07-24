@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '../../../../features/auth/frontend/supabaseClient';
-import SocialHub from '../../../../features/profile/frontend/SocialHub';
+import { supabase } from '@/features/auth/frontend/supabaseClient';
+import SocialHub from '@/features/profile/frontend/SocialHub';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function FriendsClient() {

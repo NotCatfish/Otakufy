@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import * as wanakana from 'wanakana';
 import { useQuizEngine } from '../hooks/useQuizEngine';
-import { useTransitionContext } from '../../../web/src/context/TransitionContext';
+import { useTransitionContext } from '@/context/TransitionContext';
 import { VOCAB_TYPES_CONFIG, THEME_MAP } from '../config/quizConfig';
 import LevelSelector from '../components/LevelSelector';
 import VocabTypeSelector from '../components/VocabTypeSelector';
@@ -11,9 +11,9 @@ import QuizSetup from '../components/QuizSetup';
 import FlashcardView from '../components/FlashcardView';
 import SessionSummary from '../components/SessionSummary';
 import ConfirmModal from '../components/ConfirmModal';
-import EmptyState from '../../../web/src/components/ui/EmptyState';
+import EmptyState from '@/components/ui/EmptyState';
 import { CheckCircle2, Lock, BookOpen, AlertCircle } from 'lucide-react';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function QuizEngine({ category }) {
   const currentTheme = THEME_MAP[category] || THEME_MAP['random'];

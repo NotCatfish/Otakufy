@@ -119,6 +119,14 @@ export default function RootLayout({ children }) {
               <GlobalKeyHandler />
               {children}
             </main>
+
+            <footer className="w-full py-8 text-center text-[11px] text-[var(--muted-text)] relative z-10 opacity-50 hover:opacity-100 transition-opacity">
+              <div className="max-w-4xl mx-auto px-4">
+                <p className="mb-1 font-mono uppercase tracking-widest text-[9px] mb-2">Notice & Disclaimer</p>
+                <p className="mb-1">This is a "Vibecoded" (AI-assisted) project built strictly for portfolio and educational purposes.</p>
+                <p>The creator assumes absolutely no liability for data loss, security breaches, or any damages arising from the use of this software. By using this site, you agree to use it entirely at your own risk.</p>
+              </div>
+            </footer>
           </TransitionProvider>
         </LanguageProvider>
       </body>

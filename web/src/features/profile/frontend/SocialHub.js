@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import SocialRepository from '../repositories/SocialRepository';
 import Link from 'next/link';
 import DefaultAvatar from './DefaultAvatar';
-import { useLanguage } from '../../../web/src/context/LanguageContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function SocialHub({ session }) {
   const { t } = useLanguage();
