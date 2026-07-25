@@ -148,14 +148,14 @@ export default function DashboardClient({ initialProfile }) {
             <div className="flex items-center gap-4 pt-1">
               <div 
                 className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px] opacity-0 animate-fade-in`}
-                style={{ animationDelay: , animationFillMode: 'forwards' }}
+                style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
               >
                 <span className="text-lg leading-none">🔥</span>
                 <span>{`${toKanji(profile?.streak || 0)} ${t("Day Streak")}`}</span>
               </div>
               <div 
                 className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono opacity-0 animate-fade-in`}
-                style={{ animationDelay: , animationFillMode: 'forwards' }}
+                style={{ animationDelay: '4.2s', animationFillMode: 'forwards' }}
               >
                 <span>⚡</span>
                 <span>{`${toKanji(totalXp.toLocaleString())} ${t("Total XP")}`}</span>
@@ -166,7 +166,7 @@ export default function DashboardClient({ initialProfile }) {
                 return (
                   <div 
                     className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 opacity-0 animate-fade-in ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
-                    style={{ animationDelay: , animationFillMode: 'forwards' }}
+                    style={{ animationDelay: '4.4s', animationFillMode: 'forwards' }}
                   >
                     <span>
                       {isGoalReached ? '✅' : '🎯'}
@@ -252,7 +252,7 @@ export default function DashboardClient({ initialProfile }) {
                 onMouseEnter={() => prefetchCategory(item.path)}
                 className="mb-module rounded-2xl py-12 flex flex-col items-center justify-center gap-4 cursor-pointer group transition-all"
               >
-                <item.Icon className={`w-8 h-8 group-hover:opacity-60 transition-opacity text-[var(--foreground)] opacity-0 animate-fade-in`} style={{ animationDelay: , animationFillMode: 'forwards' }} />
+                <item.Icon className={`w-8 h-8 group-hover:opacity-60 transition-opacity text-[var(--foreground)] opacity-0 animate-fade-in`} style={{ animationDelay: `${2.0 + (0.1 * i)}s`, animationFillMode: 'forwards' }} />
                 <span className="text-[19px] font-medium text-[var(--foreground)] group-hover:text-[var(--muted-text)] transition-colors">
                   <RevealText text={t(item.text)} baseDelay={2.2 + (0.1 * i)}  />
                 </span>
@@ -279,7 +279,7 @@ export default function DashboardClient({ initialProfile }) {
               </div>
             </div>
             <div className="mt-8">
-              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity opacity-0 animate-fade-in`} style={{ animationDelay: , animationFillMode: 'forwards' }}>
+              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity opacity-0 animate-fade-in`} style={{ animationDelay: '3.4s', animationFillMode: 'forwards' }}>
                 <Play className="w-4 h-4 mr-2 fill-[var(--background)]" />
                 <RevealText text={t("Start SRS Review")} baseDelay={3.4}  />
               </a>

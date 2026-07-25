@@ -110,7 +110,7 @@ export default function HelpPage() {
                     support@otakufy.dummy.com
                 </a>
             </div>
-        </div>
+        </SmoothFade>
 
         {/* Row 2: FAQ Accordion (Full Width) */}
         <div className="mb-card rounded-2xl p-8 border border-[var(--strong-border)] h-full md:col-span-2">
@@ -143,7 +143,7 @@ export default function HelpPage() {
             </div>
         </div>
 
-      </SmoothFade>
+      </div>
     </PageContainer>
   );
 }
