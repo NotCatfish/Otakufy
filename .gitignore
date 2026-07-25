@@ -6,6 +6,11 @@ sensitivedata*
 client_secret_*.json
 *.credentials.json
 
+# Local Data and Configs
+OldDb/
+rawdata/
+antigravityrule.txt
+
 # Dependencies
 node_modules/
 npm-debug.log*
