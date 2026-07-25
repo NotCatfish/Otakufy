@@ -74,6 +74,7 @@ export default function SettingsPage() {
               <p className="text-[13px] text-white/30">{t("Set a personal daily target for your own motivation. (Your streak extends automatically just by playing!)")}</p>
             </div>
             
+            {user ? (
             <div className="flex items-center gap-2 bg-[var(--surface)] p-1.5 rounded-xl border border-[var(--strong-border)]">
               {[100, 500, 1000].map(val => (
                 <button
@@ -89,6 +90,12 @@ export default function SettingsPage() {
                 </button>
               ))}
             </div>
+            ) : (
+            <a href="/login" className="flex items-center gap-2 bg-[var(--surface)] p-2 px-4 rounded-xl border border-[var(--strong-border)] hover:border-white/30 transition-colors">
+                <svg className="w-4 h-4 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                <span className="text-[13px] text-white/50 font-medium">{t("Login to set")}</span>
+            </a>
+            )}
           </div>
         </SmoothFade>
 
