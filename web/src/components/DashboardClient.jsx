@@ -75,9 +75,14 @@ export default function DashboardClient({ initialProfile }) {
       fetchProfile();
     }
     
-    // Force animation on every load for testing purposes
     if (typeof window !== 'undefined') {
-      setIsInitialLoad(true);
+      const hasAnimated = sessionStorage.getItem('dashboardAnimated');
+      if (!hasAnimated) {
+        setIsInitialLoad(true);
+        sessionStorage.setItem('dashboardAnimated', 'true');
+      } else {
+        setIsInitialLoad(false);
+      }
     }
     setMounted(true);
   }, []);
