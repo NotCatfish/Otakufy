@@ -16,7 +16,8 @@ const NAV_LINKS = [
   { href: "/", label: "Dashboard" },
   { href: "/dictionary", label: "Dictionary" },
   { href: "/leaderboard", label: "Leaderboard" },
-  { href: "/suggestions", label: "Suggestions" }
+  { href: "/suggestions", label: "Suggestions" },
+  { href: "/settings", label: "Settings" }
 ];
 
 export default function Navigation() {
