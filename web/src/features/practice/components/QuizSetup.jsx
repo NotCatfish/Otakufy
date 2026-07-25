@@ -168,9 +168,9 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
             <RevealText text={tLocal("New Session")} baseDelay={1.4} />
           </h2>
           <p className="text-lg leading-relaxed font-light text-[var(--muted-text)]">
-            <RevealText text={`${tLocal("This section has")} ${engineState.totalDbCount !== null ? String(toKanji(engineState.totalDbCount)) : String(toKanji(deckData.length))} ${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}.`} baseDelay={2.0} charDelay={0.025} />
+            <RevealText text={`${tLocal("This section has")} ${typeof engineState.totalDbCount === 'number' ? String(toKanji(engineState.totalDbCount)) : String(toKanji(deckData?.length || 0))} ${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}.`} baseDelay={2.0} charDelay={0.025} />
             <br />
-            <RevealText text={`${tLocal("We've prepared a random deck of")} ${String(toKanji(deckData.length))} ${tLocal("for this session. How many would you like to study?")}`} baseDelay={3.6} charDelay={0.015} />
+            <RevealText text={`${tLocal("We've prepared a random deck of")} ${String(toKanji(deckData?.length || 0))} ${tLocal("for this session. How many would you like to study?")}`} baseDelay={3.6} charDelay={0.015} />
           </p>
           
           <SmoothFade delay={5.6} className="flex items-center gap-6 mt-4">
@@ -186,7 +186,8 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
                       setCardAmount('');
                   } else {
                       const num = parseInt(val, 10);
-                      setCardAmount(num > deckData.length ? deckData.length : num);
+                      const maxLimit = deckData?.length || 0;
+                      setCardAmount(num > maxLimit ? maxLimit : num);
                   }
               }}
               onKeyUp={(e) => {
