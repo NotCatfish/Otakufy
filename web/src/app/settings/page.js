@@ -41,6 +41,7 @@ export default function SettingsPage() {
         } else {
             document.documentElement.classList.remove('reduce-motion');
         }
+        window.dispatchEvent(new CustomEvent("ui-anim-control"));
     } else if (key === SETTINGS_KEYS.DISABLE_PARTICLES) {
         if (value) {
             window.dispatchEvent(new CustomEvent("sakura-control", { detail: { action: "fade_out" } }));
