@@ -8,8 +8,8 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   const rawHasSeenIntro = transitionContext ? transitionContext.hasSeenIntro : false;
   const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
   
-  // Capture whether we should skip the intro exactly once on mount
-  const skipIntroRef = useRef(forceAnimate ? false : rawHasSeenIntro);
+  // Capture whether we should skip the intro exactly once on mount, but allow forceAnimate to override dynamically
+  const skipIntroRef = useRef(rawHasSeenIntro);
   const [isExiting, setIsExiting] = useState(false);
   const [animationFinished, setAnimationFinished] = useState(false);
   const mountedDuringExitRef = useRef(rawIsExiting);
@@ -31,7 +31,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   
   // If we should skip intro, or if the animation naturally finished, just hold the final state
   // This removes the animation class and the transform context, fixing backdrop-filter bugs.
-  const isFinalState = skipIntroRef.current || animationFinished;
+  const isFinalState = (skipIntroRef.current && !forceAnimate) || animationFinished;
   
   return (
     <Component 

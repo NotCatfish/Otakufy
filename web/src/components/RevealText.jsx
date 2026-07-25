@@ -20,16 +20,18 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
     }
   }, [rawIsExiting]);
 
-  const skipEntrance = useRef(forceAnimate ? false : hasSeenIntro);
+  const skipEntranceRef = useRef(hasSeenIntro);
   const prevText = useRef(text);
 
   if (typeof text !== 'string') return <span className={className}>{text}</span>;
   if (disabled || contextDisableUiAnim) return <span className={className}>{text}</span>;
   
   if (prevText.current !== text) {
-    skipEntrance.current = true;
+    skipEntranceRef.current = true;
     prevText.current = text;
   }
+  
+  const skipEntrance = skipEntranceRef.current && !forceAnimate;
   
   const chars = text.split('');
   
@@ -43,10 +45,10 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
         const exitDelay = ((chars.length - index - 1) * charDelay * 0.5);
         
         const isExitingClasses = 'opacity-100 animate-blur-hide';
-        const entranceClasses = skipEntrance.current ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
+        const entranceClasses = skipEntrance ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
         const spanClass = isExiting ? isExitingClasses : entranceClasses;
         
-        const style = (skipEntrance.current && !isExiting) ? {} : { 
+        const style = (skipEntrance && !isExiting) ? {} : { 
           animationDelay: `${isExiting ? exitDelay : entranceDelay}s`,
           animationFillMode: 'forwards'
         };

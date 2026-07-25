@@ -8,15 +8,14 @@ import { useTransitionContext } from '@/context/TransitionContext';
 
 export default function QuizSetup({ category, currentTheme, engineState }) {
   const { t, lang } = useLanguage();
-  const [isInitialLoad, setIsInitialLoad] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
     const key = `quizSetupAnimated_${category}`;
     if (!sessionStorage.getItem(key)) {
-      setIsInitialLoad(true);
       sessionStorage.setItem(key, 'true');
     } else {
-      setIsInitialLoad(false);
+      setShouldAnimate(false);
     }
   }, [category]);
 
@@ -113,18 +112,18 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
   return (
     <div className="max-w-[1440px] w-full mx-auto py-24 px-4 md:px-8 relative z-10 flex flex-col font-light tracking-wide text-[var(--foreground)] opacity-90">
       
-      <SmoothFade delay={0.2} className="mb-16" disabled={!isInitialLoad}>
+      <SmoothFade delay={0.2} className="mb-16" forceAnimate={shouldAnimate}>
         <ReturnButton onClick={handleBack} />
       </SmoothFade>
 
-      <SmoothFade delay={0.4} disabled={!isInitialLoad}>
+      <SmoothFade delay={0.4} forceAnimate={shouldAnimate}>
         <h1 className="text-5xl md:text-6xl font-bold mb-16 tracking-tight text-[var(--foreground)]">
-          <RevealText text={`${toKanji(level)} ${tLocal("Practice")}`} baseDelay={1.6} disabled={!isInitialLoad} />
+          <RevealText text={`${toKanji(level)} ${tLocal("Practice")}`} baseDelay={1.6} forceAnimate={shouldAnimate} />
         </h1>
       </SmoothFade>
       
       {(category === 'vocabulary' || category === 'grammar') && level !== 'SRS' && (
-        <SmoothFade delay={0.8} className="w-full mb-16 relative" disabled={!isInitialLoad}>
+        <SmoothFade delay={0.8} className="w-full mb-16 relative" forceAnimate={shouldAnimate}>
            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[var(--strong-border)]">
               <span className="border border-[var(--strong-border)] text-[var(--muted-text)] px-2 py-0.5 rounded text-xs tracking-widest uppercase">{toKanji('N1-N5')}</span>
               <span className="text-[var(--foreground)] font-light tracking-widest text-sm uppercase opacity-90">
@@ -134,7 +133,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
            
            <div className="flex flex-col gap-8">
                <p className="font-light text-xl text-[var(--foreground)] tracking-wide leading-relaxed opacity-95">
-                 <RevealText text={config[vocabType]?.instruction || ""} baseDelay={1.8} charDelay={0.015} disabled={!isInitialLoad} />
+                 <RevealText text={config[vocabType]?.instruction || ""} baseDelay={1.8} charDelay={0.015} forceAnimate={shouldAnimate} />
                </p>
 
                {vocabType !== 'random' && (
@@ -181,15 +180,15 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
         </SmoothFade>
       )}
 
-      <SmoothFade delay={1.2} className="flex flex-col gap-20" disabled={!isInitialLoad}>
+      <SmoothFade delay={1.2} className="flex flex-col gap-20" forceAnimate={shouldAnimate}>
         <section className="flex flex-col gap-6">
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
-            <RevealText text={tLocal("New Session")} baseDelay={2.2} disabled={!isInitialLoad} />
+            <RevealText text={tLocal("New Session")} baseDelay={2.2} forceAnimate={shouldAnimate} />
           </h2>
           <p className="text-lg leading-relaxed font-light text-[var(--muted-text)]">
-            <RevealText text={tLocal("This section has")} baseDelay={2.4} disabled={!isInitialLoad} /> <span className="text-[var(--foreground)] font-medium opacity-0 animate-fade-in" style={{ animationDelay: '2.5s', animationFillMode: 'forwards' }}>{engineState.totalDbCount !== null ? toKanji(engineState.totalDbCount) : toKanji(deckData.length)}</span> <RevealText text={category === 'vocabulary' ? tLocal('questions') : tLocal('cards')} baseDelay={2.6} disabled={!isInitialLoad} />. 
+            <RevealText text={tLocal("This section has")} baseDelay={2.4} forceAnimate={shouldAnimate} /> <span className="text-[var(--foreground)] font-medium opacity-0 animate-fade-in" style={{ animationDelay: '2.5s', animationFillMode: 'forwards' }}>{engineState.totalDbCount !== null ? toKanji(engineState.totalDbCount) : toKanji(deckData.length)}</span> <RevealText text={category === 'vocabulary' ? tLocal('questions') : tLocal('cards')} baseDelay={2.6} forceAnimate={shouldAnimate} />. 
             <br />
-            <RevealText text={tLocal("We've prepared a random deck of")} baseDelay={2.8} charDelay={0.015} disabled={!isInitialLoad} /> <span className="text-[var(--foreground)] font-medium opacity-0 animate-fade-in" style={{ animationDelay: '2.9s', animationFillMode: 'forwards' }}>{toKanji(deckData.length)}</span> <RevealText text={tLocal("for this session. How many would you like to study?")} baseDelay={3.0} charDelay={0.015} disabled={!isInitialLoad} />
+            <RevealText text={tLocal("We've prepared a random deck of")} baseDelay={2.8} charDelay={0.015} forceAnimate={shouldAnimate} /> <span className="text-[var(--foreground)] font-medium opacity-0 animate-fade-in" style={{ animationDelay: '2.9s', animationFillMode: 'forwards' }}>{toKanji(deckData.length)}</span> <RevealText text={tLocal("for this session. How many would you like to study?")} baseDelay={3.0} charDelay={0.015} forceAnimate={shouldAnimate} />
           </p>
           
           <div className="flex items-center gap-6 mt-4 opacity-0 animate-fade-in" style={{ animationDelay: '3.1s', animationFillMode: 'forwards' }}>
@@ -247,7 +246,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
 
         <section className="flex flex-col gap-6">
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
-            <RevealText text={tLocal("Saved Sessions")} baseDelay={3.2} disabled={!isInitialLoad} />
+            <RevealText text={tLocal("Saved Sessions")} baseDelay={3.2} forceAnimate={shouldAnimate} />
           </h2>
           
           <div className="flex items-start gap-2 text-[11px] text-[var(--muted-text)] opacity-60 italic -mt-2 mb-1 animate-fade-in" style={{ animationDelay: '3.4s', animationFillMode: 'forwards', opacity: 0 }}>
