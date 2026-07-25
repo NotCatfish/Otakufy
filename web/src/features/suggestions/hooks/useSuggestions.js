@@ -20,7 +20,7 @@ export function useSuggestions(activeTab, sortBy) {
     fetchSessionAndData();
   }, [sortBy, activeTab]);
 
-  const fetchSuggestions = async (currentSession) => {
+  async function fetchSuggestions(currentSession) {
     try {
       const cacheKey = `otakufy_suggestions_cache_${activeTab}`;
       const cached = sessionStorage.getItem(cacheKey);

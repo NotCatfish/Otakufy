@@ -75,13 +75,15 @@ export const useQuizEngine = (category) => {
           if (autoSave) {
               try {
                   const parsed = JSON.parse(autoSave);
-                  setQueue(parsed.queue);
-                  setCurrentIndex(parsed.currentIndex);
-                  setScore(parsed.score);
-                  setStatus(parsed.status || 'idle');
-                  setQuizSessionId(parsed.quizSessionId || null);
-                  setInitialQueueLength(parsed.initialQueueLength || parsed.queue.length);
-                  setDeckData(parsed.queue); // satisfy data dependencies
+                  setTimeout(() => {
+                    setQueue(parsed.queue);
+                    setCurrentIndex(parsed.currentIndex);
+                    setScore(parsed.score);
+                    setStatus(parsed.status || 'idle');
+                    setQuizSessionId(parsed.quizSessionId || null);
+                    setInitialQueueLength(parsed.initialQueueLength || parsed.queue.length);
+                    setDeckData(parsed.queue); // satisfy data dependencies
+                  }, 0);
                   return; // Auto-resume successful
               } catch(e) {
                   console.warn("Failed to parse autosave", e);
@@ -412,8 +414,8 @@ export const useQuizEngine = (category) => {
     }
   };
 
-  const loadLevelData = (lvl) => loadDeck(lvl);
-  const loadVocabData = (lvl, type) => loadDeck(lvl, type);
+  function loadLevelData(lvl) { return loadDeck(lvl); }
+  function loadVocabData(lvl, type) { return loadDeck(lvl, type); }
 
   const startNewSession = async () => {
     let amount = parseInt(cardAmount);
@@ -701,7 +703,7 @@ export const useQuizEngine = (category) => {
     const isMeaningFilled = meaningInput.trim().length > 0;
 
     if (!isReadingFilled && !isMeaningFilled) {
-      const now = Date.now();
+      const now = new Date().getTime();
       if (now - emptySubmitRef.current < 500) {
         return; // Prevent accidental rapid double-enter from skipping
       }
@@ -1023,7 +1025,7 @@ export const useQuizEngine = (category) => {
     unlockedBadges, setUnlockedBadges,
     showSaveModal, setShowSaveModal, saveName, setSaveName,
     confirmModal, setConfirmModal, failedItems, retryMistakes,
-    srsSessionStats: srsSessionStats.current,
+    srsSessionStats,
     loadLevelData, loadVocabData, startNewSession, loadSave, deleteSave, saveAndQuit, navigateBack,
     handleVocabAnswer, handleSubmit, handleSkip, handleNext
   };

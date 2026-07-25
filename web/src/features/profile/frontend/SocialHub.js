@@ -26,17 +26,17 @@ export default function SocialHub({ session }) {
     }
   }, [session]);
 
-  const fetchFriends = async () => {
+  async function fetchFriends() {
     const { data } = await SocialRepository.getFriends(session.user.id);
     if (data) setFriends(data);
-  };
+  }
 
-  const fetchRequests = async () => {
+  async function fetchRequests() {
     const { data } = await SocialRepository.getPendingRequests(session.user.id);
     if (data) setRequests(data);
-  };
+  }
 
-  const fetchOutgoingRequests = async () => {
+  async function fetchOutgoingRequests() {
     const { data } = await SocialRepository.getOutgoingRequests(session.user.id);
     if (data && data.length > 0) {
       // fetch profile info for each addressee
@@ -47,7 +47,7 @@ export default function SocialHub({ session }) {
     } else {
       setOutgoingRequests([]);
     }
-  };
+  }
 
   // Exact-match search: requires "username#discriminator" format
   const executeExactSearch = async () => {

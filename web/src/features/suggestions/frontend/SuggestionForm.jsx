@@ -6,21 +6,18 @@ export default function SuggestionForm({ onSubmit, existingSuggestions, onClose 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [similar, setSimilar] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
   // Duplicate Mitigation (Live Filtering)
-  useEffect(() => {
+  const similar = React.useMemo(() => {
     if (title.length > 3) {
       const query = title.toLowerCase();
-      const matches = existingSuggestions.filter(s => 
+      return existingSuggestions.filter(s => 
         s.title.toLowerCase().includes(query) || s.description.toLowerCase().includes(query)
-      );
-      setSimilar(matches.slice(0, 3)); // Show top 3 similar
-    } else {
-      setSimilar([]);
+      ).slice(0, 3);
     }
+    return [];
   }, [title, existingSuggestions]);
 
   const handleSubmit = async (e) => {

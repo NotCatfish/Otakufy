@@ -28,9 +28,11 @@ export default function DefaultAvatar({ src, avatarUrl, name, seed, size = 32, c
   const imageUrl = (!imgError && (src || avatarUrl)) || null;
   const imgRef = React.useRef(null);
 
-  React.useEffect(() => {
+  const [prevSrcUrl, setPrevSrcUrl] = React.useState(src || avatarUrl);
+  if ((src || avatarUrl) !== prevSrcUrl) {
+    setPrevSrcUrl(src || avatarUrl);
     setImgError(false);
-  }, [src, avatarUrl]);
+  }
 
   React.useEffect(() => {
     // Fix for SSR: if the image failed to load before React hydrated,

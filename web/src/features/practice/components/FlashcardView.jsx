@@ -137,7 +137,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
   const isSrsMode = engineState.level === 'SRS';
   const currentItemId = currentCard?.parent_id || currentCard?.id;
-  const srsStats = engineState.srsSessionStats ? engineState.srsSessionStats[currentItemId] : null;
+  const srsStats = engineState.srsSessionStats?.current ? engineState.srsSessionStats.current[currentItemId] : null;
 
   const getDisplayReading = () => {
     if (!currentCard) return '';

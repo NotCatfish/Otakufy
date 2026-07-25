@@ -62,7 +62,7 @@ export default function QuizEngine({ category }) {
     const visitedPaths = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
     const alreadyVisited = visitedPaths.includes(currentKey);
     
-    setIsVisited(alreadyVisited);
+    setTimeout(() => setIsVisited(alreadyVisited), 0);
     initialIsVisitedRef.current = alreadyVisited;
 
     if (!alreadyVisited) {
@@ -77,7 +77,7 @@ export default function QuizEngine({ category }) {
 
   const localHasSeenIntro = initialIsVisitedRef.current;
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => { setTimeout(() => setMounted(true), 0); }, []);
 
   useEffect(() => {
     if (!mounted) return;

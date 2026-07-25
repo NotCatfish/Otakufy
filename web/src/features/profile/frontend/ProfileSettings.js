@@ -68,7 +68,7 @@ export default function ProfileSettings() {
     });
 
     if (typeof window !== 'undefined' && window.location.search.includes('reset=true')) {
-      setIsResetMode(true);
+      setTimeout(() => setIsResetMode(true), 0);
     }
 
     if (typeof window !== 'undefined' && window.location.search.includes('linked=true')) {
@@ -714,7 +714,7 @@ export default function ProfileSettings() {
                     )}
                     {emailStatusMessage.includes('Check your') && (
                       <div className="text-[11px] text-amber-300/90 font-medium pt-1 border-t border-white/5 flex items-center gap-1.5">
-                        <span>💡</span> Don't forget to check your Spam / Promotions folder!
+                        <span>💡</span> Don&apos;t forget to check your Spam / Promotions folder!
                       </div>
                     )}
                   </div>
