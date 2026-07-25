@@ -155,7 +155,7 @@ export default function DashboardClient({ initialProfile }) {
               </div>
               <div 
                 className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`}
-                style={{ animationDelay: !hasSeenIntro ? '5.6s' : '0s', animationFillMode: 'forwards' }}
+                style={{ animationDelay: !hasSeenIntro ? '4.2s' : '0s', animationFillMode: 'forwards' }}
               >
                 <span>⚡</span>
                 <span>{`${toKanji(totalXp.toLocaleString())} ${t("Total XP")}`}</span>
@@ -166,7 +166,7 @@ export default function DashboardClient({ initialProfile }) {
                 return (
                   <div 
                     className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'} ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
-                    style={{ animationDelay: !hasSeenIntro ? '5.8s' : '0s', animationFillMode: 'forwards' }}
+                    style={{ animationDelay: !hasSeenIntro ? '4.4s' : '0s', animationFillMode: 'forwards' }}
                   >
                     <span>
                       {isGoalReached ? '✅' : '🎯'}

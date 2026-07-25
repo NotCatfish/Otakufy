@@ -6,6 +6,8 @@ import { toRomaji } from 'wanakana';
 import PageContainer from '../../components/PageContainer';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
+import SmoothFade from '../../components/SmoothFade';
+import RevealText from '../../components/RevealText';
 import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -201,15 +203,15 @@ export default function DictionaryPage() {
 
   return (
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
-      <header className="mb-12 border-b border-[var(--strong-border)] pb-8">
+      <SmoothFade as="header" delay={0.1} className="mb-12 border-b border-[var(--strong-border)] pb-8">
         <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
-          {t("Dictionary")}
+          <RevealText text={t("Dictionary")} baseDelay={0.2} />
         </h1>
         <p className="text-[14px] text-white/50">{t("Search through over 9,000 Kanji, Vocabulary, and Grammar points.")}</p>
-      </header>
+      </SmoothFade>
 
       {/* Controls */}
-      <div className="flex flex-col gap-4 mb-12">
+      <SmoothFade delay={0.2} className="flex flex-col gap-4 mb-12">
         <div className="flex flex-col md:flex-row gap-4">
             {/* Search Bar */}
             <div className="flex-1 relative">
@@ -272,10 +274,10 @@ export default function DictionaryPage() {
                 </div>
             </div>
         )}
-      </div>
+      </SmoothFade>
 
       {/* Results Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <SmoothFade delay={0.3} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {results.map((item, idx) => (
             <div 
                 key={`${item.id}-${idx}`} 
@@ -317,7 +319,7 @@ export default function DictionaryPage() {
                 </div>
             </div>
         ))}
-      </div>
+      </SmoothFade>
 
       {/* Loading State */}
       {loading && (

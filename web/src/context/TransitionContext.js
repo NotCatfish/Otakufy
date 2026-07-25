@@ -16,24 +16,15 @@ export function TransitionProvider({ children }) {
   const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
 
   const hasSeenIntro = React.useMemo(() => {
-    if (typeof window !== 'undefined') {
-      const visited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
-      return visited.includes(normalizedPath);
-    }
+    // ALWAYS return false to force animations to replay for testing
     return false;
   }, [pathname, sessionUpdated, normalizedPath]);
 
-  const [disableUiAnim, setDisableUiAnim] = useState(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const stored = localStorage.getItem('otakufy_setting_' + SETTINGS_KEYS.DISABLE_UI_ANIMATIONS);
-        return stored ? JSON.parse(stored) : false;
-      } catch (e) {
-        return false;
-      }
-    }
-    return false;
-  });
+  const [disableUiAnim, setDisableUiAnim] = useState(false);
+
+  useEffect(() => {
+    setDisableUiAnim(getSetting(SETTINGS_KEYS.DISABLE_UI_ANIMATIONS, false));
+  }, []);
 
   useEffect(() => {
     const updateSetting = () => {

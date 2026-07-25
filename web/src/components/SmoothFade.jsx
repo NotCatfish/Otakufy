@@ -9,7 +9,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
   
   // Capture whether we should skip the intro exactly once on mount
-  const skipIntroRef = useRef(forceAnimate ? false : rawHasSeenIntro);
+  const skipIntroRef = { current: false };
   const [isExiting, setIsExiting] = useState(false);
   const [animationFinished, setAnimationFinished] = useState(false);
   const mountedDuringExitRef = useRef(rawIsExiting);

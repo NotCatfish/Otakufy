@@ -7,6 +7,8 @@ import PageContainer from '../../components/PageContainer';
 import DefaultAvatar from '@/features/profile/frontend/DefaultAvatar';
 import { useLanguage } from '../../context/LanguageContext';
 import Button from '../../components/ui/Button';
+import SmoothFade from '../../components/SmoothFade';
+import RevealText from '../../components/RevealText';
 
 export default function LeaderboardPage() {
   const { lang, t } = useLanguage();
@@ -225,9 +227,9 @@ export default function LeaderboardPage() {
 
   return (
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
-      <header className="mb-12 pb-12 border-b border-[var(--strong-border)] text-center flex flex-col items-center">
+      <SmoothFade as="header" delay={0.1} className="mb-12 pb-12 border-b border-[var(--strong-border)] text-center flex flex-col items-center">
         <h1 className="text-4xl font-semibold tracking-tight text-white mb-6">
-          {leaderboardMode === 'global' ? t("Global Leaderboard") : t("Friends Leaderboard")}
+          <RevealText text={leaderboardMode === 'global' ? t("Global Leaderboard") : t("Friends Leaderboard")} baseDelay={0.2} />
         </h1>
         
         {session && (
@@ -254,7 +256,7 @@ export default function LeaderboardPage() {
             ? t("Top 50 learners ranked by XP. (Public profiles only)")
             : t("Ranked amongst your friends network.")}
         </p>
-      </header>
+      </SmoothFade>
 
       <div className="flex flex-col gap-4">
         {currentLeaderboard.length === 0 ? (
@@ -263,7 +265,8 @@ export default function LeaderboardPage() {
           </div>
         ) : (
           currentLeaderboard.map((user, index) => (
-            <Link key={user.id} href={`/profile/${user.id}`} className={`group block ${session?.user?.id === user.id ? 'relative z-10 scale-[1.02]' : ''}`}>
+            <SmoothFade delay={0.3 + (index * 0.05)} key={user.id}>
+            <Link href={`/profile/${user.id}`} className={`group block ${session?.user?.id === user.id ? 'relative z-10 scale-[1.02]' : ''}`}>
               <div className={`flex items-center gap-6 p-6 rounded-2xl transition-all ${session?.user?.id === user.id ? 'border border-[var(--strong-border)] bg-[var(--surface-hover)]' : 'border border-[var(--strong-border)] bg-[var(--surface)] hover:border-[var(--strong-border)] hover:bg-[var(--surface)]'}`}>
                 <div className={`w-12 text-center text-xl mb-mono ${session?.user?.id === user.id ? 'text-white font-semibold' : 'text-white/30 group-hover:text-white transition-colors'}`}>
                   #{user.rank || (index + 1)}
@@ -284,11 +287,12 @@ export default function LeaderboardPage() {
                 </div>
               </div>
             </Link>
+            </SmoothFade>
           ))
         )}
 
         {shouldRenderCallerAtBottom && (
-          <div className="mt-12 pt-12 border-t border-dashed border-[var(--strong-border)] relative animate-fade-in">
+          <SmoothFade delay={0.8} className="mt-12 pt-12 border-t border-dashed border-[var(--strong-border)] relative">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--surface)] px-4 text-[10px] uppercase tracking-widest text-white/30 font-medium">
               {t("Your Current Rank")}
             </div>
@@ -314,7 +318,7 @@ export default function LeaderboardPage() {
                 </div>
               </div>
             </Link>
-          </div>
+          </SmoothFade>
         )}
       </div>
     </PageContainer>

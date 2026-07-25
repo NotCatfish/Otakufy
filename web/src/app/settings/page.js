@@ -2,14 +2,18 @@
 
 import { useState, useEffect } from 'react';
 import ToggleSwitch from '../../components/ui/ToggleSwitch';
+import SmoothFade from '../../components/SmoothFade';
+import RevealText from '../../components/RevealText';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
 import PageContainer from '../../components/PageContainer';
 import { SETTINGS_KEYS, getSetting, saveSetting } from '@/features/profile/utils/settingsUtils';
 import { useLanguage } from '../../context/LanguageContext';
+import { supabase } from '@/features/auth/frontend/supabaseClient';
 
 export default function SettingsPage() {
   const { t } = useLanguage();
+  const [user, setUser] = useState(null);
   const [xpGoal, setXpGoal] = useState(500);
   const [showFurigana, setShowFurigana] = useState(true);
   const [autoPlayAudio, setAutoPlayAudio] = useState(false);
@@ -53,17 +57,17 @@ export default function SettingsPage() {
 
   return (
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
-      <header className="mb-12 border-b border-[var(--strong-border)] pb-8">
+      <SmoothFade as="header" delay={0.1} className="mb-12 border-b border-[var(--strong-border)] pb-8">
         <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
-          {t("Settings")}
+          <RevealText text={t("Settings")} baseDelay={0.2} />
         </h1>
         <p className="text-[14px] text-white/50">{t("Customize your Otakufy experience.")}</p>
-      </header>
+      </SmoothFade>
 
       <div className="space-y-8">
         
         {/* Daily XP Goal */}
-        <section className="bg-[var(--surface)] border border-[var(--strong-border)] p-8 rounded-2xl">
+        <SmoothFade delay={0.2} as="section" className="bg-[var(--surface)] border border-[var(--strong-border)] p-8 rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <h3 className="text-xl font-semibold mb-1 text-white">{t("Daily XP Goal")}</h3>
@@ -86,10 +90,10 @@ export default function SettingsPage() {
               ))}
             </div>
           </div>
-        </section>
+        </SmoothFade>
 
         {/* Global Preferences */}
-        <section className="bg-[var(--surface)] border border-[var(--strong-border)] p-8 rounded-2xl">
+        <SmoothFade delay={0.3} as="section" className="bg-[var(--surface)] border border-[var(--strong-border)] p-8 rounded-2xl">
           <h3 className="text-xl font-semibold mb-6 text-white">{t("Global Preferences")}</h3>
           
           <div className="space-y-2">
@@ -161,8 +165,7 @@ export default function SettingsPage() {
             </div>
 
           </div>
-        </section>
-
+        </SmoothFade>
       </div>
     </PageContainer>
   );

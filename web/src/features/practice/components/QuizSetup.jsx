@@ -113,7 +113,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
       </SmoothFade>
       
       {(category === 'vocabulary' || category === 'grammar') && level !== 'SRS' && (
-        <SmoothFade delay={0.8} disabled={hasSeenIntro} className="w-full mb-16 relative">
+        <SmoothFade delay={0.4} disabled={hasSeenIntro} className="w-full mb-16 relative">
            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[var(--strong-border)]">
               <span className="border border-[var(--strong-border)] text-[var(--muted-text)] px-2 py-0.5 rounded text-xs tracking-widest uppercase">{toKanji('N1-N5')}</span>
               <span className="text-[var(--foreground)] font-light tracking-widest text-sm uppercase opacity-90">
@@ -123,7 +123,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
            
            <div className="flex flex-col gap-8">
                <p className="font-light text-xl text-[var(--foreground)] tracking-wide leading-relaxed opacity-95">
-                 <RevealText text={config[vocabType]?.instruction || ""} baseDelay={0.6} charDelay={0.015} disabled={hasSeenIntro} />
+                 <RevealText text={config[vocabType]?.instruction || ""} baseDelay={0.4} charDelay={0.015} disabled={hasSeenIntro} />
                </p>
 
                {vocabType !== 'random' && (
@@ -183,7 +183,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
             <RevealText text={`${lang === 'ja' ? '' : ' '}${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}. ${tLocal("How many would you like to study?")}`} baseDelay={0.4} charDelay={0.015} disabled={hasSeenIntro} />
           </p>
           
-          <SmoothFade delay={1.6} disabled={hasSeenIntro} className="flex items-center gap-6 mt-4">
+          <SmoothFade delay={0.4} disabled={hasSeenIntro} className="flex items-center gap-6 mt-4">
             <input 
               type="text"
               inputMode="numeric"
@@ -215,7 +215,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
               <p className="text-red-400 font-medium tracking-wide mt-2">{engineState.validationError}</p>
           )}
           
-          <SmoothFade delay={5.8} disabled={hasSeenIntro} className="mt-6 self-start">
+          <SmoothFade delay={0.5} disabled={hasSeenIntro} className="mt-6 self-start">
             <button 
               onClick={handleStart}
               className="px-8 py-3 border border-[var(--strong-border)] rounded-full text-sm uppercase tracking-[0.1em] hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] transition-all duration-300"
@@ -225,7 +225,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
           </SmoothFade>
 
           {engineState.isSrsMode && (
-            <SmoothFade delay={6.2} disabled={hasSeenIntro} className="mt-8 border border-[var(--strong-border)] bg-[var(--surface-hover)] rounded-xl p-6 relative">
+            <SmoothFade delay={0.6} disabled={hasSeenIntro} className="mt-8 border border-[var(--strong-border)] bg-[var(--surface-hover)] rounded-xl p-6 relative">
                 <span className="absolute -top-3 left-6 bg-[var(--card-bg)] px-2 text-xs font-light tracking-widest text-green-400 uppercase">{tLocal("The Point System")}</span>
                 <ul className="mt-2 text-sm text-[var(--muted-text)] font-light space-y-2 leading-relaxed tracking-wide">
                     <li><span className="text-sakura-dark font-medium">{tLocal("First Try:")}</span> {tLocal("Answer correctly on your first attempt to instantly master the card.")}</li>
@@ -240,10 +240,10 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
 
         <section className="flex flex-col gap-6">
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
-            <RevealText text={tLocal("Saved Sessions")} baseDelay={6.0} disabled={hasSeenIntro} />
+            <RevealText text={tLocal("Saved Sessions")} baseDelay={0.7} disabled={hasSeenIntro} />
           </h2>
           
-          <SmoothFade delay={6.4} disabled={hasSeenIntro} className="flex items-start gap-2 text-[12px] text-[var(--muted-text)] italic -mt-2 mb-1">
+          <SmoothFade delay={0.8} disabled={hasSeenIntro} className="flex items-start gap-2 text-[12px] text-[var(--muted-text)] italic -mt-2 mb-1">
              <svg className="w-4 h-4 shrink-0 mt-[1px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
              </svg>

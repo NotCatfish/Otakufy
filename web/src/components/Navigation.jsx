@@ -30,13 +30,8 @@ export default function Navigation() {
   const isExiting = transitionContext ? transitionContext.isExiting : false;
 
   useEffect(() => {
-    const hasAnimated = sessionStorage.getItem('navAnimated');
-    if (!hasAnimated) {
-      setIsInitialLoad(true);
-      sessionStorage.setItem('navAnimated', 'true');
-    } else {
-      setIsInitialLoad(false);
-    }
+    // ALWAYS set isInitialLoad to true for testing animations
+    setIsInitialLoad(true);
     setMounted(true);
   }, []);
 
@@ -90,9 +85,9 @@ export default function Navigation() {
                   className={`transition-colors py-1 relative ${isActive ? "text-[var(--foreground)] font-medium" : "text-[var(--muted-text)] hover:text-[var(--foreground)]"
                     }`}
                 >
-                  <RevealText text={t(link.label)} baseDelay={1.6 + (0.2 * NAV_LINKS.indexOf(link))} disabled={!isInitialLoad} ignoreExit={true} />
+                  <RevealText text={t(link.label)} baseDelay={0.2 + (0.2 * NAV_LINKS.indexOf(link))} disabled={!isInitialLoad} ignoreExit={true} />
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full animate-expand-line origin-center" style={{ animationDelay: isInitialLoad ? `${2.4 + (0.2 * NAV_LINKS.indexOf(link))}s` : '0s', opacity: isInitialLoad ? 0 : 1, animationFillMode: 'forwards' }} />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full animate-expand-line origin-center" style={{ animationDelay: isInitialLoad ? `${0.4 + (0.2 * NAV_LINKS.indexOf(link))}s` : '0s', opacity: isInitialLoad ? 0 : 1, animationFillMode: 'forwards' }} />
                   )}
                 </TransitionLink>
               );

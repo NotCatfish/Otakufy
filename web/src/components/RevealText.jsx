@@ -21,14 +21,13 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
     }
   }, [rawIsExiting, ignoreExit]);
 
-  const skipEntrance = useRef(forceAnimate ? false : hasSeenIntro);
+  const skipEntrance = { current: false };
   const prevText = useRef(text);
 
   if (typeof text !== 'string') return <span suppressHydrationWarning className={className}>{text}</span>;
   if ((disabled && !isExiting) || contextDisableUiAnim) return <span suppressHydrationWarning className={className}>{text}</span>;
   
   if (prevText.current !== text) {
-    skipEntrance.current = true;
     prevText.current = text;
   }
   

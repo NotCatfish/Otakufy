@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import PageContainer from '../../components/PageContainer';
+import SmoothFade from '../../components/SmoothFade';
+import RevealText from '../../components/RevealText';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function HelpPage() {
@@ -52,19 +54,19 @@ export default function HelpPage() {
     <PageContainer maxWidth="max-w-[1440px]" className="flex flex-col gap-12 w-full pb-20">
       
       {/* Hero Section */}
-      <div className="flex flex-col items-start gap-3 border-b border-[var(--strong-border)] pb-8">
+      <SmoothFade delay={0.1} className="flex flex-col items-start gap-3 border-b border-[var(--strong-border)] pb-8">
         <h1 className="text-4xl font-semibold tracking-tight text-white">
-          {t("Help & Support")}
+          <RevealText text={t("Help & Support")} baseDelay={0.2} />
         </h1>
         <p className="text-[var(--muted-text)] text-[14px]">
           {t("Need a hand with your Japanese journey? Check out the guides below or reach out to the community for assistance.")}
         </p>
-      </div>
+      </SmoothFade>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         
         {/* Row 1, Col 1: Quick Guides */}
-        <div className="mb-card rounded-2xl p-8 border border-[var(--strong-border)] h-full">
+        <SmoothFade delay={0.2} className="mb-card rounded-2xl p-8 border border-[var(--strong-border)] h-full">
             <h2 className="mb-label mb-6 text-sm">quick guides</h2>
             <div className="flex flex-col gap-6">
                 <div>
@@ -82,10 +84,10 @@ export default function HelpPage() {
                     </p>
                 </div>
             </div>
-        </div>
+        </SmoothFade>
 
         {/* Row 1, Col 2: Connect & Community */}
-        <div className="mb-card rounded-2xl p-8 border border-[var(--strong-border)] flex flex-col gap-4 h-full">
+        <SmoothFade delay={0.3} className="mb-card rounded-2xl p-8 border border-[var(--strong-border)] flex flex-col gap-4 h-full">
             <h2 className="mb-label mb-4 text-sm">connect</h2>
             
             <a 
@@ -141,8 +143,7 @@ export default function HelpPage() {
             </div>
         </div>
 
-      </div>
-
+      </SmoothFade>
     </PageContainer>
   );
 }

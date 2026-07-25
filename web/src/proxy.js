@@ -39,7 +39,6 @@ export async function proxy(request) {
 
   // Protected routes requiring active authentication
   const isProtectedRoute = pathname.startsWith('/profile') ||
-                           pathname.startsWith('/settings') ||
                            pathname.startsWith('/friends')
 
   if (isProtectedRoute && !user) {
