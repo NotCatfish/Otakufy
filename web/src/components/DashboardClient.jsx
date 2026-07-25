@@ -14,11 +14,12 @@ import SmoothFade from './SmoothFade';
 import { supabase } from '@/features/auth/frontend/supabaseClient';
 import { useLanguage } from '@/context/LanguageContext';
 import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
+import { useTransitionContext } from '@/context/TransitionContext';
 
 export default function DashboardClient({ initialProfile }) {
   const { lang, t } = useLanguage();
+  const { hasSeenIntro } = useTransitionContext();
   const [profile, setProfile] = useState(initialProfile || null);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [dailyXp, setDailyXp] = useState(0);
   const [xpGoal, setXpGoal] = useState(100);
@@ -75,15 +76,6 @@ export default function DashboardClient({ initialProfile }) {
       fetchProfile();
     }
     
-    if (typeof window !== 'undefined') {
-      const hasAnimated = sessionStorage.getItem('dashboardAnimated_v2');
-      if (!hasAnimated) {
-        setIsInitialLoad(true);
-        sessionStorage.setItem('dashboardAnimated_v2', 'true');
-      } else {
-        setIsInitialLoad(false);
-      }
-    }
     setMounted(true);
   }, []);
 
@@ -143,27 +135,27 @@ export default function DashboardClient({ initialProfile }) {
   if (!mounted) return null;
 
   return (
-    <PageContainer disableGlobalFade={isInitialLoad}>
+    <PageContainer disableGlobalFade={!hasSeenIntro}>
         
-        <SmoothFade as="header" delay={2.8} disabled={!isInitialLoad} className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
+        <SmoothFade as="header" delay={0.2} className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">
-              <RevealText text={t("Welcome back.")} baseDelay={4.0} disabled={!isInitialLoad} />
+              <RevealText text={t("Welcome back.")} baseDelay={0.4} />
             </h1>
             <p className="text-[21px] text-[var(--muted-text)]">
-              <RevealText text={t("\"Continue your path to fluency.\"")} baseDelay={4.8} disabled={!isInitialLoad} charDelay={0.03} />
+              <RevealText text={t("\"Continue your path to fluency.\"")} baseDelay={0.6} charDelay={0.03} />
             </p>
             <div className="flex items-center gap-4 pt-1">
               <div 
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px] opacity-0 animate-fade-in"
-                style={{ animationDelay: isInitialLoad ? '5.4s' : '0s', animationFillMode: 'forwards' }}
+                style={{ animationDelay: !hasSeenIntro ? '0.8s' : '0s', animationFillMode: 'forwards' }}
               >
                 <span className="text-lg leading-none">🔥</span>
                 <span>{`${toKanji(profile?.streak || 0)} ${t("Day Streak")}`}</span>
               </div>
               <div 
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono opacity-0 animate-fade-in"
-                style={{ animationDelay: isInitialLoad ? '5.6s' : '0s', animationFillMode: 'forwards' }}
+                style={{ animationDelay: !hasSeenIntro ? '5.6s' : '0s', animationFillMode: 'forwards' }}
               >
                 <span>⚡</span>
                 <span>{`${toKanji(totalXp.toLocaleString())} ${t("Total XP")}`}</span>
@@ -174,7 +166,7 @@ export default function DashboardClient({ initialProfile }) {
                 return (
                   <div 
                     className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 opacity-0 animate-fade-in ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
-                    style={{ animationDelay: isInitialLoad ? '5.8s' : '0s', animationFillMode: 'forwards' }}
+                    style={{ animationDelay: !hasSeenIntro ? '5.8s' : '0s', animationFillMode: 'forwards' }}
                   >
                     <span>
                       {isGoalReached ? '✅' : '🎯'}
@@ -225,15 +217,15 @@ export default function DashboardClient({ initialProfile }) {
               
               <div className="absolute z-10 text-center flex flex-col items-center justify-center drop-shadow-none">
                 <div className="text-[33px] font-semibold leading-none tnum text-[var(--foreground)] mb-0.5">
-                  <RevealText text={toKanji(calculatedLevel)} baseDelay={5.8} disabled={!isInitialLoad} />
+                  <RevealText text={toKanji(calculatedLevel)} baseDelay={1.0} />
                 </div>
                 <div className="text-[10px] text-[var(--muted-text)] tracking-[0.16em] uppercase mb-1">
-                  <RevealText text={t("LEVEL")} baseDelay={6.2} disabled={!isInitialLoad} />
+                  <RevealText text={t("LEVEL")} baseDelay={1.2} />
                 </div>
                 <div className="text-[11px] text-[var(--foreground)] mb-mono tnum">
-                  <RevealText text={`${toKanji(currentLevelXp)}`} baseDelay={6.4} disabled={!isInitialLoad} />
+                  <RevealText text={`${toKanji(currentLevelXp)}`} baseDelay={1.4} />
                   <span className="opacity-50">
-                    <RevealText text={` / ${toKanji(xpForNext)}`} baseDelay={6.4} disabled={!isInitialLoad} />
+                    <RevealText text={` / ${toKanji(xpForNext)}`} baseDelay={1.4} />
                   </span>
                 </div>
               </div>
@@ -241,9 +233,9 @@ export default function DashboardClient({ initialProfile }) {
         </SmoothFade>
 
         {/* Quick Practice */}
-        <SmoothFade as="section" delay={6.0} disabled={!isInitialLoad} className="mb-16">
+        <SmoothFade as="section" delay={1.6} className="mb-16">
           <h2 className="text-[22px] font-semibold text-[var(--foreground)] mb-6 tracking-wide">
-            <RevealText text={t("study_modules")} baseDelay={7.2} disabled={!isInitialLoad} />
+            <RevealText text={t("study_modules")} baseDelay={1.8} />
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {[
@@ -260,36 +252,36 @@ export default function DashboardClient({ initialProfile }) {
                 onMouseEnter={() => prefetchCategory(item.path)}
                 className="mb-module rounded-2xl py-12 flex flex-col items-center justify-center gap-4 cursor-pointer group transition-all"
               >
-                <item.Icon className="w-8 h-8 opacity-100 group-hover:opacity-60 transition-opacity text-[var(--foreground)] opacity-0 animate-fade-in" style={{ animationDelay: isInitialLoad ? `${7.6 + (0.1 * i)}s` : '0s', animationFillMode: 'forwards' }} />
+                <item.Icon className="w-8 h-8 opacity-100 group-hover:opacity-60 transition-opacity text-[var(--foreground)] opacity-0 animate-fade-in" style={{ animationDelay: !hasSeenIntro ? `${2.0 + (0.1 * i)}s` : '0s', animationFillMode: 'forwards' }} />
                 <span className="text-[19px] font-medium text-[var(--foreground)] group-hover:text-[var(--muted-text)] transition-colors">
-                  <RevealText text={t(item.text)} baseDelay={7.8 + (0.1 * i)} disabled={!isInitialLoad} />
+                  <RevealText text={t(item.text)} baseDelay={2.2 + (0.1 * i)} />
                 </span>
               </TransitionLink>
             ))}
           </div>
         </SmoothFade>
 
-        <SmoothFade delay={8.8} disabled={!isInitialLoad} className="grid md:grid-cols-2 gap-8 md:gap-12">
-          <DailyObjectives userId={profile?.id} isInitialLoad={isInitialLoad} />
+        <SmoothFade delay={2.6} className="grid md:grid-cols-2 gap-8 md:gap-12">
+          <DailyObjectives userId={profile?.id} isInitialLoad={!hasSeenIntro} />
           
           <section className="mb-card rounded-lg p-6 flex flex-col justify-between">
             <div>
               <h2 className="text-[22px] font-semibold text-[var(--foreground)] mb-5 tracking-wide">
-                <RevealText text={t("smart_review")} baseDelay={10.0} disabled={!isInitialLoad} />
+                <RevealText text={t("smart_review")} baseDelay={2.8} />
               </h2>
               <div className="flex flex-col gap-2">
                 <span className="text-[var(--foreground)] font-medium text-[16px]">
-                  <RevealText text={t("Spaced Repetition")} baseDelay={10.4} disabled={!isInitialLoad} />
+                  <RevealText text={t("Spaced Repetition")} baseDelay={3.0} />
                 </span>
                 <span className="text-[var(--muted-text)] text-[14.5px] leading-relaxed">
-                  <RevealText text={t("Power through your due SRS reviews. The algorithm determines exactly what you need to study for optimal long-term retention. If your queue is empty, you'll automatically start a random") + " " + (lang === 'ja' ? toKanji(autoJlptLevel).replace('N', 'Ｎ') : autoJlptLevel) + " " + t("deck.")} baseDelay={10.8} disabled={!isInitialLoad} charDelay={0.015} />
+                  <RevealText text={t("Power through your due SRS reviews. The algorithm determines exactly what you need to study for optimal long-term retention. If your queue is empty, you'll automatically start a random") + " " + (lang === 'ja' ? toKanji(autoJlptLevel).replace('N', 'Ｎ') : autoJlptLevel) + " " + t("deck.")} baseDelay={3.2} charDelay={0.015} />
                 </span>
               </div>
             </div>
             <div className="mt-8">
-              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className="inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity opacity-0 animate-fade-in" style={{ animationDelay: isInitialLoad ? '12.0s' : '0s', animationFillMode: 'forwards' }}>
+              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className="inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity opacity-0 animate-fade-in" style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
                 <Play className="w-4 h-4 mr-2 fill-[var(--background)]" />
-                <RevealText text={t("Start SRS Review")} baseDelay={12.0} disabled={!isInitialLoad} />
+                <RevealText text={t("Start SRS Review")} baseDelay={3.4} />
               </a>
             </div>
           </section>

@@ -20,18 +20,16 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
     }
   }, [rawIsExiting]);
 
-  const skipEntranceRef = useRef(hasSeenIntro);
+  const skipEntrance = useRef(forceAnimate ? false : hasSeenIntro);
   const prevText = useRef(text);
 
-  if (typeof text !== 'string') return <span className={className}>{text}</span>;
-  if (disabled || contextDisableUiAnim) return <span className={className}>{text}</span>;
+  if (typeof text !== 'string') return <span suppressHydrationWarning className={className}>{text}</span>;
+  if (disabled || contextDisableUiAnim) return <span suppressHydrationWarning className={className}>{text}</span>;
   
   if (prevText.current !== text) {
-    skipEntranceRef.current = true;
+    skipEntrance.current = true;
     prevText.current = text;
   }
-  
-  const skipEntrance = skipEntranceRef.current && !forceAnimate;
   
   const chars = text.split('');
   
@@ -39,22 +37,23 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
   const SPEED_FACTOR = 0.4;
   
   return (
-    <span className={`inline-flex flex-wrap ${className}`}>
+    <span suppressHydrationWarning className={`inline-flex flex-wrap ${className}`}>
       {chars.map((char, index) => {
         const entranceDelay = baseDelay + (index * charDelay);
         const exitDelay = ((chars.length - index - 1) * charDelay * 0.5);
         
         const isExitingClasses = 'opacity-100 animate-blur-hide';
-        const entranceClasses = skipEntrance ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
+        const entranceClasses = skipEntrance.current ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
         const spanClass = isExiting ? isExitingClasses : entranceClasses;
         
-        const style = (skipEntrance && !isExiting) ? {} : { 
+        const style = (skipEntrance.current && !isExiting) ? {} : { 
           animationDelay: `${isExiting ? exitDelay : entranceDelay}s`,
           animationFillMode: 'forwards'
         };
 
         return (
           <span
+            suppressHydrationWarning
             key={`${text}-${index}`}
             className={`inline-block ${spanClass}`}
             style={style}

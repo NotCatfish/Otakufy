@@ -10,6 +10,7 @@ import UserMenu from '@/features/auth/frontend/UserMenu';
 import SmoothFade from "./SmoothFade";
 import RevealText from "./RevealText";
 import AnimatedLogo from "./AnimatedLogo";
+import { useTransitionContext } from '@/context/TransitionContext';
 
 const NAV_LINKS = [
   { href: "/", label: "Dashboard" },
@@ -24,6 +25,8 @@ export default function Navigation() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { t } = useLanguage();
+  const transitionContext = useTransitionContext();
+  const isExiting = transitionContext ? transitionContext.isExiting : false;
 
   useEffect(() => {
     const hasAnimated = sessionStorage.getItem('navAnimated');
@@ -35,6 +38,14 @@ export default function Navigation() {
     }
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    // If the user clicks a link and triggers an exit transition, permanently disable initial load animations 
+    // for the navigation bar so it stays fixed and doesn't participate in exit/re-entrance animations.
+    if (isExiting && isInitialLoad) {
+      setIsInitialLoad(false);
+    }
+  }, [isExiting, isInitialLoad]);
 
   useEffect(() => {
     setMobileMenuOpen(false);

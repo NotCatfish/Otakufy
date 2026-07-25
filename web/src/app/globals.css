@@ -232,6 +232,8 @@
   --animate-gentle-fade-down: gentle-fade-down 2.0s ease-in-out forwards;
   --animate-expand-line: expand-line 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 
+}
+
   @keyframes fade-in {
     from {
       opacity: 0;
@@ -367,7 +369,6 @@
       transform: scaleX(1);
     }
   }
-}
 
 .logo-gradient {
   background: linear-gradient(90deg,

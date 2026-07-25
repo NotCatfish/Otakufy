@@ -7,10 +7,20 @@ const TransitionContext = createContext();
 
 export function TransitionProvider({ children }) {
   const [isExiting, setIsExiting] = useState(false);
-  const [visitedPaths, setVisitedPaths] = useState(() => new Set());
-  const [disableUiAnim, setDisableUiAnim] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+
+  // Initialize hasSeenIntro synchronously on the client to prevent hydration flashes
+  const [hasSeenIntro, setHasSeenIntro] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
+      const visited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
+      return visited.includes(normalizedPath);
+    }
+    return false;
+  });
+
+  const [disableUiAnim, setDisableUiAnim] = useState(false);
 
   useEffect(() => {
     const updateSetting = () => {
@@ -22,18 +32,30 @@ export function TransitionProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    // Wait for initial entrance animations to finish, then skip them for future navigations to THIS path
-    const timer = setTimeout(() => {
-      setVisitedPaths(prev => {
-        const next = new Set(prev);
-        next.add(pathname);
-        return next;
-      });
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, [pathname]);
+    // Group all practice paths under a single key so viewing one practice intro skips it for all other practice categories
+    const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
+    
+    // Check if we've seen it this session
+    const visited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
+    if (visited.includes(normalizedPath)) {
+      setHasSeenIntro(true);
+    } else {
+      setHasSeenIntro(false);
+      
+      // Immediately add to visited paths to prevent replay if user navigates quickly
+      const currentVisited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
+      if (!currentVisited.includes(normalizedPath)) {
+        currentVisited.push(normalizedPath);
+        sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(currentVisited));
+      }
 
-  const hasSeenIntro = visitedPaths.has(pathname);
+      // Wait for initial entrance animations to finish, then skip them for future navigations
+      const timer = setTimeout(() => {
+        setHasSeenIntro(true);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
 
   // Reset exit state on mount of new route
   useEffect(() => {
