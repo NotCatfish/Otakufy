@@ -3,25 +3,19 @@ import { VOCAB_TYPES_CONFIG, GRAMMAR_TYPES_CONFIG } from '../config/quizConfig';
 import ReturnButton from './ReturnButton';
 import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
-import { useTransitionContext } from '@/context/TransitionContext';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function VocabTypeSelector({ category, currentTheme, engineState }) {
   const { lang } = useLanguage();
   const { level, setAppState, setVocabType, loadVocabData } = engineState;
-  const { triggerExitTransition, isExiting } = useTransitionContext();
   const config = category === 'grammar' ? GRAMMAR_TYPES_CONFIG : VOCAB_TYPES_CONFIG;
   const vocabTypes = Object.values(config);
 
-  const handleBack = async () => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleBack = () => {
     engineState.navigateBack();
   };
 
-  const handleSelect = async (typeId) => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleSelect = (typeId) => {
     setVocabType(typeId);
     loadVocabData(level, typeId);
   };

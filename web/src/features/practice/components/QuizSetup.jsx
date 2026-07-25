@@ -4,7 +4,6 @@ import ReturnButton from './ReturnButton';
 import { useLanguage } from '@/context/LanguageContext';
 import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
-import { useTransitionContext } from '@/context/TransitionContext';
 
 export default function QuizSetup({ category, currentTheme, engineState }) {
   const { t, lang } = useLanguage();
@@ -77,23 +76,16 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
     cardAmount, setCardAmount, startNewSession, 
     saves, loadSave, deleteSave 
   } = engineState;
-  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
 
-  const handleBack = async () => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleBack = () => {
     engineState.navigateBack();
   };
 
-  const handleStart = async () => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleStart = () => {
     startNewSession();
   };
 
-  const handleLoadSave = async (index) => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleLoadSave = (index) => {
     loadSave(index);
   };
 
@@ -173,15 +165,15 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
       <SmoothFade delay={1.2} className="flex flex-col gap-20">
         <section className="flex flex-col gap-6">
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
-            <RevealText text={tLocal("New Session")} baseDelay={2.2} />
+            <RevealText text={tLocal("New Session")} baseDelay={1.4} />
           </h2>
           <p className="text-lg leading-relaxed font-light text-[var(--muted-text)]">
-            <RevealText text={tLocal("This section has")} baseDelay={2.4} /> <span className={`text-[var(--foreground)] font-medium ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '2.5s' : '0s', animationFillMode: 'forwards' }}>{engineState.totalDbCount !== null ? toKanji(engineState.totalDbCount) : toKanji(deckData.length)}</span> <RevealText text={category === 'vocabulary' ? tLocal('questions') : tLocal('cards')} baseDelay={2.6} />. 
+            <RevealText text={`${tLocal("This section has")} ${engineState.totalDbCount !== null ? String(toKanji(engineState.totalDbCount)) : String(toKanji(deckData.length))} ${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}.`} baseDelay={2.0} charDelay={0.025} />
             <br />
-            <RevealText text={tLocal("We've prepared a random deck of")} baseDelay={2.8} charDelay={0.015} /> <span className={`text-[var(--foreground)] font-medium ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '2.9s' : '0s', animationFillMode: 'forwards' }}>{toKanji(deckData.length)}</span> <RevealText text={tLocal("for this session. How many would you like to study?")} baseDelay={3.0} charDelay={0.015} />
+            <RevealText text={`${tLocal("We've prepared a random deck of")} ${String(toKanji(deckData.length))} ${tLocal("for this session. How many would you like to study?")}`} baseDelay={3.6} charDelay={0.015} />
           </p>
           
-          <div className={`flex items-center gap-6 mt-4 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '3.1s' : '0s', animationFillMode: 'forwards' }}>
+          <SmoothFade delay={5.6} className="flex items-center gap-6 mt-4">
             <input 
               type="text"
               inputMode="numeric"
@@ -206,22 +198,23 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
               className="w-24 bg-transparent border-b border-[var(--strong-border)] text-3xl font-light text-[var(--foreground)] focus:outline-none focus:border-[var(--foreground)] transition-colors pb-2 text-center"
             />
             <span className="text-sm text-[var(--muted-text)]">{category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}</span>
-          </div>
+          </SmoothFade>
           
           {engineState.validationError && (
               <p className="text-red-400 font-medium tracking-wide mt-2">{engineState.validationError}</p>
           )}
           
-          <button 
-            onClick={handleStart}
-            className={`mt-6 self-start px-8 py-3 border border-[var(--strong-border)] rounded-full text-sm uppercase tracking-[0.1em] hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] transition-all duration-300 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`}
-            style={{ animationDelay: !hasSeenIntro ? '3.2s' : '0s', animationFillMode: 'forwards' }}
-          >
-            {tLocal("Start Study")}
-          </button>
+          <SmoothFade delay={5.8} className="mt-6 self-start">
+            <button 
+              onClick={handleStart}
+              className="px-8 py-3 border border-[var(--strong-border)] rounded-full text-sm uppercase tracking-[0.1em] hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] transition-all duration-300"
+            >
+              {tLocal("Start Study")}
+            </button>
+          </SmoothFade>
 
           {engineState.isSrsMode && (
-            <div className={`mt-8 border border-[var(--strong-border)] bg-[var(--surface-hover)] rounded-xl p-6 relative ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
+            <SmoothFade delay={6.2} className="mt-8 border border-[var(--strong-border)] bg-[var(--surface-hover)] rounded-xl p-6 relative">
                 <span className="absolute -top-3 left-6 bg-[var(--card-bg)] px-2 text-xs font-light tracking-widest text-green-400 uppercase">{tLocal("The Point System")}</span>
                 <ul className="mt-2 text-sm text-[var(--muted-text)] font-light space-y-2 leading-relaxed tracking-wide">
                     <li><span className="text-sakura-dark font-medium">{tLocal("First Try:")}</span> {tLocal("Answer correctly on your first attempt to instantly master the card.")}</li>
@@ -230,21 +223,21 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
                     <li><span className="text-red-400 font-medium">-1</span> {tLocal("Point for incorrect answers (minimum 0).")}</li>
                     <li><span className="text-[var(--foreground)] font-medium">4</span> {tLocal("Points required to clear the card.")}</li>
                 </ul>
-            </div>
+            </SmoothFade>
           )}
         </section>
 
         <section className="flex flex-col gap-6">
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
-            <RevealText text={tLocal("Saved Sessions")} baseDelay={3.2} />
+            <RevealText text={tLocal("Saved Sessions")} baseDelay={6.0} />
           </h2>
           
-          <div className={`flex items-start gap-2 text-[11px] text-[var(--muted-text)] italic -mt-2 mb-1 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-60'}`} style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
+          <SmoothFade delay={6.4} className="flex items-start gap-2 text-[11px] text-[var(--muted-text)] italic -mt-2 mb-1 opacity-60">
              <svg className="w-3.5 h-3.5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
              </svg>
              <p>{tLocal("Mid-quiz saves are stored locally in this browser. They do not sync to the cloud and will be lost if you clear your site data.")}</p>
-          </div>
+          </SmoothFade>
 
           <div className="flex flex-col gap-4">
             {[0, 1].map((index) => {

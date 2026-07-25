@@ -2,17 +2,13 @@ import React from 'react';
 import ReturnButton from './ReturnButton';
 import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
-import { useTransitionContext } from '@/context/TransitionContext';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function LevelSelector({ category, currentTheme, engineState }) {
   const { lang } = useLanguage();
   const { setLevel, setAppState, loadLevelData } = engineState;
-  const { triggerExitTransition, isExiting } = useTransitionContext();
 
-  const handleLevelClick = async (lvl) => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleLevelClick = (lvl) => {
     if (lvl === 'SRS') {
       loadLevelData(lvl);
     } else if (category === 'vocabulary' || category === 'grammar') {
@@ -25,9 +21,7 @@ export default function LevelSelector({ category, currentTheme, engineState }) {
     }
   };
 
-  const handleBack = async () => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleBack = () => {
     engineState.navigateBack();
   };
 

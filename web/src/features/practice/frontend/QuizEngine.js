@@ -43,38 +43,8 @@ export default function QuizEngine({ category }) {
   const engineState = useQuizEngine(category);
   const { appState, isLoading, dispatch } = engineState;
   const transitionContext = useTransitionContext();
-  const { triggerExitTransition, resetTransition, isExiting } = transitionContext;
-
-  const currentKey = `/practice/${category}/${appState}`;
-  const visitedPaths = typeof window !== 'undefined' 
-    ? JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]')
-    : [];
-  const isVisited = visitedPaths.includes(currentKey);
-  const [sessionUpdated, setSessionUpdated] = useState(0);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (!isVisited) {
-      visitedPaths.push(currentKey);
-      sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visitedPaths));
-      const timer = setTimeout(() => {
-        setSessionUpdated(prev => prev + 1);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [currentKey, isVisited]);
-
-  const localHasSeenIntro = isVisited;
 
   useEffect(() => { setMounted(true); }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    
-    // Reset transition whenever the state changes so the new component animates in
-    if (resetTransition) resetTransition();
-
-  }, [appState, mounted, resetTransition]);
 
   useEffect(() => {
     const handleEsc = async (e) => {
@@ -84,29 +54,23 @@ export default function QuizEngine({ category }) {
         const tag = document.activeElement?.tagName;
         if (e.key === 'Escape' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
             e.preventDefault();
-            if (isExiting) return;
-            await triggerExitTransition(2500);
             engineState.navigateBack();
         }
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [engineState.navigateBack, triggerExitTransition, isExiting]);
+  }, [engineState.navigateBack]);
 
-  const handleSelectLevel = async (level) => {
-    if (isExiting) return;
-    await triggerExitTransition(2500);
+  const handleSelectLevel = (level) => {
     engineState.setLevel(level);
     engineState.setAppState('select_vocab_type');
   };
 
-  const handleSelectType = async (type) => {
-    await triggerExitTransition(1500);
+  const handleSelectType = (type) => {
     dispatch({ type: 'SELECT_TYPE', payload: type });
   };
 
-  const handleStartSession = async (config) => {
-    await triggerExitTransition(1500);
+  const handleStartSession = (config) => {
     dispatch({ type: 'START_SESSION', payload: config });
   };
 
@@ -124,7 +88,7 @@ export default function QuizEngine({ category }) {
   if (!mounted) return null;
 
   return (
-    <TransitionContext.Provider value={{ ...transitionContext, hasSeenIntro: localHasSeenIntro }}>
+    <TransitionContext.Provider value={{ ...transitionContext }}>
       <div>
         {isLoading || ((appState === 'setup' || appState === 'playing') && engineState.deckData?.length === 0) ? (
         <div className="max-w-3xl mx-auto py-32 animate-fade-in text-center flex flex-col items-center justify-center relative z-10">
@@ -172,15 +136,15 @@ export default function QuizEngine({ category }) {
           />
         </div>
       ) : appState === 'select_level' ? (
-        <LevelSelector category={category} currentTheme={currentTheme} engineState={engineState} />
+        <LevelSelector key={`level-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} />
       ) : appState === 'select_vocab_type' ? (
-        <VocabTypeSelector category={category} currentTheme={currentTheme} engineState={engineState} />
+        <VocabTypeSelector key={`vocabtype-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} />
       ) : appState === 'setup' ? (
-        <QuizSetup category={category} currentTheme={currentTheme} engineState={engineState} />
+        <QuizSetup key={`setup-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} />
       ) : appState === 'finished' ? (
-        <SessionSummary currentTheme={currentTheme} engineState={engineState} />
+        <SessionSummary key={`summary-${appState}`} currentTheme={currentTheme} engineState={engineState} />
       ) : appState === 'playing' ? (
-        <FlashcardView category={category} currentTheme={currentTheme} engineState={engineState} renderWithUnderline={renderWithUnderline} />
+        <FlashcardView key={`play-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} renderWithUnderline={renderWithUnderline} />
       ) : null}
 
       <ConfirmModal 
