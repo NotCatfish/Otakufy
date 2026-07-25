@@ -67,7 +67,7 @@ export default function Navigation() {
   if (!mounted) return null;
 
   return (
-    <nav 
+    <nav
       className="sticky top-0 z-50 text-[var(--foreground)] dark:text-white backdrop-blur-xl py-3.5 font-light w-full transition-all duration-500 bg-[rgba(255,255,255,0.08)] border-b border-[rgba(var(--theme-rgb),0.3)] shadow-[0_16px_40px_rgba(var(--theme-rgb),0.15)] dark:bg-black/90 dark:border-[var(--divider)] dark:shadow-none"
     >
       <SmoothFade as="div" delay={0.2} disabled={!isInitialLoad} className="flex justify-between items-center max-w-[1440px] w-[95%] mx-auto gap-4">
@@ -84,19 +84,15 @@ export default function Navigation() {
             {NAV_LINKS.map(link => {
               const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
               return (
-                <TransitionLink 
-                  key={link.href} 
-                  href={link.href} 
-                  className={`transition-colors py-1 relative ${
-                    isActive ? "text-[var(--foreground)] font-medium" : "text-[var(--muted-text)] hover:text-[var(--foreground)]"
-                  }`}
+                <TransitionLink
+                  key={link.href}
+                  href={link.href}
+                  className={`transition-colors py-1 relative ${isActive ? "text-[var(--foreground)] font-medium" : "text-[var(--muted-text)] hover:text-[var(--foreground)]"
+                    }`}
                 >
                   <RevealText text={t(link.label)} baseDelay={1.6 + (0.2 * NAV_LINKS.indexOf(link))} disabled={!isInitialLoad} />
                   {isActive && (
-                    <span 
-                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full origin-center ${(!isInitialLoad || transitionContext?.disableUiAnim) ? '' : 'animate-expand-line'}`} 
-                      style={(!isInitialLoad || transitionContext?.disableUiAnim) ? { opacity: 1 } : { animationDelay: `${2.4 + (0.2 * NAV_LINKS.indexOf(link))}s`, opacity: 0, animationFillMode: 'forwards' }} 
-                    />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full animate-expand-line origin-center" style={{ animationDelay: isInitialLoad ? `${2.4 + (0.2 * NAV_LINKS.indexOf(link))}s` : '0s', opacity: isInitialLoad ? 0 : 1, animationFillMode: 'forwards' }} />
                   )}
                 </TransitionLink>
               );
@@ -134,11 +130,10 @@ export default function Navigation() {
               <TransitionLink
                 key={link.href}
                 href={link.href}
-                className={`min-h-[44px] px-4 py-3 rounded-xl text-[15px] flex items-center justify-between transition-colors ${
-                  isActive 
-                    ? "bg-[var(--foreground)] text-[var(--background)] font-medium border border-[var(--foreground)]" 
+                className={`min-h-[44px] px-4 py-3 rounded-xl text-[15px] flex items-center justify-between transition-colors ${isActive
+                    ? "bg-[var(--foreground)] text-[var(--background)] font-medium border border-[var(--foreground)]"
                     : "text-[var(--muted-text)] hover:bg-black/5 dark:hover:bg-white/5 hover:text-[var(--foreground)]"
-                }`}
+                  }`}
               >
                 <span>{t(link.label)}</span>
                 {isActive && <span className="text-xs bg-white text-black font-sans px-2 py-0.5 rounded-full uppercase tracking-wider font-bold">{t("Active")}</span>}

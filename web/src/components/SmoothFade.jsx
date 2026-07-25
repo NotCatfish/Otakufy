@@ -25,7 +25,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
     }
   }, [rawIsExiting]);
 
-  if (disabled || contextDisableUiAnim) {
+  if ((disabled && !isExiting) || contextDisableUiAnim) {
     return <Component suppressHydrationWarning className={className} {...props}>{children}</Component>;
   }
   
@@ -36,10 +36,10 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   return (
     <Component 
       suppressHydrationWarning
-      className={`${isExiting ? 'opacity-100 animate-gentle-fade-down' : (isFinalState ? 'opacity-100' : 'opacity-0 animate-gentle-fade-up')} ${className}`}
+      className={`${isExiting ? 'opacity-0 translate-y-5 blur-[8px] transition-all duration-1000 ease-in-out' : (isFinalState ? 'opacity-100' : 'opacity-0 animate-gentle-fade-up')} ${className}`}
       style={{
-        animationDelay: `${isExiting ? 0 : delay}s`,
-        animationFillMode: 'forwards'
+        [isExiting ? 'transitionDelay' : 'animationDelay']: `${isExiting ? 0 : delay}s`,
+        ...(isExiting ? {} : { animationFillMode: 'forwards' })
       }}
       onAnimationEnd={(e) => {
         if (!isExiting && e.animationName === 'gentle-fade-up') {

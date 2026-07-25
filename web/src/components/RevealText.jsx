@@ -24,7 +24,7 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
   const prevText = useRef(text);
 
   if (typeof text !== 'string') return <span suppressHydrationWarning className={className}>{text}</span>;
-  if (disabled || contextDisableUiAnim) return <span suppressHydrationWarning className={className}>{text}</span>;
+  if ((disabled && !isExiting) || contextDisableUiAnim) return <span suppressHydrationWarning className={className}>{text}</span>;
   
   if (prevText.current !== text) {
     skipEntrance.current = true;
@@ -42,13 +42,13 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
         const entranceDelay = baseDelay + (index * charDelay);
         const exitDelay = ((chars.length - index - 1) * charDelay * 0.5);
         
-        const isExitingClasses = 'opacity-100 animate-blur-hide';
+        const isExitingClasses = 'opacity-0 blur-[8px] transition-all duration-1000 ease-in-out';
         const entranceClasses = skipEntrance.current ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
         const spanClass = isExiting ? isExitingClasses : entranceClasses;
         
         const style = (skipEntrance.current && !isExiting) ? {} : { 
-          animationDelay: `${isExiting ? exitDelay : entranceDelay}s`,
-          animationFillMode: 'forwards'
+          [isExiting ? 'transitionDelay' : 'animationDelay']: `${isExiting ? exitDelay : entranceDelay}s`,
+          ...(isExiting ? {} : { animationFillMode: 'forwards' })
         };
 
         return (

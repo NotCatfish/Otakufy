@@ -542,6 +542,7 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
 
     let lastIsDark = null;
     let isInitialLoad = true;
+    let isForceStopped = false;
     
     function checkTheme() {
       const isDark =
@@ -563,6 +564,7 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
             
             setTimeout(() => {
               if (getSetting(SETTINGS_KEYS.DISABLE_PARTICLES, false)) return;
+              if (isForceStopped) return;
               targetAlpha = 1.0;
               if (!isActive) {
                 isActive = true;
@@ -612,14 +614,17 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
     const handleControl = (e) => {
       const { action } = e.detail;
       if (action === "stop") {
+        isForceStopped = true;
         targetAlpha = 0.0;
       } else if (action === "normal") {
+        isForceStopped = false;
         targetAlpha = 1.0;
         if (!isActive) {
           isActive = true;
           checkTheme();
         }
       } else if (action === "fade_out") {
+        isForceStopped = true;
         if (!isActive || currentAlpha === 0) {
           window.dispatchEvent(new CustomEvent("canvas-faded-out"));
         } else {
@@ -627,6 +632,7 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
           targetAlpha = 0.0;
         }
       } else if (action === "fade_in") {
+        isForceStopped = false;
         isFadingOutState = false;
         if (getSetting(SETTINGS_KEYS.DISABLE_PARTICLES, false)) return;
         initParticles(false); // Spawn them instantly!
