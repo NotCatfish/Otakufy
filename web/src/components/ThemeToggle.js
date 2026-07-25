@@ -45,9 +45,12 @@ export default function ThemeToggle() {
     if (isTransitioning) return;
     setIsTransitioning(true);
     
+    let timeoutId;
+
     // Stage 1: Wait for canvas to finish fading, then trigger the DOM switch
     const onCanvasFaded = () => {
       window.removeEventListener("canvas-faded-out", onCanvasFaded);
+      clearTimeout(timeoutId);
       
       const root = window.document.documentElement;
 
@@ -90,6 +93,9 @@ export default function ThemeToggle() {
 
     // Stage 3: Tell canvas to smoothly fade out all particles
     window.dispatchEvent(new CustomEvent("sakura-control", { detail: { action: "fade_out" } }));
+    
+    // Safety fallback: if canvas-faded-out never fires (e.g., animation is unmounted or disabled), force proceed after 1s
+    timeoutId = setTimeout(onCanvasFaded, 1000);
   };
 
   return (
