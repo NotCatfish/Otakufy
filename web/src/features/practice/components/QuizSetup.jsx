@@ -68,7 +68,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
     };
     return String(str).replace(/[0-9,]+/g, (match) => {
       if (match === ',') return match;
-      return numToKanji(match);
+      return numToKanji(parseInt(match.replace(/,/g, ''), 10));
     }).replace('N', 'Ｎ');
   };
   

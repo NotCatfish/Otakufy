@@ -42,9 +42,10 @@ export function TransitionProvider({ children }) {
       sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visited));
 
       // Wait for initial entrance animations to finish, then trigger a re-evaluation so future states know it's seen
+      // 5000ms ensures all staggered animations on the dashboard and setup pages finish before state flips
       const timer = setTimeout(() => {
         setSessionUpdated(prev => prev + 1);
-      }, 2500);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [pathname, normalizedPath]);
