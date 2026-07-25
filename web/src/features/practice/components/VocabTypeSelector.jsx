@@ -3,13 +3,17 @@ import { VOCAB_TYPES_CONFIG, GRAMMAR_TYPES_CONFIG } from '../config/quizConfig';
 import ReturnButton from './ReturnButton';
 import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
+import { useTransitionContext } from '@/context/TransitionContext';
 import { useLanguage } from '@/context/LanguageContext';
 
-export default function VocabTypeSelector({ category, currentTheme, engineState, hasSeenIntro = false }) {
+export default function VocabTypeSelector({ category, currentTheme, engineState }) {
   const { lang } = useLanguage();
   const { level, setVocabType, setAppState, loadVocabData } = engineState;
+  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
 
-  const handleTypeClick = (type) => {
+  const handleTypeClick = async (type) => {
+    if (isExiting) return;
+    await triggerExitTransition(2500);
     setVocabType(type);
     if (category === 'vocabulary') {
       loadVocabData(level, type);
@@ -18,7 +22,9 @@ export default function VocabTypeSelector({ category, currentTheme, engineState,
     }
   };
 
-  const handleBack = () => {
+  const handleBack = async () => {
+    if (isExiting) return;
+    await triggerExitTransition(2500);
     engineState.setLevel(null);
     engineState.setAppState('select_level');
   };
@@ -41,7 +47,7 @@ export default function VocabTypeSelector({ category, currentTheme, engineState,
         </p>
       </SmoothFade>
       
-      <SmoothFade delay={0.8} disabled={hasSeenIntro} className="flex flex-wrap justify-center gap-5 w-full max-w-[1440px] mt-12">
+      <SmoothFade delay={1.8} disabled={hasSeenIntro} className="flex flex-wrap justify-center gap-5 w-full max-w-[1440px] mt-12">
         {types.map((type, index) => (
           <button 
             key={type}

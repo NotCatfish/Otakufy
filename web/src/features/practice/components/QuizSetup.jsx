@@ -4,9 +4,11 @@ import ReturnButton from './ReturnButton';
 import { useLanguage } from '@/context/LanguageContext';
 import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
+import { useTransitionContext } from '@/context/TransitionContext';
 
-export default function QuizSetup({ category, currentTheme, engineState, hasSeenIntro = false }) {
+export default function QuizSetup({ category, currentTheme, engineState }) {
   const { t, lang } = useLanguage();
+  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
   
   const tLocal = (str) => {
     if (lang !== 'ja') return t(str);
@@ -77,15 +79,21 @@ export default function QuizSetup({ category, currentTheme, engineState, hasSeen
     saves, loadSave, deleteSave 
   } = engineState;
 
-  const handleBack = () => {
+  const handleBack = async () => {
+    if (isExiting) return;
+    await triggerExitTransition(2500);
     engineState.navigateBack();
   };
 
-  const handleStart = () => {
+  const handleStart = async () => {
+    if (isExiting) return;
+    await triggerExitTransition(1500);
     startNewSession();
   };
 
-  const handleLoadSave = (index) => {
+  const handleLoadSave = async (index) => {
+    if (isExiting) return;
+    await triggerExitTransition(1500);
     loadSave(index);
   };
 

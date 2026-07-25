@@ -2,13 +2,17 @@ import React from 'react';
 import ReturnButton from './ReturnButton';
 import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
+import { useTransitionContext } from '@/context/TransitionContext';
 import { useLanguage } from '@/context/LanguageContext';
 
-export default function LevelSelector({ category, currentTheme, engineState, hasSeenIntro = false }) {
+export default function LevelSelector({ category, currentTheme, engineState }) {
   const { lang } = useLanguage();
   const { setLevel, setAppState, loadLevelData } = engineState;
+  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
 
-  const handleLevelClick = (lvl) => {
+  const handleLevelClick = async (lvl) => {
+    if (isExiting) return;
+    await triggerExitTransition(2500);
     if (lvl === 'SRS') {
       loadLevelData(lvl);
     } else if (category === 'vocabulary' || category === 'grammar') {
@@ -21,7 +25,9 @@ export default function LevelSelector({ category, currentTheme, engineState, has
     }
   };
 
-  const handleBack = () => {
+  const handleBack = async () => {
+    if (isExiting) return;
+    await triggerExitTransition(2500);
     engineState.navigateBack();
   };
 
@@ -40,7 +46,7 @@ export default function LevelSelector({ category, currentTheme, engineState, has
         </p>
       </SmoothFade>
       
-      <SmoothFade delay={0.8} disabled={hasSeenIntro} className="flex flex-wrap justify-center gap-5 w-full max-w-[1440px] mt-12">
+      <SmoothFade delay={1.8} disabled={hasSeenIntro} className="flex flex-wrap justify-center gap-5 w-full max-w-[1440px] mt-12">
         {['N1', 'N2', 'N3', 'N4', 'N5', 'SRS', category === 'random' ? 'Global' : 'Random'].map((lvl, index) => {
           const kanjiMap = {'1': '一', '2': '二', '3': '三', '4': '四', '5': '五'};
           const displayLvl = lang === 'ja' 
