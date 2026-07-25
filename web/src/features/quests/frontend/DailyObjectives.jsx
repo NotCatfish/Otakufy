@@ -1,5 +1,6 @@
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check, Lock } from 'lucide-react';
+import Link from 'next/link';
 import { useQuests } from '../hooks/useQuests';
 import { useLanguage } from '@/context/LanguageContext';
 import RevealText from '@/components/RevealText';
@@ -50,7 +51,49 @@ export default function DailyObjectives({ userId, isInitialLoad = false }) {
     const { t, lang } = useLanguage();
     const { quests, loading, claimReward } = useQuests(userId);
 
-    if (!userId) return null;
+    if (!userId) {
+        return (
+            <div className="mb-card rounded-lg relative overflow-hidden min-h-[220px] flex flex-col">
+                {/* Blurred template background */}
+                <div className="absolute inset-0 p-6 opacity-30 pointer-events-none filter blur-[3px]">
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="w-32 h-6 bg-[var(--foreground)] rounded-md opacity-40"></div>
+                        <div className="w-12 h-4 bg-[var(--foreground)] rounded-md opacity-20"></div>
+                    </div>
+                    <div className="space-y-5">
+                        <div className="flex items-center gap-3">
+                            <div className="w-4 h-4 rounded-sm border border-[var(--foreground)] opacity-30"></div>
+                            <div className="w-48 h-4 bg-[var(--foreground)] rounded-md opacity-20"></div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <div className="w-4 h-4 rounded-sm border border-[var(--foreground)] opacity-30"></div>
+                            <div className="w-40 h-4 bg-[var(--foreground)] rounded-md opacity-20"></div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <div className="w-4 h-4 rounded-sm border border-[var(--foreground)] opacity-30"></div>
+                            <div className="w-52 h-4 bg-[var(--foreground)] rounded-md opacity-20"></div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Overlay content */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--background)]/60 backdrop-blur-[2px] z-10 text-center p-6">
+                    <div className="w-12 h-12 rounded-full bg-[var(--card-bg)] border border-[var(--card-border)] flex items-center justify-center mb-4 shadow-xl">
+                        <Lock className="w-5 h-5 text-[var(--muted-text)]" />
+                    </div>
+                    <h3 className="text-[14px] font-semibold tracking-wide text-[var(--foreground)] mb-1.5">
+                        {t("Authentication Required")}
+                    </h3>
+                    <p className="text-[12px] text-[var(--muted-text)] max-w-[220px] leading-relaxed mb-4">
+                        {t("Log in or create an account to unlock daily quests and earn XP.")}
+                    </p>
+                    <Link href="/login" className="text-[11px] uppercase font-bold text-[var(--background)] bg-[var(--foreground)] hover:opacity-85 rounded-sm py-1.5 px-4 transition-opacity">
+                        {t("Log In")}
+                    </Link>
+                </div>
+            </div>
+        );
+    }
 
     if (loading) {
         return (
