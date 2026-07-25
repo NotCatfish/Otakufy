@@ -10,6 +10,8 @@ import PageContainer from '../../components/PageContainer';
 import { SETTINGS_KEYS, getSetting, saveSetting } from '@/features/profile/utils/settingsUtils';
 import { useLanguage } from '../../context/LanguageContext';
 import { supabase } from '@/features/auth/frontend/supabaseClient';
+import { PageAnimationGate } from '@/context/PageAnimationContext';
+import { PAGE_KEYS } from '@/config/pageKeys';
 
 export default function SettingsPage() {
   const { t } = useLanguage();
@@ -56,6 +58,7 @@ export default function SettingsPage() {
   };
 
   return (
+    <PageAnimationGate pageKey={PAGE_KEYS.SETTINGS}>
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
       <SmoothFade as="header" delay={0.1} className="mb-12 border-b border-[var(--strong-border)] pb-8">
         <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
@@ -175,5 +178,6 @@ export default function SettingsPage() {
         </SmoothFade>
       </div>
     </PageContainer>
+    </PageAnimationGate>
   );
 }

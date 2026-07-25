@@ -12,7 +12,7 @@ export default function LevelSelector({ category, currentTheme, engineState }) {
 
   const handleLevelClick = async (lvl) => {
     if (isExiting) return;
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     if (lvl === 'SRS') {
       loadLevelData(lvl);
     } else if (category === 'vocabulary' || category === 'grammar') {
@@ -27,7 +27,7 @@ export default function LevelSelector({ category, currentTheme, engineState }) {
 
   const handleBack = async () => {
     if (isExiting) return;
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     engineState.navigateBack();
   };
 

@@ -6,6 +6,8 @@ import PageContainer from '../../components/PageContainer';
 import SmoothFade from '../../components/SmoothFade';
 import RevealText from '../../components/RevealText';
 import { useLanguage } from '../../context/LanguageContext';
+import { PageAnimationGate } from '@/context/PageAnimationContext';
+import { PAGE_KEYS } from '@/config/pageKeys';
 
 export default function HelpPage() {
   const { t } = useLanguage();
@@ -51,6 +53,7 @@ export default function HelpPage() {
   };
 
   return (
+    <PageAnimationGate pageKey={PAGE_KEYS.HELP}>
     <PageContainer maxWidth="max-w-[1440px]" className="flex flex-col gap-12 w-full pb-20">
       
       {/* Hero Section */}
@@ -145,5 +148,6 @@ export default function HelpPage() {
 
       </div>
     </PageContainer>
+    </PageAnimationGate>
   );
 }

@@ -13,7 +13,7 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
 
   const handleTypeClick = async (type) => {
     if (isExiting) return;
-    await triggerExitTransition(2500);
+    await triggerExitTransition();
     setVocabType(type);
     if (category === 'vocabulary') {
       loadVocabData(level, type);
@@ -24,7 +24,7 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
 
   const handleBack = async () => {
     if (isExiting) return;
-    await triggerExitTransition(2500);
+    await triggerExitTransition();
     engineState.setLevel(null);
     engineState.setAppState('select_level');
   };

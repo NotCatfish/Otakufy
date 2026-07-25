@@ -9,6 +9,8 @@ import { useLanguage } from '../../context/LanguageContext';
 import Button from '../../components/ui/Button';
 import SmoothFade from '../../components/SmoothFade';
 import RevealText from '../../components/RevealText';
+import { PageAnimationGate } from '@/context/PageAnimationContext';
+import { PAGE_KEYS } from '@/config/pageKeys';
 
 export default function LeaderboardPage() {
   const { lang, t } = useLanguage();
@@ -226,6 +228,7 @@ export default function LeaderboardPage() {
   const shouldRenderCallerAtBottom = currentCaller && !isCallerInTop;
 
   return (
+    <PageAnimationGate pageKey={PAGE_KEYS.LEADERBOARD}>
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
       <SmoothFade as="header" delay={0.1} className="mb-12 pb-12 border-b border-[var(--strong-border)] text-center flex flex-col items-center">
         <h1 className="text-4xl font-semibold tracking-tight text-white mb-6">
@@ -322,5 +325,6 @@ export default function LeaderboardPage() {
         )}
       </div>
     </PageContainer>
+    </PageAnimationGate>
   );
 }

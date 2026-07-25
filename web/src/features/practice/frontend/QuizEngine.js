@@ -14,6 +14,8 @@ import ConfirmModal from '../components/ConfirmModal';
 import EmptyState from '@/components/ui/EmptyState';
 import { CheckCircle2, Lock, BookOpen, AlertCircle } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { PageAnimationGate } from '@/context/PageAnimationContext';
+import { getQuizPageKey } from '@/config/pageKeys';
 
 export default function QuizEngine({ category }) {
   const currentTheme = THEME_MAP[category] || THEME_MAP['random'];
@@ -44,38 +46,8 @@ export default function QuizEngine({ category }) {
   const { appState, isLoading, dispatch } = engineState;
   const transitionContext = useTransitionContext();
   const { triggerExitTransition, resetTransition, isExiting } = transitionContext;
-
-  const currentKey = `/practice/${category}/${appState}`;
-  const [isVisited, setIsVisited] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    const visitedPaths = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
-    return visitedPaths.includes(currentKey);
-  });
   
-  // Keep track of the initial value on mount so it doesn't change during the component lifecycle
-  // This prevents animations from suddenly stopping if it becomes true mid-animation
-  const initialIsVisitedRef = useRef(isVisited);
-  const [sessionUpdated, setSessionUpdated] = useState(0);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const visitedPaths = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
-    const alreadyVisited = visitedPaths.includes(currentKey);
-    
-    setTimeout(() => setIsVisited(alreadyVisited), 0);
-    initialIsVisitedRef.current = alreadyVisited;
-
-    if (!alreadyVisited) {
-      visitedPaths.push(currentKey);
-      sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visitedPaths));
-      const timer = setTimeout(() => {
-        setSessionUpdated(prev => prev + 1);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [currentKey]);
-
-  const localHasSeenIntro = initialIsVisitedRef.current;
+  const pageKey = getQuizPageKey(category, appState, engineState.level);
 
   useEffect(() => { setTimeout(() => setMounted(true), 0); }, []);
 
@@ -96,7 +68,7 @@ export default function QuizEngine({ category }) {
         if (e.key === 'Escape' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
             e.preventDefault();
             if (isExiting) return;
-            await triggerExitTransition(1100);
+            await triggerExitTransition();
             engineState.navigateBack();
         }
     };
@@ -106,18 +78,18 @@ export default function QuizEngine({ category }) {
 
   const handleSelectLevel = async (level) => {
     if (isExiting) return;
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     engineState.setLevel(level);
     engineState.setAppState('select_vocab_type');
   };
 
   const handleSelectType = async (type) => {
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     dispatch({ type: 'SELECT_TYPE', payload: type });
   };
 
   const handleStartSession = async (config) => {
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     dispatch({ type: 'START_SESSION', payload: config });
   };
 
@@ -136,6 +108,7 @@ export default function QuizEngine({ category }) {
 
   return (
     <TransitionContext.Provider value={transitionContext}>
+      <PageAnimationGate pageKey={pageKey}>
       <div>
         {isLoading || ((appState === 'setup' || appState === 'playing') && engineState.deckData?.length === 0) ? (
         <div className="max-w-3xl mx-auto py-32 animate-fade-in text-center flex flex-col items-center justify-center relative z-10">
@@ -201,6 +174,7 @@ export default function QuizEngine({ category }) {
         onCancel={() => engineState.setConfirmModal({ isOpen: false, message: '', onConfirm: null })}
       />
     </div>
+    </PageAnimationGate>
     </TransitionContext.Provider>
   );
 }

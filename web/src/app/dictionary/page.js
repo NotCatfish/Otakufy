@@ -10,6 +10,8 @@ import SmoothFade from '../../components/SmoothFade';
 import RevealText from '../../components/RevealText';
 import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 import { useLanguage } from '../../context/LanguageContext';
+import { PageAnimationGate } from '@/context/PageAnimationContext';
+import { PAGE_KEYS } from '@/config/pageKeys';
 
 export default function DictionaryPage() {
   const { t } = useLanguage();
@@ -202,6 +204,7 @@ export default function DictionaryPage() {
   }, [selectedItem]);
 
   return (
+    <PageAnimationGate pageKey={PAGE_KEYS.DICTIONARY}>
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
       <SmoothFade as="header" delay={0.1} className="mb-12 border-b border-[var(--strong-border)] pb-8">
         <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
@@ -463,5 +466,6 @@ export default function DictionaryPage() {
           </div>
       )}
     </PageContainer>
+    </PageAnimationGate>
   );
 }

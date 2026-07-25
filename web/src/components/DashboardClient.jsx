@@ -15,6 +15,8 @@ import { supabase } from '@/features/auth/frontend/supabaseClient';
 import { useLanguage } from '@/context/LanguageContext';
 import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 import { useTransitionContext } from '@/context/TransitionContext';
+import { PageAnimationGate } from '@/context/PageAnimationContext';
+import { PAGE_KEYS } from '@/config/pageKeys';
 
 export default function DashboardClient({ initialProfile }) {
   const { lang, t } = useLanguage();
@@ -135,6 +137,7 @@ export default function DashboardClient({ initialProfile }) {
   if (!mounted) return null;
 
   return (
+    <PageAnimationGate pageKey={PAGE_KEYS.DASHBOARD}>
     <PageContainer >
         
         <SmoothFade as="header" delay={0.2}  className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
@@ -146,33 +149,33 @@ export default function DashboardClient({ initialProfile }) {
               <RevealText text={t("\"Continue your path to fluency.\"")} baseDelay={0.6} charDelay={0.03}  />
             </p>
             <div className="flex items-center gap-4 pt-1">
-              <div 
-                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px] opacity-0 animate-fade-in`}
-                style={{ animationDelay: '0.8s', animationFillMode: 'forwards' }}
+              <SmoothFade 
+                delay={0.8}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px]`}
               >
                 <span className="text-lg leading-none">🔥</span>
                 <span>{`${toKanji(profile?.streak || 0)} ${t("Day Streak")}`}</span>
-              </div>
-              <div 
-                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono opacity-0 animate-fade-in`}
-                style={{ animationDelay: '4.2s', animationFillMode: 'forwards' }}
+              </SmoothFade>
+              <SmoothFade 
+                delay={4.2}
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono`}
               >
                 <span>⚡</span>
                 <span>{`${toKanji(totalXp.toLocaleString())} ${t("Total XP")}`}</span>
-              </div>
+              </SmoothFade>
               
               {(() => {
                 const isGoalReached = dailyXp >= xpGoal;
                 return (
-                  <div 
-                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 opacity-0 animate-fade-in ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
-                    style={{ animationDelay: '4.4s', animationFillMode: 'forwards' }}
+                  <SmoothFade 
+                    delay={4.4}
+                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
                   >
                     <span>
                       {isGoalReached ? '✅' : '🎯'}
                     </span>
                     <span>{`${dailyXp} / ${xpGoal} ${t("Daily XP")}`}</span>
-                  </div>
+                  </SmoothFade>
                 );
               })()}
             </div>
@@ -252,7 +255,7 @@ export default function DashboardClient({ initialProfile }) {
                 onMouseEnter={() => prefetchCategory(item.path)}
                 className="mb-module rounded-2xl py-12 flex flex-col items-center justify-center gap-4 cursor-pointer group transition-all"
               >
-                <item.Icon className={`w-8 h-8 group-hover:opacity-60 transition-opacity text-[var(--foreground)] opacity-0 animate-fade-in`} style={{ animationDelay: `${2.0 + (0.1 * i)}s`, animationFillMode: 'forwards' }} />
+                <SmoothFade delay={2.0 + (0.1 * i)} as={item.Icon} className={`w-8 h-8 group-hover:opacity-60 transition-opacity text-[var(--foreground)]`} />
                 <span className="text-[19px] font-medium text-[var(--foreground)] group-hover:text-[var(--muted-text)] transition-colors">
                   <RevealText text={t(item.text)} baseDelay={2.2 + (0.1 * i)}  />
                 </span>
@@ -279,13 +282,14 @@ export default function DashboardClient({ initialProfile }) {
               </div>
             </div>
             <div className="mt-8">
-              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity opacity-0 animate-fade-in`} style={{ animationDelay: '3.4s', animationFillMode: 'forwards' }}>
+              <SmoothFade delay={3.4} as="a" href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity`}>
                 <Play className="w-4 h-4 mr-2 fill-[var(--background)]" />
                 <RevealText text={t("Start SRS Review")} baseDelay={3.4}  />
-              </a>
+              </SmoothFade>
             </div>
           </section>
         </SmoothFade>
     </PageContainer>
+  </PageAnimationGate>
   );
 }

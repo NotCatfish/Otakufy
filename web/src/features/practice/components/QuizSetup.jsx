@@ -81,19 +81,19 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
 
   const handleBack = async () => {
     if (isExiting) return;
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     engineState.navigateBack();
   };
 
   const handleStart = async () => {
     if (isExiting) return;
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     startNewSession();
   };
 
   const handleLoadSave = async (index) => {
     if (isExiting) return;
-    await triggerExitTransition(1100);
+    await triggerExitTransition();
     loadSave(index);
   };
 

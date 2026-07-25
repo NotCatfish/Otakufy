@@ -37,17 +37,18 @@ export function TransitionProvider({ children }) {
   const resetTransition = useCallback(() => setIsExiting(false), []);
 
   // Generic exit transition that resolves when complete
-  const triggerExitTransition = useCallback((exitDurationMs = 1500) => {
+  const triggerExitTransition = useCallback((exitDurationMs = 800) => {
     return new Promise((resolve) => {
       setIsExiting(true);
       const isAnimDisabled = getSetting(SETTINGS_KEYS.DISABLE_UI_ANIMATIONS, false);
       setTimeout(() => {
+        setIsExiting(false);
         resolve();
       }, isAnimDisabled ? 0 : exitDurationMs);
     });
   }, []);
 
-  const navigateWithTransition = useCallback(async (href, exitDurationMs = 1500) => {
+  const navigateWithTransition = useCallback(async (href, exitDurationMs = 800) => {
     if (pathname === href) return;
     await triggerExitTransition(exitDurationMs);
     router.push(href);

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import { useTransitionContext } from '@/context/TransitionContext';
+import { useSkipPageAnimation } from '@/context/PageAnimationContext';
 
 export default function SmoothFade({ children, delay = 0, className = "", as: Component = "div", disabled = false, forceAnimate = false, ignoreExit = false, ...props }) {
   const transitionContext = useTransitionContext();
@@ -8,7 +9,8 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
   
   // Capture whether we should skip the intro exactly once on mount
-  const skipIntroRef = { current: false };
+  const skipPageAnim = useSkipPageAnimation();
+  const skipIntroRef = { current: skipPageAnim };
   const [isExiting, setIsExiting] = useState(false);
   const [animationFinished, setAnimationFinished] = useState(false);
   const mountedDuringExitRef = useRef(rawIsExiting);
@@ -36,7 +38,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   return (
     <Component 
       suppressHydrationWarning
-      className={`${isExiting ? 'opacity-0 translate-y-5 blur-[8px] transition-all duration-1000 ease-in-out' : (isFinalState ? 'opacity-100' : 'opacity-0 animate-gentle-fade-up')} ${className}`}
+      className={`${isExiting ? 'opacity-0 translate-y-5 blur-[8px] transition-all duration-700 ease-in-out' : (isFinalState ? 'opacity-100' : 'opacity-0 animate-gentle-fade-up')} ${className}`}
       style={{
         [isExiting ? 'transitionDelay' : 'animationDelay']: `${isExiting ? 0 : delay}s`,
         ...(isExiting ? {} : { animationFillMode: 'forwards' })

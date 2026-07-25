@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import { useTransitionContext } from '@/context/TransitionContext';
+import { useSkipPageAnimation } from '@/context/PageAnimationContext';
 
 export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035, className = "", disabled = false, forceAnimate = false, ignoreExit = false }) {
   const transitionContext = useTransitionContext();
@@ -20,7 +21,8 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
     }
   }, [rawIsExiting, ignoreExit]);
 
-  const skipEntrance = { current: false };
+  const skipPageAnim = useSkipPageAnimation();
+  const skipEntrance = { current: skipPageAnim };
   const prevText = useRef(text);
 
   if (typeof text !== 'string') return <span suppressHydrationWarning className={className}>{text}</span>;
