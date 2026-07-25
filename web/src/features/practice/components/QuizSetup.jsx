@@ -167,10 +167,12 @@ export default function QuizSetup({ category, currentTheme, engineState, hasSeen
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
             <RevealText text={tLocal("New Session")} baseDelay={1.4} disabled={hasSeenIntro} />
           </h2>
-          <p className="text-lg leading-relaxed font-light text-[var(--muted-text)]">
-            <RevealText text={`${tLocal("This section has")} ${typeof engineState.totalDbCount === 'number' ? String(toKanji(engineState.totalDbCount)) : String(toKanji(deckData?.length || 0))} ${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}.`} baseDelay={2.0} charDelay={0.025} disabled={hasSeenIntro} />
-            <br />
-            <RevealText text={`${tLocal("We've prepared a random deck of")} ${String(toKanji(deckData?.length || 0))} ${tLocal("for this session. How many would you like to study?")}`} baseDelay={3.6} charDelay={0.015} disabled={hasSeenIntro} />
+          <p className="text-xl md:text-2xl leading-relaxed font-light text-[var(--muted-text)]">
+            <RevealText text={`${tLocal("This deck currently holds")}${lang === 'ja' ? '' : ' '}`} baseDelay={2.0} charDelay={0.015} disabled={hasSeenIntro} />
+            <SmoothFade as="span" delay={2.4} disabled={hasSeenIntro} className="font-semibold text-3xl text-[var(--foreground)] mx-1.5 inline-block">
+              {typeof engineState.totalDbCount === 'number' ? String(toKanji(engineState.totalDbCount)) : String(toKanji(deckData?.length || 0))}
+            </SmoothFade>
+            <RevealText text={`${lang === 'ja' ? '' : ' '}${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}. ${tLocal("How many would you like to study?")}`} baseDelay={2.8} charDelay={0.015} disabled={hasSeenIntro} />
           </p>
           
           <SmoothFade delay={5.6} disabled={hasSeenIntro} className="flex items-center gap-6 mt-4">
