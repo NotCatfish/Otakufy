@@ -135,7 +135,7 @@ export default function QuizEngine({ category }) {
   if (!mounted) return null;
 
   return (
-    <TransitionContext.Provider value={{ ...transitionContext, hasSeenIntro: localHasSeenIntro }}>
+    <TransitionContext.Provider value={{ ...transitionContext: localHasSeenIntro }}>
       <div>
         {isLoading || ((appState === 'setup' || appState === 'playing') && engineState.deckData?.length === 0) ? (
         <div className="max-w-3xl mx-auto py-32 animate-fade-in text-center flex flex-col items-center justify-center relative z-10">

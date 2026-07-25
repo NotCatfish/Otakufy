@@ -5,7 +5,6 @@ import { useTransitionContext } from '@/context/TransitionContext';
 export default function SmoothFade({ children, delay = 0, className = "", as: Component = "div", disabled = false, forceAnimate = false, ignoreExit = false, ...props }) {
   const transitionContext = useTransitionContext();
   const rawIsExiting = transitionContext ? transitionContext.isExiting : false;
-  const rawHasSeenIntro = transitionContext ? transitionContext.hasSeenIntro : false;
   const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
   
   // Capture whether we should skip the intro exactly once on mount

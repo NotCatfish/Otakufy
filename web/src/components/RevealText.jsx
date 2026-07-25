@@ -5,7 +5,6 @@ import { useTransitionContext } from '@/context/TransitionContext';
 export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035, className = "", disabled = false, forceAnimate = false, ignoreExit = false }) {
   const transitionContext = useTransitionContext();
   const rawIsExiting = transitionContext ? transitionContext.isExiting : false;
-  const hasSeenIntro = transitionContext ? transitionContext.hasSeenIntro : false;
   const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
 
   const [isExiting, setIsExiting] = useState(false);

@@ -11,14 +11,7 @@ export function TransitionProvider({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [sessionUpdated, setSessionUpdated] = useState(0);
 
-  const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
-
-  const hasSeenIntro = React.useMemo(() => {
-    // ALWAYS return false to force animations to replay for testing
-    return false;
-  }, [pathname, sessionUpdated, normalizedPath]);
 
   const [disableUiAnim, setDisableUiAnim] = useState(false);
 
@@ -34,22 +27,7 @@ export function TransitionProvider({ children }) {
     return () => window.removeEventListener("ui-anim-control", updateSetting);
   }, []);
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const visited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
-    if (!visited.includes(normalizedPath)) {
-      // Immediately add to visited paths to prevent replay if user navigates quickly
-      visited.push(normalizedPath);
-      sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visited));
 
-      // Wait for initial entrance animations to finish, then trigger a re-evaluation so future states know it's seen
-      // 5000ms ensures all staggered animations on the dashboard and setup pages finish before state flips
-      const timer = setTimeout(() => {
-        setSessionUpdated(prev => prev + 1);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [pathname, normalizedPath]);
 
   // Reset exit state on mount of new route
   useEffect(() => {
@@ -76,7 +54,7 @@ export function TransitionProvider({ children }) {
   }, [pathname, router, triggerExitTransition]);
 
   return (
-    <TransitionContext.Provider value={{ isExiting, hasSeenIntro, disableUiAnim, triggerExitTransition, resetTransition, navigateWithTransition }}>
+    <TransitionContext.Provider value={{ isExiting, disableUiAnim, triggerExitTransition, resetTransition, navigateWithTransition }}>
       {children}
     </TransitionContext.Provider>
   );

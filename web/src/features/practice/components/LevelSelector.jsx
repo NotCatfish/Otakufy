@@ -8,7 +8,7 @@ import { useLanguage } from '@/context/LanguageContext';
 export default function LevelSelector({ category, currentTheme, engineState }) {
   const { lang } = useLanguage();
   const { setLevel, setAppState, loadLevelData } = engineState;
-  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
+  const { triggerExitTransition, isExiting } = useTransitionContext();
 
   const handleLevelClick = async (lvl) => {
     if (isExiting) return;

@@ -9,7 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
 export default function VocabTypeSelector({ category, currentTheme, engineState }) {
   const { lang } = useLanguage();
   const { level, setVocabType, setAppState, loadVocabData } = engineState;
-  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
+  const { triggerExitTransition, isExiting } = useTransitionContext();
 
   const handleTypeClick = async (type) => {
     if (isExiting) return;
