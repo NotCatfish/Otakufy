@@ -93,7 +93,10 @@ export default function Navigation() {
                 >
                   <RevealText text={t(link.label)} baseDelay={1.6 + (0.2 * NAV_LINKS.indexOf(link))} disabled={!isInitialLoad} />
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full animate-expand-line origin-center" style={{ animationDelay: isInitialLoad ? `${2.4 + (0.2 * NAV_LINKS.indexOf(link))}s` : '0s', opacity: isInitialLoad ? 0 : 1, animationFillMode: 'forwards' }} />
+                    <span 
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full origin-center ${(!isInitialLoad || transitionContext?.disableUiAnim) ? '' : 'animate-expand-line'}`} 
+                      style={(!isInitialLoad || transitionContext?.disableUiAnim) ? { opacity: 1 } : { animationDelay: `${2.4 + (0.2 * NAV_LINKS.indexOf(link))}s`, opacity: 0, animationFillMode: 'forwards' }} 
+                    />
                   )}
                 </TransitionLink>
               );

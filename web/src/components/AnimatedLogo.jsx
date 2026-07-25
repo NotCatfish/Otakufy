@@ -1,12 +1,15 @@
 "use client";
 import React, { useRef, useEffect } from 'react';
+import { useTransitionContext } from '@/context/TransitionContext';
 
 export default function AnimatedLogo({ children, className = "" }) {
   const ref = useRef(null);
+  const transitionContext = useTransitionContext();
+  const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el || contextDisableUiAnim) return;
 
     let offset = 0;
     let animId;
@@ -19,7 +22,7 @@ export default function AnimatedLogo({ children, className = "" }) {
 
     animId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animId);
-  }, []);
+  }, [contextDisableUiAnim]);
 
   return (
     <span
