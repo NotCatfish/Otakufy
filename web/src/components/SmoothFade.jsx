@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTransitionContext } from '@/context/TransitionContext';
 
-export default function SmoothFade({ children, delay = 0, className = "", as: Component = "div", disabled = false, forceAnimate = false, ...props }) {
+export default function SmoothFade({ children, delay = 0, className = "", as: Component = "div", disabled = false, forceAnimate = false, ignoreExit = false, ...props }) {
   const transitionContext = useTransitionContext();
   const rawIsExiting = transitionContext ? transitionContext.isExiting : false;
   const rawHasSeenIntro = transitionContext ? transitionContext.hasSeenIntro : false;
@@ -15,6 +15,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   const mountedDuringExitRef = useRef(rawIsExiting);
   
   useEffect(() => {
+    if (ignoreExit) return;
     if (mountedDuringExitRef.current && rawIsExiting) {
       // Ignore exit animation if the component just mounted while exiting is true
     } else {
@@ -23,7 +24,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
       // Reset animation finished if we start exiting
       if (rawIsExiting) setAnimationFinished(false);
     }
-  }, [rawIsExiting]);
+  }, [rawIsExiting, ignoreExit]);
 
   if ((disabled && !isExiting) || contextDisableUiAnim) {
     return <Component suppressHydrationWarning className={className} {...props}>{children}</Component>;

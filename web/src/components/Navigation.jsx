@@ -70,7 +70,7 @@ export default function Navigation() {
     <nav
       className="sticky top-0 z-50 text-[var(--foreground)] dark:text-white backdrop-blur-xl py-3.5 font-light w-full transition-all duration-500 bg-[rgba(255,255,255,0.08)] border-b border-[rgba(var(--theme-rgb),0.3)] shadow-[0_16px_40px_rgba(var(--theme-rgb),0.15)] dark:bg-black/90 dark:border-[var(--divider)] dark:shadow-none"
     >
-      <SmoothFade as="div" delay={0.2} disabled={!isInitialLoad} className="flex justify-between items-center max-w-[1440px] w-[95%] mx-auto gap-4">
+      <SmoothFade as="div" delay={0.2} disabled={!isInitialLoad} ignoreExit={true} className="flex justify-between items-center max-w-[1440px] w-[95%] mx-auto gap-4">
         {/* Far Left: Otakufy Logo & Core Links */}
         <div className="flex items-center gap-8 sm:gap-10">
           <TransitionLink href="/" className="min-h-[44px] flex items-center shrink-0">
@@ -90,7 +90,7 @@ export default function Navigation() {
                   className={`transition-colors py-1 relative ${isActive ? "text-[var(--foreground)] font-medium" : "text-[var(--muted-text)] hover:text-[var(--foreground)]"
                     }`}
                 >
-                  <RevealText text={t(link.label)} baseDelay={1.6 + (0.2 * NAV_LINKS.indexOf(link))} disabled={!isInitialLoad} />
+                  <RevealText text={t(link.label)} baseDelay={1.6 + (0.2 * NAV_LINKS.indexOf(link))} disabled={!isInitialLoad} ignoreExit={true} />
                   {isActive && (
                     <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--foreground)] rounded-full animate-expand-line origin-center" style={{ animationDelay: isInitialLoad ? `${2.4 + (0.2 * NAV_LINKS.indexOf(link))}s` : '0s', opacity: isInitialLoad ? 0 : 1, animationFillMode: 'forwards' }} />
                   )}

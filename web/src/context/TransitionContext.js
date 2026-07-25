@@ -23,13 +23,22 @@ export function TransitionProvider({ children }) {
     return false;
   }, [pathname, sessionUpdated, normalizedPath]);
 
-  const [disableUiAnim, setDisableUiAnim] = useState(false);
+  const [disableUiAnim, setDisableUiAnim] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('otakufy_setting_' + SETTINGS_KEYS.DISABLE_UI_ANIMATIONS);
+        return stored ? JSON.parse(stored) : false;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  });
 
   useEffect(() => {
     const updateSetting = () => {
       setDisableUiAnim(getSetting(SETTINGS_KEYS.DISABLE_UI_ANIMATIONS, false));
     };
-    updateSetting();
     window.addEventListener("ui-anim-control", updateSetting);
     return () => window.removeEventListener("ui-anim-control", updateSetting);
   }, []);

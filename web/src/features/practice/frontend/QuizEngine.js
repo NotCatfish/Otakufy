@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as wanakana from 'wanakana';
 import { useQuizEngine } from '../hooks/useQuizEngine';
 import { useTransitionContext, TransitionContext } from '@/context/TransitionContext';

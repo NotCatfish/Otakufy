@@ -849,15 +849,19 @@ export const TRANSLATIONS = {
 };
 
 export function LanguageProvider({ children }) {
-  const [lang, setLangState] = useState("en");
+  const [lang, setLangState] = useState(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const saved = localStorage.getItem("app_lang");
+        if (saved === "ja" || saved === "en") return saved;
+      } catch (e) {}
+    }
+    return "en";
+  });
 
   useEffect(() => {
-    const saved = localStorage.getItem("app_lang");
-    if (saved === "ja" || saved === "en") {
-      setLangState(saved);
-      document.documentElement.setAttribute("lang", saved);
-    }
-  }, []);
+    document.documentElement.setAttribute("lang", lang);
+  }, [lang]);
 
   const setLang = useCallback((newLang) => {
     setLangState(newLang);

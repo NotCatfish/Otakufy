@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTransitionContext } from '@/context/TransitionContext';
 
-export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035, className = "", disabled = false, forceAnimate = false }) {
+export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035, className = "", disabled = false, forceAnimate = false, ignoreExit = false }) {
   const transitionContext = useTransitionContext();
   const rawIsExiting = transitionContext ? transitionContext.isExiting : false;
   const hasSeenIntro = transitionContext ? transitionContext.hasSeenIntro : false;
@@ -12,13 +12,14 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
   const mountedDuringExitRef = useRef(rawIsExiting);
   
   useEffect(() => {
+    if (ignoreExit) return;
     if (mountedDuringExitRef.current && rawIsExiting) {
       // Ignore exit animation if the component just mounted while exiting is true
     } else {
       setIsExiting(rawIsExiting);
       mountedDuringExitRef.current = false;
     }
-  }, [rawIsExiting]);
+  }, [rawIsExiting, ignoreExit]);
 
   const skipEntrance = useRef(forceAnimate ? false : hasSeenIntro);
   const prevText = useRef(text);
