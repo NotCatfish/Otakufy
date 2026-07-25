@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-const TransitionContext = createContext();
+export const TransitionContext = createContext();
 
 export function TransitionProvider({ children }) {
   const [isExiting, setIsExiting] = useState(false);

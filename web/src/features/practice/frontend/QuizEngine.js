@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import * as wanakana from 'wanakana';
 import { useQuizEngine } from '../hooks/useQuizEngine';
-import { useTransitionContext } from '@/context/TransitionContext';
+import { useTransitionContext, TransitionContext } from '@/context/TransitionContext';
 import { VOCAB_TYPES_CONFIG, THEME_MAP } from '../config/quizConfig';
 import LevelSelector from '../components/LevelSelector';
 import VocabTypeSelector from '../components/VocabTypeSelector';
@@ -42,7 +42,29 @@ export default function QuizEngine({ category }) {
   
   const engineState = useQuizEngine(category);
   const { appState, isLoading, dispatch } = engineState;
-  const { triggerExitTransition, resetTransition, isExiting } = useTransitionContext();
+  const transitionContext = useTransitionContext();
+  const { triggerExitTransition, resetTransition, isExiting } = transitionContext;
+
+  const currentKey = `/practice/${category}/${appState}`;
+  const visitedPaths = typeof window !== 'undefined' 
+    ? JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]')
+    : [];
+  const isVisited = visitedPaths.includes(currentKey);
+  const [sessionUpdated, setSessionUpdated] = useState(0);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!isVisited) {
+      visitedPaths.push(currentKey);
+      sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visitedPaths));
+      const timer = setTimeout(() => {
+        setSessionUpdated(prev => prev + 1);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [currentKey, isVisited]);
+
+  const localHasSeenIntro = isVisited;
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -102,8 +124,9 @@ export default function QuizEngine({ category }) {
   if (!mounted) return null;
 
   return (
-    <div>
-      {isLoading || ((appState === 'setup' || appState === 'playing') && engineState.deckData?.length === 0) ? (
+    <TransitionContext.Provider value={{ ...transitionContext, hasSeenIntro: localHasSeenIntro }}>
+      <div>
+        {isLoading || ((appState === 'setup' || appState === 'playing') && engineState.deckData?.length === 0) ? (
         <div className="max-w-3xl mx-auto py-32 animate-fade-in text-center flex flex-col items-center justify-center relative z-10">
           <div className="w-12 h-12 border-4 border-[var(--strong-border)] border-t-[var(--foreground)] rounded-full otakufy-spin-fast mb-8"></div>
           <h2 className="text-sm font-light text-[var(--muted-text)] tracking-[0.2em] uppercase">{tLocal('Fetching questions...')}</h2>
@@ -167,5 +190,6 @@ export default function QuizEngine({ category }) {
         onCancel={() => engineState.setConfirmModal({ isOpen: false, message: '', onConfirm: null })}
       />
     </div>
+    </TransitionContext.Provider>
   );
 }
