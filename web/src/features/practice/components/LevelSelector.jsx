@@ -12,7 +12,7 @@ export default function LevelSelector({ category, currentTheme, engineState }) {
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
-    const key = `levelSelectorAnimated_${category}`;
+    const key = `levelSelectorAnimated_v2_${category}`;
     if (!sessionStorage.getItem(key)) {
       sessionStorage.setItem(key, 'true');
     } else {

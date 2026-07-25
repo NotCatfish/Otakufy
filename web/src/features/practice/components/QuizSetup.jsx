@@ -11,7 +11,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
-    const key = `quizSetupAnimated_${category}`;
+    const key = `quizSetupAnimated_v2_${category}`;
     if (!sessionStorage.getItem(key)) {
       sessionStorage.setItem(key, 'true');
     } else {

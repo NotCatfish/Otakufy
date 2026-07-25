@@ -31,3 +31,4 @@ venv/
 __pycache__/
 .pytest_cache/
 secure_uploads/
+node_modules

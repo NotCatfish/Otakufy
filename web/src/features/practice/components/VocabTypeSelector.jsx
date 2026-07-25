@@ -15,7 +15,7 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
-    const key = `vocabTypeSelectorAnimated_${category}`;
+    const key = `vocabTypeSelectorAnimated_v2_${category}`;
     if (!sessionStorage.getItem(key)) {
       sessionStorage.setItem(key, 'true');
     } else {

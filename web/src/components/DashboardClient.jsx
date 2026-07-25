@@ -18,7 +18,7 @@ import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtil
 export default function DashboardClient({ initialProfile }) {
   const { lang, t } = useLanguage();
   const [profile, setProfile] = useState(initialProfile || null);
-  const [isInitialLoad, setIsInitialLoad] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [dailyXp, setDailyXp] = useState(0);
   const [xpGoal, setXpGoal] = useState(100);
@@ -76,10 +76,10 @@ export default function DashboardClient({ initialProfile }) {
     }
     
     if (typeof window !== 'undefined') {
-      const hasAnimated = sessionStorage.getItem('dashboardAnimated');
+      const hasAnimated = sessionStorage.getItem('dashboardAnimated_v2');
       if (!hasAnimated) {
         setIsInitialLoad(true);
-        sessionStorage.setItem('dashboardAnimated', 'true');
+        sessionStorage.setItem('dashboardAnimated_v2', 'true');
       } else {
         setIsInitialLoad(false);
       }
