@@ -98,7 +98,23 @@ export default function RootLayout({ children }) {
                     root.classList.add('dark');
                   }
 
-                  if (localStorage.getItem('otakufy_disable_ui_anim') === 'true') {
+                  var userId = 'guest';
+                  for (var i = 0; i < localStorage.length; i++) {
+                    var k = localStorage.key(i);
+                    if (k && k.indexOf('sb-') === 0 && k.indexOf('-auth-token') > 0) {
+                      try {
+                        var session = JSON.parse(localStorage.getItem(k));
+                        if (session && session.user && session.user.id) {
+                          userId = session.user.id;
+                        }
+                      } catch(e) {}
+                    }
+                  }
+                  var animKey = 'otakufy_disable_ui_anim_' + userId;
+                  var animVal = localStorage.getItem(animKey);
+                  if (animVal === null) animVal = localStorage.getItem('otakufy_disable_ui_anim');
+                  
+                  if (animVal === 'true') {
                     root.classList.add('reduce-motion');
                   }
                 } catch (e) {}

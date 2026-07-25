@@ -18,7 +18,12 @@ import { useTransitionContext } from '@/context/TransitionContext';
 
 export default function DashboardClient({ initialProfile }) {
   const { lang, t } = useLanguage();
-  const { hasSeenIntro } = useTransitionContext();
+  const transitionContext = useTransitionContext();
+  const [hasSeenIntro] = useState(transitionContext.hasSeenIntro);
+
+  useEffect(() => {
+    transitionContext.registerVisit('/');
+  }, []);
   const [profile, setProfile] = useState(initialProfile || null);
   const [mounted, setMounted] = useState(false);
   const [dailyXp, setDailyXp] = useState(0);

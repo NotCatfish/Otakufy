@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { SETTINGS_KEYS, getSetting } from '@/features/profile/utils/settingsUtils';
 
 export const TransitionContext = createContext();
 
@@ -10,7 +11,7 @@ export function TransitionProvider({ children }) {
 
   useEffect(() => {
     const updateSetting = () => {
-      setDisableUiAnim(localStorage.getItem('otakufy_disable_ui_anim') === 'true');
+      setDisableUiAnim(getSetting(SETTINGS_KEYS.DISABLE_UI_ANIMATIONS, false));
     };
     updateSetting();
     window.addEventListener("ui-anim-control", updateSetting);
@@ -36,13 +37,6 @@ export function TransitionProvider({ children }) {
   };
 
   const hasSeenIntro = visitedPaths.includes('/');
-
-  // Register dashboard visit if we are on the dashboard
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.pathname === '/') {
-        registerVisit('/');
-    }
-  }, []);
 
   return (
     <TransitionContext.Provider value={{ disableUiAnim, hasVisited, registerVisit, hasSeenIntro }}>
