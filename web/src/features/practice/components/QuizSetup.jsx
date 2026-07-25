@@ -235,8 +235,8 @@ export default function QuizSetup({ category, currentTheme, engineState, hasSeen
             <RevealText text={tLocal("Saved Sessions")} baseDelay={6.0} disabled={hasSeenIntro} />
           </h2>
           
-          <SmoothFade delay={6.4} disabled={hasSeenIntro} className="flex items-start gap-2 text-[11px] text-[var(--muted-text)] italic -mt-2 mb-1 opacity-60">
-             <svg className="w-3.5 h-3.5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <SmoothFade delay={6.4} disabled={hasSeenIntro} className="flex items-start gap-2 text-[12px] text-[var(--muted-text)] italic -mt-2 mb-1">
+             <svg className="w-4 h-4 shrink-0 mt-[1px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
              </svg>
              <p>{tLocal("Mid-quiz saves are stored locally in this browser. They do not sync to the cloud and will be lost if you clear your site data.")}</p>
