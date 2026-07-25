@@ -10,15 +10,17 @@ export function TransitionProvider({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  // Initialize hasSeenIntro synchronously on the client to prevent hydration flashes
-  const [hasSeenIntro, setHasSeenIntro] = useState(() => {
+  const [sessionUpdated, setSessionUpdated] = useState(0);
+
+  const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
+
+  const hasSeenIntro = React.useMemo(() => {
     if (typeof window !== 'undefined') {
-      const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
       const visited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
       return visited.includes(normalizedPath);
     }
     return false;
-  });
+  }, [pathname, sessionUpdated, normalizedPath]);
 
   const [disableUiAnim, setDisableUiAnim] = useState(false);
 
@@ -32,30 +34,20 @@ export function TransitionProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    // Group all practice paths under a single key so viewing one practice intro skips it for all other practice categories
-    const normalizedPath = pathname.startsWith('/practice') ? '/practice' : pathname;
-    
-    // Check if we've seen it this session
+    if (typeof window === 'undefined') return;
     const visited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
-    if (visited.includes(normalizedPath)) {
-      setHasSeenIntro(true);
-    } else {
-      setHasSeenIntro(false);
-      
+    if (!visited.includes(normalizedPath)) {
       // Immediately add to visited paths to prevent replay if user navigates quickly
-      const currentVisited = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
-      if (!currentVisited.includes(normalizedPath)) {
-        currentVisited.push(normalizedPath);
-        sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(currentVisited));
-      }
+      visited.push(normalizedPath);
+      sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visited));
 
-      // Wait for initial entrance animations to finish, then skip them for future navigations
+      // Wait for initial entrance animations to finish, then trigger a re-evaluation so future states know it's seen
       const timer = setTimeout(() => {
-        setHasSeenIntro(true);
+        setSessionUpdated(prev => prev + 1);
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [pathname]);
+  }, [pathname, normalizedPath]);
 
   // Reset exit state on mount of new route
   useEffect(() => {

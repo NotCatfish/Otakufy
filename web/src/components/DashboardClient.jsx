@@ -135,26 +135,26 @@ export default function DashboardClient({ initialProfile }) {
   if (!mounted) return null;
 
   return (
-    <PageContainer disableGlobalFade={!hasSeenIntro}>
+    <PageContainer disableGlobalFade={hasSeenIntro}>
         
-        <SmoothFade as="header" delay={0.2} className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
+        <SmoothFade as="header" delay={0.2} disabled={hasSeenIntro} className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">
-              <RevealText text={t("Welcome back.")} baseDelay={0.4} />
+              <RevealText text={t("Welcome back.")} baseDelay={0.4} disabled={hasSeenIntro} />
             </h1>
             <p className="text-[21px] text-[var(--muted-text)]">
-              <RevealText text={t("\"Continue your path to fluency.\"")} baseDelay={0.6} charDelay={0.03} />
+              <RevealText text={t("\"Continue your path to fluency.\"")} baseDelay={0.6} charDelay={0.03} disabled={hasSeenIntro} />
             </p>
             <div className="flex items-center gap-4 pt-1">
               <div 
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px] opacity-0 animate-fade-in"
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px] ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`}
                 style={{ animationDelay: !hasSeenIntro ? '0.8s' : '0s', animationFillMode: 'forwards' }}
               >
                 <span className="text-lg leading-none">🔥</span>
                 <span>{`${toKanji(profile?.streak || 0)} ${t("Day Streak")}`}</span>
               </div>
               <div 
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono opacity-0 animate-fade-in"
+                className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-xp-bg)] border border-[var(--badge-xp-border)] text-[var(--badge-xp-text)] font-medium text-[14px] mb-mono ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`}
                 style={{ animationDelay: !hasSeenIntro ? '5.6s' : '0s', animationFillMode: 'forwards' }}
               >
                 <span>⚡</span>
@@ -165,7 +165,7 @@ export default function DashboardClient({ initialProfile }) {
                 const isGoalReached = dailyXp >= xpGoal;
                 return (
                   <div 
-                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 opacity-0 animate-fade-in ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
+                    className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface)] border font-medium text-[14px] mb-mono transition-all duration-500 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'} ${isGoalReached ? 'border-[var(--theme-color)] text-[var(--theme-color)] shadow-[0_0_15px_rgba(var(--theme-rgb),0.4)]' : 'border-[var(--strong-border)] text-[var(--muted-text)]'}`}
                     style={{ animationDelay: !hasSeenIntro ? '5.8s' : '0s', animationFillMode: 'forwards' }}
                   >
                     <span>
@@ -217,15 +217,15 @@ export default function DashboardClient({ initialProfile }) {
               
               <div className="absolute z-10 text-center flex flex-col items-center justify-center drop-shadow-none">
                 <div className="text-[33px] font-semibold leading-none tnum text-[var(--foreground)] mb-0.5">
-                  <RevealText text={toKanji(calculatedLevel)} baseDelay={1.0} />
+                  <RevealText text={toKanji(calculatedLevel)} baseDelay={1.0} disabled={hasSeenIntro} />
                 </div>
                 <div className="text-[10px] text-[var(--muted-text)] tracking-[0.16em] uppercase mb-1">
-                  <RevealText text={t("LEVEL")} baseDelay={1.2} />
+                  <RevealText text={t("LEVEL")} baseDelay={1.2} disabled={hasSeenIntro} />
                 </div>
                 <div className="text-[11px] text-[var(--foreground)] mb-mono tnum">
-                  <RevealText text={`${toKanji(currentLevelXp)}`} baseDelay={1.4} />
+                  <RevealText text={`${toKanji(currentLevelXp)}`} baseDelay={1.4} disabled={hasSeenIntro} />
                   <span className="opacity-50">
-                    <RevealText text={` / ${toKanji(xpForNext)}`} baseDelay={1.4} />
+                    <RevealText text={` / ${toKanji(xpForNext)}`} baseDelay={1.4} disabled={hasSeenIntro} />
                   </span>
                 </div>
               </div>
@@ -233,9 +233,9 @@ export default function DashboardClient({ initialProfile }) {
         </SmoothFade>
 
         {/* Quick Practice */}
-        <SmoothFade as="section" delay={1.6} className="mb-16">
+        <SmoothFade as="section" delay={1.6} disabled={hasSeenIntro} className="mb-16">
           <h2 className="text-[22px] font-semibold text-[var(--foreground)] mb-6 tracking-wide">
-            <RevealText text={t("study_modules")} baseDelay={1.8} />
+            <RevealText text={t("study_modules")} baseDelay={1.8} disabled={hasSeenIntro} />
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {[
@@ -252,36 +252,36 @@ export default function DashboardClient({ initialProfile }) {
                 onMouseEnter={() => prefetchCategory(item.path)}
                 className="mb-module rounded-2xl py-12 flex flex-col items-center justify-center gap-4 cursor-pointer group transition-all"
               >
-                <item.Icon className="w-8 h-8 opacity-100 group-hover:opacity-60 transition-opacity text-[var(--foreground)] opacity-0 animate-fade-in" style={{ animationDelay: !hasSeenIntro ? `${2.0 + (0.1 * i)}s` : '0s', animationFillMode: 'forwards' }} />
+                <item.Icon className={`w-8 h-8 group-hover:opacity-60 transition-opacity text-[var(--foreground)] ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? `${2.0 + (0.1 * i)}s` : '0s', animationFillMode: 'forwards' }} />
                 <span className="text-[19px] font-medium text-[var(--foreground)] group-hover:text-[var(--muted-text)] transition-colors">
-                  <RevealText text={t(item.text)} baseDelay={2.2 + (0.1 * i)} />
+                  <RevealText text={t(item.text)} baseDelay={2.2 + (0.1 * i)} disabled={hasSeenIntro} />
                 </span>
               </TransitionLink>
             ))}
           </div>
         </SmoothFade>
 
-        <SmoothFade delay={2.6} className="grid md:grid-cols-2 gap-8 md:gap-12">
+        <SmoothFade delay={2.6} disabled={hasSeenIntro} className="grid md:grid-cols-2 gap-8 md:gap-12">
           <DailyObjectives userId={profile?.id} isInitialLoad={!hasSeenIntro} />
           
           <section className="mb-card rounded-lg p-6 flex flex-col justify-between">
             <div>
               <h2 className="text-[22px] font-semibold text-[var(--foreground)] mb-5 tracking-wide">
-                <RevealText text={t("smart_review")} baseDelay={2.8} />
+                <RevealText text={t("smart_review")} baseDelay={2.8} disabled={hasSeenIntro} />
               </h2>
               <div className="flex flex-col gap-2">
                 <span className="text-[var(--foreground)] font-medium text-[16px]">
-                  <RevealText text={t("Spaced Repetition")} baseDelay={3.0} />
+                  <RevealText text={t("Spaced Repetition")} baseDelay={3.0} disabled={hasSeenIntro} />
                 </span>
                 <span className="text-[var(--muted-text)] text-[14.5px] leading-relaxed">
-                  <RevealText text={t("Power through your due SRS reviews. The algorithm determines exactly what you need to study for optimal long-term retention. If your queue is empty, you'll automatically start a random") + " " + (lang === 'ja' ? toKanji(autoJlptLevel).replace('N', 'Ｎ') : autoJlptLevel) + " " + t("deck.")} baseDelay={3.2} charDelay={0.015} />
+                  <RevealText text={t("Power through your due SRS reviews. The algorithm determines exactly what you need to study for optimal long-term retention. If your queue is empty, you'll automatically start a random") + " " + (lang === 'ja' ? toKanji(autoJlptLevel).replace('N', 'Ｎ') : autoJlptLevel) + " " + t("deck.")} baseDelay={3.2} charDelay={0.015} disabled={hasSeenIntro} />
                 </span>
               </div>
             </div>
             <div className="mt-8">
-              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className="inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity opacity-0 animate-fade-in" style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
+              <a href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
                 <Play className="w-4 h-4 mr-2 fill-[var(--background)]" />
-                <RevealText text={t("Start SRS Review")} baseDelay={3.4} />
+                <RevealText text={t("Start SRS Review")} baseDelay={3.4} disabled={hasSeenIntro} />
               </a>
             </div>
           </section>

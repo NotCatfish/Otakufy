@@ -77,7 +77,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
     cardAmount, setCardAmount, startNewSession, 
     saves, loadSave, deleteSave 
   } = engineState;
-  const { triggerExitTransition, isExiting } = useTransitionContext();
+  const { triggerExitTransition, isExiting, hasSeenIntro } = useTransitionContext();
 
   const handleBack = async () => {
     if (isExiting) return;
@@ -176,12 +176,12 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
             <RevealText text={tLocal("New Session")} baseDelay={2.2} />
           </h2>
           <p className="text-lg leading-relaxed font-light text-[var(--muted-text)]">
-            <RevealText text={tLocal("This section has")} baseDelay={2.4} /> <span className="text-[var(--foreground)] font-medium opacity-0 animate-fade-in" style={{ animationDelay: '2.5s', animationFillMode: 'forwards' }}>{engineState.totalDbCount !== null ? toKanji(engineState.totalDbCount) : toKanji(deckData.length)}</span> <RevealText text={category === 'vocabulary' ? tLocal('questions') : tLocal('cards')} baseDelay={2.6} />. 
+            <RevealText text={tLocal("This section has")} baseDelay={2.4} /> <span className={`text-[var(--foreground)] font-medium ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '2.5s' : '0s', animationFillMode: 'forwards' }}>{engineState.totalDbCount !== null ? toKanji(engineState.totalDbCount) : toKanji(deckData.length)}</span> <RevealText text={category === 'vocabulary' ? tLocal('questions') : tLocal('cards')} baseDelay={2.6} />. 
             <br />
-            <RevealText text={tLocal("We've prepared a random deck of")} baseDelay={2.8} charDelay={0.015} /> <span className="text-[var(--foreground)] font-medium opacity-0 animate-fade-in" style={{ animationDelay: '2.9s', animationFillMode: 'forwards' }}>{toKanji(deckData.length)}</span> <RevealText text={tLocal("for this session. How many would you like to study?")} baseDelay={3.0} charDelay={0.015} />
+            <RevealText text={tLocal("We've prepared a random deck of")} baseDelay={2.8} charDelay={0.015} /> <span className={`text-[var(--foreground)] font-medium ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '2.9s' : '0s', animationFillMode: 'forwards' }}>{toKanji(deckData.length)}</span> <RevealText text={tLocal("for this session. How many would you like to study?")} baseDelay={3.0} charDelay={0.015} />
           </p>
           
-          <div className="flex items-center gap-6 mt-4 opacity-0 animate-fade-in" style={{ animationDelay: '3.1s', animationFillMode: 'forwards' }}>
+          <div className={`flex items-center gap-6 mt-4 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '3.1s' : '0s', animationFillMode: 'forwards' }}>
             <input 
               type="text"
               inputMode="numeric"
@@ -214,14 +214,14 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
           
           <button 
             onClick={handleStart}
-            className="mt-6 self-start px-8 py-3 border border-[var(--strong-border)] rounded-full text-sm uppercase tracking-[0.1em] hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] transition-all duration-300 opacity-0 animate-fade-in"
-            style={{ animationDelay: '3.2s', animationFillMode: 'forwards' }}
+            className={`mt-6 self-start px-8 py-3 border border-[var(--strong-border)] rounded-full text-sm uppercase tracking-[0.1em] hover:bg-[var(--foreground)] hover:text-[var(--background)] text-[var(--foreground)] transition-all duration-300 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`}
+            style={{ animationDelay: !hasSeenIntro ? '3.2s' : '0s', animationFillMode: 'forwards' }}
           >
             {tLocal("Start Study")}
           </button>
 
           {engineState.isSrsMode && (
-            <div className="mt-8 border border-[var(--strong-border)] bg-[var(--surface-hover)] rounded-xl p-6 relative opacity-0 animate-fade-in" style={{ animationDelay: '3.4s', animationFillMode: 'forwards' }}>
+            <div className={`mt-8 border border-[var(--strong-border)] bg-[var(--surface-hover)] rounded-xl p-6 relative ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
                 <span className="absolute -top-3 left-6 bg-[var(--card-bg)] px-2 text-xs font-light tracking-widest text-green-400 uppercase">{tLocal("The Point System")}</span>
                 <ul className="mt-2 text-sm text-[var(--muted-text)] font-light space-y-2 leading-relaxed tracking-wide">
                     <li><span className="text-sakura-dark font-medium">{tLocal("First Try:")}</span> {tLocal("Answer correctly on your first attempt to instantly master the card.")}</li>
@@ -239,7 +239,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
             <RevealText text={tLocal("Saved Sessions")} baseDelay={3.2} />
           </h2>
           
-          <div className="flex items-start gap-2 text-[11px] text-[var(--muted-text)] opacity-60 italic -mt-2 mb-1 animate-fade-in" style={{ animationDelay: '3.4s', animationFillMode: 'forwards', opacity: 0 }}>
+          <div className={`flex items-start gap-2 text-[11px] text-[var(--muted-text)] italic -mt-2 mb-1 ${!hasSeenIntro ? 'opacity-0 animate-fade-in' : 'opacity-60'}`} style={{ animationDelay: !hasSeenIntro ? '3.4s' : '0s', animationFillMode: 'forwards' }}>
              <svg className="w-3.5 h-3.5 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
              </svg>

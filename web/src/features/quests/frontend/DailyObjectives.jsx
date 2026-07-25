@@ -111,19 +111,19 @@ export default function DailyObjectives({ userId, isInitialLoad = false }) {
       <div className="mb-card rounded-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="text-[22px] font-semibold text-[var(--foreground)] tracking-wide">
-            <RevealText text={t("daily_objectives")} baseDelay={2.8} />
+            <RevealText text={t("daily_objectives")} baseDelay={2.8} disabled={!isInitialLoad} />
           </div>
           <span className="text-[13px] text-[var(--muted-text)] mb-mono tnum">
-            <RevealText text={`${toKanji(completedCount, lang)}`} baseDelay={3.0} />
+            <RevealText text={`${toKanji(completedCount, lang)}`} baseDelay={3.0} disabled={!isInitialLoad} />
             <span className="opacity-50">
-              <RevealText text={` / ${toKanji(quests.length, lang)}`} baseDelay={3.0} />
+              <RevealText text={` / ${toKanji(quests.length, lang)}`} baseDelay={3.0} disabled={!isInitialLoad} />
             </span>
           </span>
         </div>
         <div>
             {quests.length === 0 && (
               <span className="text-[14px] text-[var(--muted-text)]">
-                <RevealText text={t("No quests assigned today.")} baseDelay={3.0} />
+                <RevealText text={t("No quests assigned today.")} baseDelay={3.0} disabled={!isInitialLoad} />
               </span>
             )}
             {quests.map((quest, index) => {
@@ -135,37 +135,37 @@ export default function DailyObjectives({ userId, isInitialLoad = false }) {
                   <div key={quest.id} className={`mb-row-grid py-3 ${index !== quests.length - 1 ? 'mb-row border-b border-[var(--divider)]' : ''} ${isClaimed ? 'opacity-30' : ''}`}>
                     <div className="flex items-center gap-3 min-w-0">
                         {isClaimed ? (
-                            <div className="w-3.5 h-3.5 rounded-sm shrink-0 bg-[var(--foreground)]/30 flex items-center justify-center opacity-0 animate-fade-in" style={{ animationDelay: isInitialLoad ? `${3.2 + (0.2 * index)}s` : '0s', animationFillMode: 'forwards' }}>
+                            <div className={`w-3.5 h-3.5 rounded-sm shrink-0 bg-[var(--foreground)]/30 flex items-center justify-center ${isInitialLoad ? 'opacity-0 animate-fade-in' : 'opacity-100'}`} style={{ animationDelay: isInitialLoad ? `${3.2 + (0.2 * index)}s` : '0s', animationFillMode: 'forwards' }}>
                                 <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--background)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                             </div>
                         ) : (
-                            <div className={`w-3.5 h-3.5 rounded-sm shrink-0 flex items-center justify-center border transition-colors opacity-0 animate-fade-in ${isComplete ? 'bg-[var(--foreground)] border-[var(--foreground)]' : 'border-[var(--card-border)] bg-[var(--card-bg)]'}`} style={{ animationDelay: isInitialLoad ? `${3.2 + (0.2 * index)}s` : '0s', animationFillMode: 'forwards' }}>
+                            <div className={`w-3.5 h-3.5 rounded-sm shrink-0 flex items-center justify-center border transition-colors ${isInitialLoad ? 'opacity-0 animate-fade-in' : 'opacity-100'} ${isComplete ? 'bg-[var(--foreground)] border-[var(--foreground)]' : 'border-[var(--card-border)] bg-[var(--card-bg)]'}`} style={{ animationDelay: isInitialLoad ? `${3.2 + (0.2 * index)}s` : '0s', animationFillMode: 'forwards' }}>
                                 {isComplete && <Check className="w-2.5 h-2.5 text-[var(--background)]" />}
                             </div>
                         )}
                         <span className={`text-[13.5px] truncate text-[var(--foreground)] ${isClaimed || isComplete ? 'line-through opacity-50' : 'opacity-90'}`}>
-                          <RevealText text={toKanji(t(pool.description), lang)} baseDelay={3.2 + (0.2 * index)} charDelay={0.02} />
+                          <RevealText text={toKanji(t(pool.description), lang)} baseDelay={3.2 + (0.2 * index)} charDelay={0.02} disabled={!isInitialLoad} />
                         </span>
                     </div>
                     
                     {!isClaimed && isComplete ? (
                         <button 
                             onClick={() => claimReward(quest.id, pool.xp_reward)}
-                            className="text-[11px] uppercase font-bold text-[var(--background)] bg-[var(--foreground)] hover:opacity-85 rounded-sm py-0.5 px-2 text-center transition-opacity col-span-2 opacity-0 animate-fade-in"
+                            className={`text-[11px] uppercase font-bold text-[var(--background)] bg-[var(--foreground)] hover:opacity-85 rounded-sm py-0.5 px-2 text-center transition-opacity col-span-2 ${isInitialLoad ? 'opacity-0 animate-fade-in' : 'opacity-100'}`}
                             style={{ animationDelay: isInitialLoad ? `${3.4 + (0.2 * index)}s` : '0s', animationFillMode: 'forwards' }}
                         >
-                            <RevealText text={t("Claim")} baseDelay={3.4 + (0.2 * index)} />
+                            <RevealText text={t("Claim")} baseDelay={3.4 + (0.2 * index)} disabled={!isInitialLoad} />
                         </button>
                     ) : (
                         <>
                             <span className="mb-mono text-[13px] text-[var(--muted-text)] text-right tnum">
-                              <RevealText text={`${toKanji(Math.min(quest.current_progress, pool.target_amount), lang)}`} baseDelay={3.4 + (0.2 * index)} />
+                              <RevealText text={`${toKanji(Math.min(quest.current_progress, pool.target_amount), lang)}`} baseDelay={3.4 + (0.2 * index)} disabled={!isInitialLoad} />
                               <span className="opacity-50">
-                                <RevealText text={`/${toKanji(pool.target_amount, lang)}`} baseDelay={3.4 + (0.2 * index)} />
+                                <RevealText text={`/${toKanji(pool.target_amount, lang)}`} baseDelay={3.4 + (0.2 * index)} disabled={!isInitialLoad} />
                               </span>
                             </span>
                             <span className={`mb-mono text-[13px] text-right tnum text-[var(--foreground)] ${isClaimed ? 'opacity-30' : 'opacity-60'}`}>
-                              <RevealText text={`+${toKanji(pool.xp_reward, lang)}${lang === 'ja' ? '経験値' : 'xp'}`} baseDelay={3.4 + (0.2 * index)} />
+                              <RevealText text={`+${toKanji(pool.xp_reward, lang)}${lang === 'ja' ? '経験値' : 'xp'}`} baseDelay={3.4 + (0.2 * index)} disabled={!isInitialLoad} />
                             </span>
                         </>
                     )}
