@@ -46,15 +46,26 @@ export default function QuizEngine({ category }) {
   const { triggerExitTransition, resetTransition, isExiting } = transitionContext;
 
   const currentKey = `/practice/${category}/${appState}`;
-  const visitedPaths = typeof window !== 'undefined' 
-    ? JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]')
-    : [];
-  const isVisited = visitedPaths.includes(currentKey);
+  const [isVisited, setIsVisited] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const visitedPaths = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
+    return visitedPaths.includes(currentKey);
+  });
+  
+  // Keep track of the initial value on mount so it doesn't change during the component lifecycle
+  // This prevents animations from suddenly stopping if it becomes true mid-animation
+  const initialIsVisitedRef = useRef(isVisited);
   const [sessionUpdated, setSessionUpdated] = useState(0);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    if (!isVisited) {
+    const visitedPaths = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
+    const alreadyVisited = visitedPaths.includes(currentKey);
+    
+    setIsVisited(alreadyVisited);
+    initialIsVisitedRef.current = alreadyVisited;
+
+    if (!alreadyVisited) {
       visitedPaths.push(currentKey);
       sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(visitedPaths));
       const timer = setTimeout(() => {
@@ -62,9 +73,9 @@ export default function QuizEngine({ category }) {
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [currentKey, isVisited]);
+  }, [currentKey]);
 
-  const localHasSeenIntro = isVisited;
+  const localHasSeenIntro = initialIsVisitedRef.current;
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -85,7 +96,7 @@ export default function QuizEngine({ category }) {
         if (e.key === 'Escape' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
             e.preventDefault();
             if (isExiting) return;
-            await triggerExitTransition(2500);
+            await triggerExitTransition(1100);
             engineState.navigateBack();
         }
     };
@@ -95,18 +106,18 @@ export default function QuizEngine({ category }) {
 
   const handleSelectLevel = async (level) => {
     if (isExiting) return;
-    await triggerExitTransition(2500);
+    await triggerExitTransition(1100);
     engineState.setLevel(level);
     engineState.setAppState('select_vocab_type');
   };
 
   const handleSelectType = async (type) => {
-    await triggerExitTransition(1500);
+    await triggerExitTransition(1100);
     dispatch({ type: 'SELECT_TYPE', payload: type });
   };
 
   const handleStartSession = async (config) => {
-    await triggerExitTransition(1500);
+    await triggerExitTransition(1100);
     dispatch({ type: 'START_SESSION', payload: config });
   };
 

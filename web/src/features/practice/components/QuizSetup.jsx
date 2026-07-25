@@ -81,19 +81,19 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
 
   const handleBack = async () => {
     if (isExiting) return;
-    await triggerExitTransition(2500);
+    await triggerExitTransition(1100);
     engineState.navigateBack();
   };
 
   const handleStart = async () => {
     if (isExiting) return;
-    await triggerExitTransition(1500);
+    await triggerExitTransition(1100);
     startNewSession();
   };
 
   const handleLoadSave = async (index) => {
     if (isExiting) return;
-    await triggerExitTransition(1500);
+    await triggerExitTransition(1100);
     loadSave(index);
   };
 
@@ -108,7 +108,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
 
       <SmoothFade delay={0.4} disabled={hasSeenIntro}>
         <h1 className="text-5xl md:text-6xl font-bold mb-16 tracking-tight text-[var(--foreground)]">
-          <RevealText text={`${toKanji(level)} ${tLocal("Practice")}`} baseDelay={1.6} disabled={hasSeenIntro} />
+          <RevealText text={`${toKanji(level)} ${tLocal("Practice")}`} baseDelay={0.4} disabled={hasSeenIntro} />
         </h1>
       </SmoothFade>
       
@@ -123,7 +123,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
            
            <div className="flex flex-col gap-8">
                <p className="font-light text-xl text-[var(--foreground)] tracking-wide leading-relaxed opacity-95">
-                 <RevealText text={config[vocabType]?.instruction || ""} baseDelay={1.8} charDelay={0.015} disabled={hasSeenIntro} />
+                 <RevealText text={config[vocabType]?.instruction || ""} baseDelay={0.6} charDelay={0.015} disabled={hasSeenIntro} />
                </p>
 
                {vocabType !== 'random' && (
@@ -170,20 +170,20 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
         </SmoothFade>
       )}
 
-      <SmoothFade delay={1.2} disabled={hasSeenIntro} className="flex flex-col gap-20">
+      <SmoothFade delay={0.2} disabled={hasSeenIntro} className="flex flex-col gap-20">
         <section className="flex flex-col gap-6">
           <h2 className="text-sm uppercase tracking-[0.2em] text-[var(--muted-text)] border-b border-[var(--strong-border)] pb-4">
-            <RevealText text={tLocal("New Session")} baseDelay={1.4} disabled={hasSeenIntro} />
+            <RevealText text={tLocal("New Session")} baseDelay={0.4} disabled={hasSeenIntro} />
           </h2>
           <p className="text-xl md:text-2xl leading-relaxed font-light text-[var(--muted-text)]">
-            <RevealText text={`${tLocal("This deck currently holds")}${lang === 'ja' ? '' : ' '}`} baseDelay={2.0} charDelay={0.015} disabled={hasSeenIntro} />
-            <SmoothFade as="span" delay={2.4} disabled={hasSeenIntro} className="font-semibold text-3xl text-[var(--foreground)] mx-1.5 inline-block">
+            <RevealText text={`${tLocal("This deck currently holds")}${lang === 'ja' ? '' : ' '}`} baseDelay={0.8} charDelay={0.015} disabled={hasSeenIntro} />
+            <SmoothFade as="span" delay={0.2} disabled={hasSeenIntro} className="font-semibold text-3xl text-[var(--foreground)] mx-1.5 inline-block">
               {typeof engineState.totalDbCount === 'number' ? String(toKanji(engineState.totalDbCount)) : String(toKanji(deckData?.length || 0))}
             </SmoothFade>
-            <RevealText text={`${lang === 'ja' ? '' : ' '}${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}. ${tLocal("How many would you like to study?")}`} baseDelay={2.8} charDelay={0.015} disabled={hasSeenIntro} />
+            <RevealText text={`${lang === 'ja' ? '' : ' '}${category === 'vocabulary' ? tLocal('questions') : tLocal('cards')}. ${tLocal("How many would you like to study?")}`} baseDelay={0.4} charDelay={0.015} disabled={hasSeenIntro} />
           </p>
           
-          <SmoothFade delay={5.6} disabled={hasSeenIntro} className="flex items-center gap-6 mt-4">
+          <SmoothFade delay={1.6} disabled={hasSeenIntro} className="flex items-center gap-6 mt-4">
             <input 
               type="text"
               inputMode="numeric"

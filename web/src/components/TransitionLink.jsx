@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useTransitionContext } from '@/context/TransitionContext';
 import { useRouter } from 'next/navigation';
 
-export default function TransitionLink({ href, children, className, exitDurationMs = 2500, ...props }) {
+export default function TransitionLink({ href, children, className, exitDurationMs = 1100, ...props }) {
   const transitionContext = useTransitionContext();
   const navigateWithTransition = transitionContext ? transitionContext.navigateWithTransition : null;
   const router = useRouter();
