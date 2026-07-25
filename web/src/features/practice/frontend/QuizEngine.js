@@ -43,6 +43,15 @@ export default function QuizEngine({ category }) {
   const engineState = useQuizEngine(category);
   const { appState, isLoading, dispatch } = engineState;
   const transitionContext = useTransitionContext();
+  
+  const currentKey = `/practice/${category}/${appState}`;
+  const isVisited = transitionContext?.hasVisited ? transitionContext.hasVisited(currentKey) : false;
+
+  useEffect(() => {
+    if (transitionContext?.registerVisit) {
+      transitionContext.registerVisit(currentKey);
+    }
+  }, [currentKey, transitionContext]);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -136,13 +145,13 @@ export default function QuizEngine({ category }) {
           />
         </div>
       ) : appState === 'select_level' ? (
-        <LevelSelector key={`level-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} />
+        <LevelSelector key={`level-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} hasSeenIntro={isVisited} />
       ) : appState === 'select_vocab_type' ? (
-        <VocabTypeSelector key={`vocabtype-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} />
+        <VocabTypeSelector key={`vocabtype-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} hasSeenIntro={isVisited} />
       ) : appState === 'setup' ? (
-        <QuizSetup key={`setup-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} />
+        <QuizSetup key={`setup-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} hasSeenIntro={isVisited} />
       ) : appState === 'finished' ? (
-        <SessionSummary key={`summary-${appState}`} currentTheme={currentTheme} engineState={engineState} />
+        <SessionSummary key={`summary-${appState}`} currentTheme={currentTheme} engineState={engineState} hasSeenIntro={isVisited} />
       ) : appState === 'playing' ? (
         <FlashcardView key={`play-${appState}`} category={category} currentTheme={currentTheme} engineState={engineState} renderWithUnderline={renderWithUnderline} />
       ) : null}

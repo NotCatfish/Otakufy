@@ -5,57 +5,55 @@ import SmoothFade from '@/components/SmoothFade';
 import RevealText from '@/components/RevealText';
 import { useLanguage } from '@/context/LanguageContext';
 
-export default function VocabTypeSelector({ category, currentTheme, engineState }) {
+export default function VocabTypeSelector({ category, currentTheme, engineState, hasSeenIntro = false }) {
   const { lang } = useLanguage();
-  const { level, setAppState, setVocabType, loadVocabData } = engineState;
-  const config = category === 'grammar' ? GRAMMAR_TYPES_CONFIG : VOCAB_TYPES_CONFIG;
-  const vocabTypes = Object.values(config);
+  const { level, setVocabType, setAppState, loadVocabData } = engineState;
+
+  const handleTypeClick = (type) => {
+    setVocabType(type);
+    if (category === 'vocabulary') {
+      loadVocabData(level, type);
+    } else {
+      setAppState('setup');
+    }
+  };
 
   const handleBack = () => {
-    engineState.navigateBack();
+    engineState.setLevel(null);
+    engineState.setAppState('select_level');
   };
 
-  const handleSelect = (typeId) => {
-    setVocabType(typeId);
-    loadVocabData(level, typeId);
-  };
+  const config = category === 'grammar' ? GRAMMAR_TYPES_CONFIG : VOCAB_TYPES_CONFIG;
+  const types = Object.keys(config);
 
   return (
-    <div className="max-w-[1440px] w-full mx-auto py-24 px-4 md:px-8 relative z-10 font-light text-white/80">
-      <SmoothFade delay={0.2} className="mb-8">
+    <div className="max-w-[1440px] w-full mx-auto py-32 px-4 md:px-8 text-center relative z-10 font-light text-white/80 flex flex-col items-center">
+      <SmoothFade delay={0.2} disabled={hasSeenIntro} className="self-start md:self-auto w-full flex justify-start md:justify-center mb-8">
         <ReturnButton onClick={handleBack} />
       </SmoothFade>
-      
-      <SmoothFade delay={0.4}>
-        <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight text-[var(--foreground)]">
-          <RevealText text={lang === 'ja' ? "出題形式" : "Question Format"} baseDelay={1.6} />
+
+      <SmoothFade delay={0.4} disabled={hasSeenIntro} className="flex flex-col items-center">
+        <h1 className="text-6xl md:text-7xl font-bold mb-6 tracking-tight capitalize text-white">
+          <RevealText text={level.replace('N', 'Ｎ')} baseDelay={1.6} disabled={hasSeenIntro} />
         </h1>
-        <p className="text-xl font-medium opacity-80 mb-16 text-[var(--foreground)]">
-          <RevealText text={lang === 'ja' ? `練習したい${level}のドリル形式を選択してください。` : `Select the specific ${level} drill type you want to practice.`} baseDelay={1.8} charDelay={0.02} />
+        <p className="text-xl md:text-2xl font-medium opacity-60 mb-20 text-white">
+          <RevealText text={lang === 'ja' ? '学習形式を選択してください' : 'Select study format'} baseDelay={1.8} charDelay={0.02} disabled={hasSeenIntro} />
         </p>
       </SmoothFade>
       
-      <SmoothFade delay={0.8} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {vocabTypes.map((type, index) => (
+      <SmoothFade delay={0.8} disabled={hasSeenIntro} className="flex flex-wrap justify-center gap-5 w-full max-w-[1440px] mt-12">
+        {types.map((type, index) => (
           <button 
-            key={type.id}
-            onClick={() => handleSelect(type.id)}
-            className="mb-module text-left p-8 flex flex-col gap-4 group cursor-pointer transition-all"
+            key={type}
+            onClick={() => handleTypeClick(type)}
+            className="mb-module w-40 h-32 flex flex-col items-center justify-center group cursor-pointer transition-all px-4"
           >
-            <div className="flex justify-between items-center w-full">
-              <span className={`text-2xl font-bold ${currentTheme.color} transition-colors`}>
-                <RevealText text={lang === 'ja' ? type.ja : type.en} baseDelay={2.0 + (index * 0.1)} />
-              </span>
-              <span className={`text-sm opacity-50 group-hover:opacity-100 transition-all font-bold ${currentTheme.color}`}>
-                <RevealText text={lang === 'ja' ? '' : type.ja} baseDelay={2.1 + (index * 0.1)} />
-              </span>
-            </div>
-            <p className={`text-sm opacity-80 group-hover:opacity-100 leading-relaxed h-10 ${currentTheme.color} font-medium transition-colors`}>
-              <RevealText text={type.desc} baseDelay={2.2 + (index * 0.1)} charDelay={0.015} />
-            </p>
-            <div className={`mt-4 w-10 h-10 rounded-full border border-[var(--card-border)] group-hover:border-[var(--hover-border)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 ${currentTheme.color}`}>
-              <span className="text-sm font-bold">→</span>
-            </div>
+            <span className={`text-2xl font-bold ${currentTheme.color} transition-colors tracking-tight leading-tight`}>
+              <RevealText text={lang === 'ja' ? config[type].ja : config[type].en} baseDelay={2.0 + (index * 0.1)} disabled={hasSeenIntro} />
+            </span>
+            <span className={`text-[10px] font-medium uppercase tracking-[0.1em] mt-3 ${currentTheme.color} opacity-80 group-hover:opacity-100 transition-colors`}>
+              <RevealText text={lang === 'ja' ? config[type].en : config[type].ja} baseDelay={2.0 + (index * 0.1)} disabled={hasSeenIntro} />
+            </span>
           </button>
         ))}
       </SmoothFade>

@@ -6,6 +6,7 @@ export const TransitionContext = createContext();
 
 export function TransitionProvider({ children }) {
   const [disableUiAnim, setDisableUiAnim] = useState(false);
+  const [visitedPaths, setVisitedPaths] = useState([]);
 
   useEffect(() => {
     const updateSetting = () => {
@@ -13,11 +14,38 @@ export function TransitionProvider({ children }) {
     };
     updateSetting();
     window.addEventListener("ui-anim-control", updateSetting);
+    
+    // Load visited paths
+    const stored = JSON.parse(sessionStorage.getItem('otakufy_visited_paths') || '[]');
+    setVisitedPaths(stored);
+    
     return () => window.removeEventListener("ui-anim-control", updateSetting);
   }, []);
 
+  const registerVisit = (path) => {
+    setVisitedPaths(prev => {
+      if (prev.includes(path)) return prev;
+      const next = [...prev, path];
+      sessionStorage.setItem('otakufy_visited_paths', JSON.stringify(next));
+      return next;
+    });
+  };
+
+  const hasVisited = (path) => {
+    return visitedPaths.includes(path);
+  };
+
+  const hasSeenIntro = visitedPaths.includes('/');
+
+  // Register dashboard visit if we are on the dashboard
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.pathname === '/') {
+        registerVisit('/');
+    }
+  }, []);
+
   return (
-    <TransitionContext.Provider value={{ disableUiAnim }}>
+    <TransitionContext.Provider value={{ disableUiAnim, hasVisited, registerVisit, hasSeenIntro }}>
       {children}
     </TransitionContext.Provider>
   );
