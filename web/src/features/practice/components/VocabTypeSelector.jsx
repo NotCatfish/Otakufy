@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { VOCAB_TYPES_CONFIG, GRAMMAR_TYPES_CONFIG } from '../config/quizConfig';
 import ReturnButton from './ReturnButton';
 import SmoothFade from '@/components/SmoothFade';
@@ -12,6 +12,17 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
   const { triggerExitTransition, isExiting } = useTransitionContext();
   const config = category === 'grammar' ? GRAMMAR_TYPES_CONFIG : VOCAB_TYPES_CONFIG;
   const vocabTypes = Object.values(config);
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
+
+  useEffect(() => {
+    const key = `vocabTypeSelectorAnimated_${category}`;
+    if (!sessionStorage.getItem(key)) {
+      setIsInitialLoad(true);
+      sessionStorage.setItem(key, 'true');
+    } else {
+      setIsInitialLoad(false);
+    }
+  }, [category]);
 
   const handleBack = async () => {
     if (isExiting) return;
@@ -28,20 +39,20 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
 
   return (
     <div className="max-w-[1440px] w-full mx-auto py-24 px-4 md:px-8 relative z-10 font-light text-white/80">
-      <SmoothFade delay={0.2} className="mb-8" forceAnimate>
+      <SmoothFade delay={0.2} className="mb-8" disabled={!isInitialLoad}>
         <ReturnButton onClick={handleBack} />
       </SmoothFade>
       
-      <SmoothFade delay={0.4} forceAnimate>
+      <SmoothFade delay={0.4} disabled={!isInitialLoad}>
         <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight text-[var(--foreground)]">
-          <RevealText text={lang === 'ja' ? "出題形式" : "Question Format"} baseDelay={1.6} forceAnimate />
+          <RevealText text={lang === 'ja' ? "出題形式" : "Question Format"} baseDelay={1.6} disabled={!isInitialLoad} />
         </h1>
         <p className="text-xl font-medium opacity-80 mb-16 text-[var(--foreground)]">
-          <RevealText text={lang === 'ja' ? `練習したい${level}のドリル形式を選択してください。` : `Select the specific ${level} drill type you want to practice.`} baseDelay={1.8} charDelay={0.02} forceAnimate />
+          <RevealText text={lang === 'ja' ? `練習したい${level}のドリル形式を選択してください。` : `Select the specific ${level} drill type you want to practice.`} baseDelay={1.8} charDelay={0.02} disabled={!isInitialLoad} />
         </p>
       </SmoothFade>
       
-      <SmoothFade delay={0.8} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" forceAnimate>
+      <SmoothFade delay={0.8} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" disabled={!isInitialLoad}>
         {vocabTypes.map((type, index) => (
           <button 
             key={type.id}
@@ -50,14 +61,14 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
           >
             <div className="flex justify-between items-center w-full">
               <span className={`text-2xl font-bold ${currentTheme.color} transition-colors`}>
-                <RevealText text={lang === 'ja' ? type.ja : type.en} baseDelay={2.0 + (index * 0.1)} forceAnimate />
+                <RevealText text={lang === 'ja' ? type.ja : type.en} baseDelay={2.0 + (index * 0.1)} disabled={!isInitialLoad} />
               </span>
               <span className={`text-sm opacity-50 group-hover:opacity-100 transition-all font-bold ${currentTheme.color}`}>
-                <RevealText text={lang === 'ja' ? '' : type.ja} baseDelay={2.1 + (index * 0.1)} forceAnimate />
+                <RevealText text={lang === 'ja' ? '' : type.ja} baseDelay={2.1 + (index * 0.1)} disabled={!isInitialLoad} />
               </span>
             </div>
             <p className={`text-sm opacity-80 group-hover:opacity-100 leading-relaxed h-10 ${currentTheme.color} font-medium transition-colors`}>
-              <RevealText text={type.desc} baseDelay={2.2 + (index * 0.1)} charDelay={0.015} forceAnimate />
+              <RevealText text={type.desc} baseDelay={2.2 + (index * 0.1)} charDelay={0.015} disabled={!isInitialLoad} />
             </p>
             <div className={`mt-4 w-10 h-10 rounded-full border border-[var(--card-border)] group-hover:border-[var(--hover-border)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 ${currentTheme.color}`}>
               <span className="text-sm font-bold">→</span>
