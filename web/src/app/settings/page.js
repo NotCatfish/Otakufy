@@ -31,6 +31,14 @@ export default function SettingsPage() {
     setShowRomaji(getSetting(SETTINGS_KEYS.SHOW_ROMAJI, false));
     setDisableUiAnim(getSetting(SETTINGS_KEYS.DISABLE_UI_ANIMATIONS, false));
     setDisableParticles(getSetting(SETTINGS_KEYS.DISABLE_PARTICLES, false));
+
+    const fetchUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUser(session.user);
+      }
+    };
+    fetchUser();
   }, []);
 
   const handleXpGoalChange = (val) => {
@@ -60,8 +68,8 @@ export default function SettingsPage() {
   return (
     <PageAnimationGate pageKey={PAGE_KEYS.SETTINGS}>
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
-      <SmoothFade as="header" delay={0.1} className="mb-12 border-b border-[var(--strong-border)] pb-8">
-        <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
+      <SmoothFade as="header" delay={0.1} className="mb-8 md:mb-12 border-b border-[var(--strong-border)] pb-6 md:pb-8 flex flex-col items-center md:items-start text-center md:text-left">
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
           <RevealText text={t("Settings")} baseDelay={0.2} />
         </h1>
         <p className="text-[14px] text-white/50">{t("Customize your Otakufy experience.")}</p>
@@ -70,7 +78,7 @@ export default function SettingsPage() {
       <div className="space-y-8">
         
         {/* Daily XP Goal */}
-        <SmoothFade delay={0.2} as="section" className="bg-[var(--surface)] border border-[var(--strong-border)] p-8 rounded-2xl">
+        <SmoothFade delay={0.2} as="section" className="bg-[var(--surface)] border border-[var(--strong-border)] p-5 md:p-8 rounded-2xl">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <h3 className="text-xl font-semibold mb-1 text-white">{t("Daily XP Goal")}</h3>
@@ -78,12 +86,12 @@ export default function SettingsPage() {
             </div>
             
             {user ? (
-            <div className="flex items-center gap-2 bg-[var(--surface)] p-1.5 rounded-xl border border-[var(--strong-border)]">
+            <div className="flex items-center justify-between sm:justify-start gap-1 md:gap-2 bg-[var(--surface)] p-1.5 rounded-xl border border-[var(--strong-border)] w-full sm:w-auto">
               {[100, 500, 1000].map(val => (
                 <button
                   key={val}
                   onClick={() => handleXpGoalChange(val)}
-                  className={`px-4 py-2 rounded-lg text-[13px] font-medium transition-all ${
+                  className={`px-3 md:px-4 py-2 rounded-lg text-[13px] font-medium transition-all ${
                     xpGoal === val 
                     ? 'bg-white text-black' 
                     : 'hover:text-white text-white/50'
@@ -103,12 +111,12 @@ export default function SettingsPage() {
         </SmoothFade>
 
         {/* Global Preferences */}
-        <SmoothFade delay={0.3} as="section" className="bg-[var(--surface)] border border-[var(--strong-border)] p-8 rounded-2xl">
+        <SmoothFade delay={0.3} as="section" className="bg-[var(--surface)] border border-[var(--strong-border)] p-5 md:p-8 rounded-2xl">
           <h3 className="text-xl font-semibold mb-6 text-white">{t("Global Preferences")}</h3>
           
           <div className="space-y-2">
             
-            <div className="flex items-center justify-between py-4 border-b border-[var(--strong-border)]">
+            <div className="flex items-center justify-between gap-4 py-4 border-b border-[var(--strong-border)]">
               <div>
                 <div className="font-medium text-[15px] mb-1 text-white">{t("Application Theme")}</div>
                 <div className="text-[13px] text-white/30">{t("Toggle between dark and light mode universally.")}</div>
@@ -119,7 +127,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between py-4 border-b border-[var(--strong-border)]">
+            <div className="flex items-center justify-between gap-4 py-4 border-b border-[var(--strong-border)]">
               <div>
                 <div className="font-medium text-[15px] mb-1 text-white">{t("Show Furigana (振り仮名)")}</div>
                 <div className="text-[13px] text-white/30">{t("Display reading aids above kanji characters during practice.")}</div>
@@ -130,7 +138,7 @@ export default function SettingsPage() {
               />
             </div>
 
-            <div className="flex items-center justify-between py-4 border-b border-[var(--strong-border)]">
+            <div className="flex items-center justify-between gap-4 py-4 border-b border-[var(--strong-border)]">
               <div>
                 <div className="font-medium text-[15px] mb-1 text-white">{t("Show Romaji (ローマ字)")}</div>
                 <div className="text-[13px] text-white/30">{t("Display english alphabet readings alongside Japanese text.")}</div>
@@ -141,7 +149,7 @@ export default function SettingsPage() {
               />
             </div>
 
-            <div className="flex items-center justify-between py-4 border-b border-[var(--strong-border)]">
+            <div className="flex items-center justify-between gap-4 py-4 border-b border-[var(--strong-border)]">
               <div>
                 <div className="font-medium text-[15px] mb-1 text-white">{t("Auto-Play Audio")}</div>
                 <div className="text-[13px] text-white/30">{t("Automatically read sentences aloud when revealing answers.")}</div>
@@ -152,7 +160,7 @@ export default function SettingsPage() {
               />
             </div>
 
-            <div className="flex items-center justify-between py-4 border-b border-[var(--strong-border)]">
+            <div className="flex items-center justify-between gap-4 py-4 border-b border-[var(--strong-border)]">
               <div>
                 <div className="font-medium text-[15px] mb-1 text-white">{t("Disable UI Animations")}</div>
                 <div className="text-[13px] text-white/30">{t("Turn off all interface animations and transitions.")}</div>
@@ -163,7 +171,7 @@ export default function SettingsPage() {
               />
             </div>
 
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between gap-4 py-4">
               <div>
                 <div className="font-medium text-[15px] mb-1 text-white">{t("Disable Particle Animations")}</div>
                 <div className="text-[13px] text-white/30">{t("Turn off seasonal background effects like falling cherry blossoms.")}</div>

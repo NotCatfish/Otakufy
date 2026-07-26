@@ -15,7 +15,7 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
     if (isExiting) return;
     await triggerExitTransition();
     setVocabType(type);
-    if (category === 'vocabulary') {
+    if (category === 'vocabulary' || category === 'grammar') {
       loadVocabData(level, type);
     } else {
       setAppState('setup');
@@ -34,7 +34,7 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
 
   return (
     <div className="max-w-[1440px] w-full mx-auto py-32 px-4 md:px-8 text-center relative z-10 font-light text-white/80 flex flex-col items-center">
-      <SmoothFade delay={0.2} className="self-start md:self-auto w-full flex justify-start md:justify-center mb-8">
+      <SmoothFade delay={0.2} className="w-full flex justify-center mb-8">
         <ReturnButton onClick={handleBack} />
       </SmoothFade>
 
@@ -46,15 +46,15 @@ export default function VocabTypeSelector({ category, currentTheme, engineState 
           <RevealText text={lang === 'ja' ? '学習形式を選択してください' : 'Select study format'} baseDelay={0.3} charDelay={0.02} />
         </p>
       </SmoothFade>
-      
+
       <SmoothFade delay={0.4} className="flex flex-wrap justify-center gap-5 w-full max-w-[1440px] mt-12">
         {types.map((type, index) => (
-          <button 
+          <button
             key={type}
             onClick={() => handleTypeClick(type)}
-            className="mb-module w-auto min-w-[160px] h-32 flex flex-col items-center justify-center group cursor-pointer transition-all px-6"
+            className="mb-module w-full max-w-[280px] sm:w-[260px] h-32 flex flex-col items-center justify-center group cursor-pointer transition-all px-4"
           >
-            <span className={`text-2xl font-bold ${currentTheme.color} transition-colors tracking-tight mt-4 whitespace-nowrap`}>
+            <span className={`text-xl md:text-2xl font-bold ${currentTheme.color} transition-colors tracking-tight mt-4 whitespace-normal text-center`}>
               <RevealText text={lang === 'ja' ? config[type].ja : config[type].en} baseDelay={0.5 + (index * 0.05)} />
             </span>
             <span className={`text-[10px] font-medium uppercase tracking-[0.2em] mt-3 ${currentTheme.color} opacity-80 group-hover:opacity-100 transition-colors whitespace-nowrap`}>

@@ -206,8 +206,8 @@ export default function DictionaryPage() {
   return (
     <PageAnimationGate pageKey={PAGE_KEYS.DICTIONARY}>
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
-      <SmoothFade as="header" delay={0.1} className="mb-12 border-b border-[var(--strong-border)] pb-8">
-        <h1 className="text-4xl font-semibold tracking-tight text-white mb-2">
+      <SmoothFade as="header" delay={0.1} className="mb-8 md:mb-12 border-b border-[var(--strong-border)] pb-8 flex flex-col items-center md:items-start text-center md:text-left">
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
           <RevealText text={t("Dictionary")} baseDelay={0.2} />
         </h1>
         <p className="text-[14px] text-white/50">{t("Search through over 9,000 Kanji, Vocabulary, and Grammar points.")}</p>
@@ -244,7 +244,7 @@ export default function DictionaryPage() {
             </div>
             
             {/* Level Filter */}
-            <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] shrink-0 overflow-x-auto min-h-[46px] items-center hide-scrollbar">
+            <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] w-full max-w-full overflow-x-auto overflow-y-hidden min-h-[46px] items-center hide-scrollbar">
                 {['All', 'N5', 'N4', 'N3', 'N2', 'N1'].map(level => (
                     <Button
                         key={level}
@@ -262,7 +262,7 @@ export default function DictionaryPage() {
         {/* Sub-Filters */}
         {(activeTab === 'vocabulary' || activeTab === 'grammar') && (
             <div className="flex animate-fade-in">
-                <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] overflow-x-auto h-[46px] hide-scrollbar">
+                <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] w-full max-w-full overflow-x-auto overflow-y-hidden min-h-[46px] items-center hide-scrollbar">
                     {(activeTab === 'vocabulary' ? ['All', 'Reading', 'Orthography', 'Paraphrase', 'Usage'] : ['All', 'Fill In The Blank', 'Scramble']).map(type => (
                         <Button
                             key={type}

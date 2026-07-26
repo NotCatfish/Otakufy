@@ -65,11 +65,11 @@ export default function Navigation() {
     <nav
       className="sticky top-0 z-50 text-[var(--foreground)] dark:text-white backdrop-blur-xl py-3.5 font-light w-full transition-all duration-500 bg-[rgba(255,255,255,0.08)] border-b border-[rgba(var(--theme-rgb),0.3)] shadow-[0_16px_40px_rgba(var(--theme-rgb),0.15)] dark:bg-black/90 dark:border-[var(--divider)] dark:shadow-none"
     >
-      <SmoothFade as="div" delay={0.2} disabled={!isInitialLoad} ignoreExit={true} className="flex justify-between items-center max-w-[1440px] w-[95%] mx-auto gap-4">
+      <SmoothFade as="div" delay={0.2} disabled={!isInitialLoad} ignoreExit={true} className="flex justify-between items-center w-full px-4 md:px-6 max-w-[1440px] mx-auto gap-2">
         {/* Far Left: Otakufy Logo & Core Links */}
-        <div className="flex items-center gap-8 sm:gap-10">
+        <div className="flex items-center gap-4 sm:gap-10">
           <TransitionLink href="/" className="min-h-[44px] flex items-center shrink-0">
-            <AnimatedLogo className="font-serif font-black text-[22px] tracking-widest inline-block relative py-1">
+            <AnimatedLogo className="font-serif font-black text-[18px] sm:text-[22px] tracking-widest inline-block relative py-1">
               Otakufy
             </AnimatedLogo>
           </TransitionLink>
@@ -96,9 +96,11 @@ export default function Navigation() {
         </div>
 
         {/* Far Right: Theme Controls & Profile Icon Dropdown */}
-        <div className="flex items-center gap-2.5 sm:gap-4 ml-auto">
-          <LanguageToggle />
-          <ThemeToggle />
+        <div className="flex items-center gap-1 sm:gap-4 ml-auto shrink-0">
+          <div className="hidden sm:flex items-center gap-2 lg:gap-4">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
           <UserMenu />
 
           {/* Hamburger Menu Button for Mobile (< 768px) */}
@@ -118,7 +120,7 @@ export default function Navigation() {
 
       {/* Mobile Drawer (< 768px) */}
       {mobileMenuOpen && (
-        <div data-modal="true" role="dialog" className="md:hidden pt-4 pb-6 mt-3 border-t border-white/10 flex flex-col gap-2 animate-fade-in font-serif">
+        <div data-modal="true" role="dialog" className="md:hidden px-4 pt-4 pb-6 mt-3 border-t border-white/10 flex flex-col gap-2 animate-fade-in font-serif">
           {NAV_LINKS.map(link => {
             const isActive = pathname === link.href || (link.href !== "/" && pathname?.startsWith(link.href));
             return (
@@ -135,6 +137,11 @@ export default function Navigation() {
               </TransitionLink>
             );
           })}
+          
+          <div className="flex justify-around items-center mt-4 pt-6 pb-2 border-t border-white/10 sm:hidden">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
         </div>
       )}
     </nav>

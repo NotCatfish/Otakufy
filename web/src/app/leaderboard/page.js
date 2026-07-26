@@ -230,8 +230,8 @@ export default function LeaderboardPage() {
   return (
     <PageAnimationGate pageKey={PAGE_KEYS.LEADERBOARD}>
     <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
-      <SmoothFade as="header" delay={0.1} className="mb-12 pb-12 border-b border-[var(--strong-border)] text-center flex flex-col items-center">
-        <h1 className="text-4xl font-semibold tracking-tight text-white mb-6">
+      <SmoothFade as="header" delay={0.1} className="mb-8 md:mb-12 pb-8 md:pb-12 border-b border-[var(--strong-border)] text-center flex flex-col items-center">
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-6">
           <RevealText text={leaderboardMode === 'global' ? t("Global Leaderboard") : t("Friends Leaderboard")} baseDelay={0.2} />
         </h1>
         
@@ -270,23 +270,26 @@ export default function LeaderboardPage() {
           currentLeaderboard.map((user, index) => (
             <SmoothFade delay={0.3 + (index * 0.05)} key={user.id}>
             <Link href={`/profile/${user.id}`} className={`group block ${session?.user?.id === user.id ? 'relative z-10 scale-[1.02]' : ''}`}>
-              <div className={`flex items-center gap-6 p-6 rounded-2xl transition-all ${session?.user?.id === user.id ? 'border border-[var(--strong-border)] bg-[var(--surface-hover)]' : 'border border-[var(--strong-border)] bg-[var(--surface)] hover:border-[var(--strong-border)] hover:bg-[var(--surface)]'}`}>
-                <div className={`w-12 text-center text-xl mb-mono ${session?.user?.id === user.id ? 'text-white font-semibold' : 'text-white/30 group-hover:text-white transition-colors'}`}>
+              <div className={`flex items-center gap-3 md:gap-6 p-4 md:p-6 rounded-2xl transition-all ${session?.user?.id === user.id ? 'border border-[var(--strong-border)] bg-[var(--surface-hover)]' : 'border border-[var(--strong-border)] bg-[var(--surface)] hover:border-[var(--strong-border)] hover:bg-[var(--surface)]'}`}>
+                <div className={`w-8 md:w-12 text-center text-lg md:text-xl mb-mono shrink-0 ${session?.user?.id === user.id ? 'text-white font-semibold' : 'text-white/30 group-hover:text-white transition-colors'}`}>
                   #{user.rank || (index + 1)}
                 </div>
                 
-                <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden shrink-0 flex items-center justify-center">
                   <DefaultAvatar src={user.avatar_url} name={user.username} seed={user.id} size={48} />
                 </div>
 
-                <div className="flex-1 flex flex-col justify-center">
-                  <h3 className="text-[16px] font-medium text-white">{user.username || (lang === 'ja' ? '匿名' : t("Anonymous"))} {session?.user?.id === user.id && <span className="text-[10px] uppercase tracking-widest bg-white text-black px-2 py-0.5 rounded ml-2 font-semibold">{t("You")}</span>}</h3>
-                  <p className="mb-label mt-1">{t("LEVEL")} {toKanji(user.level)}</p>
+                <div className="flex-1 flex flex-col justify-center min-w-0">
+                  <h3 className="text-[14px] md:text-[16px] font-medium text-white flex items-center flex-wrap gap-2">
+                    <span className="truncate block">{user.username || (lang === 'ja' ? '匿名' : t("Anonymous"))}</span>
+                    {session?.user?.id === user.id && <span className="text-[10px] uppercase tracking-widest bg-white text-black px-2 py-0.5 rounded font-semibold shrink-0">{t("You")}</span>}
+                  </h3>
+                  <p className="mb-label mt-1 text-[11px] md:text-[12px]">{t("LEVEL")} {toKanji(user.level)}</p>
                 </div>
 
-                <div className="flex flex-col items-end justify-center pr-4">
-                  <span className={`text-[16px] mb-mono transition-colors ${session?.user?.id === user.id ? 'text-white font-semibold' : 'text-white/50 group-hover:text-white'}`}>{toKanji(user.xp?.toLocaleString() || 0)} {lang === 'ja' ? '経験値' : 'XP'}</span>
-                  {user.streak > 0 && <span className="text-[11px] text-white/30 mt-1">🔥 {toKanji(user.streak)} {t("Day Streak")}</span>}
+                <div className="flex flex-col items-end justify-center shrink-0">
+                  <span className={`text-[14px] md:text-[16px] mb-mono transition-colors ${session?.user?.id === user.id ? 'text-white font-semibold' : 'text-white/50 group-hover:text-white'}`}>{toKanji(user.xp?.toLocaleString() || 0)} {lang === 'ja' ? '経験値' : 'XP'}</span>
+                  {user.streak > 0 && <span className="text-[10px] md:text-[11px] text-white/30 mt-1">🔥 {toKanji(user.streak)} {t("Day Streak")}</span>}
                 </div>
               </div>
             </Link>

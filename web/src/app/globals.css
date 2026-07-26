@@ -414,6 +414,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-serif), var(--font-sans), serif;
   overflow-x: hidden;
+  max-width: 100vw;
   transition: background-color 0.4s ease-out, color 0.4s ease-out;
   min-height: 100vh;
   display: flex;
@@ -522,9 +523,16 @@ body {
 
 .mb-row-grid {
   display: grid;
-  grid-template-columns: 1fr 90px 90px;
+  grid-template-columns: 1fr auto auto;
   align-items: center;
-  column-gap: 16px;
+  column-gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .mb-row-grid {
+    grid-template-columns: 1fr 80px 80px;
+    column-gap: 16px;
+  }
 }
 
 .mb-row {
@@ -610,6 +618,8 @@ body {
 /* Phase 5 Polish: Smooth Scrolling & Sleek Custom Scrollbars */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 ::-webkit-scrollbar {

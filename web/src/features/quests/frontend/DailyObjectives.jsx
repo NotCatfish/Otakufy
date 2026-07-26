@@ -143,8 +143,8 @@ export default function DailyObjectives({ userId, isInitialLoad = false }) {
                                 {isComplete && <Check className="w-2.5 h-2.5 text-[var(--background)]" />}
                             </div>
                         )}
-                        <span className={`text-[13.5px] truncate text-[var(--foreground)] ${isClaimed || isComplete ? 'line-through opacity-50' : 'opacity-90'}`}>
-                          <RevealText text={toKanji(t(pool.description), lang)} baseDelay={3.2 + (0.2 * index)} charDelay={0.02} disabled={!isInitialLoad} />
+                        <span className={`text-[13.5px] line-clamp-2 text-[var(--foreground)] ${isInitialLoad ? 'opacity-0 animate-fade-in' : 'opacity-100'} ${isClaimed || isComplete ? 'line-through opacity-50' : 'opacity-90'}`} style={{ animationDelay: isInitialLoad ? `${3.2 + (0.2 * index)}s` : '0s', animationFillMode: 'forwards' }}>
+                          {toKanji(t(pool.description), lang)}
                         </span>
                     </div>
                     

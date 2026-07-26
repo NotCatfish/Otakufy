@@ -140,15 +140,15 @@ export default function DashboardClient({ initialProfile }) {
     <PageAnimationGate pageKey={PAGE_KEYS.DASHBOARD}>
     <PageContainer >
         
-        <SmoothFade as="header" delay={0.2}  className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
-          <div className="space-y-4">
-            <h1 className="text-5xl md:text-6xl font-semibold tracking-tight">
+        <SmoothFade as="header" delay={0.2}  className="flex flex-col md:flex-row items-center md:items-end text-center md:text-left justify-between gap-8 pb-10 mb-10 border-b border-[var(--divider)]">
+          <div className="space-y-4 w-full md:w-auto flex flex-col items-center md:items-start">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight">
               <RevealText text={t("Welcome back.")} baseDelay={0.4}  />
             </h1>
-            <p className="text-[21px] text-[var(--muted-text)]">
+            <p className="text-base md:text-[21px] text-[var(--muted-text)]">
               <RevealText text={t("\"Continue your path to fluency.\"")} baseDelay={0.6} charDelay={0.03}  />
             </p>
-            <div className="flex items-center gap-4 pt-1">
+            <div className="flex flex-wrap justify-center md:justify-start items-center gap-1.5 md:gap-4 pt-1 w-full max-w-[320px] md:max-w-none mx-auto md:mx-0">
               <SmoothFade 
                 delay={0.8}
                 className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--badge-streak-bg)] border border-[var(--badge-streak-border)] text-[var(--badge-streak-text)] font-medium text-[14px]`}
@@ -253,7 +253,7 @@ export default function DashboardClient({ initialProfile }) {
                 href={`/practice/${item.path}`}
                 key={i} 
                 onMouseEnter={() => prefetchCategory(item.path)}
-                className="mb-module rounded-2xl py-12 flex flex-col items-center justify-center gap-4 cursor-pointer group transition-all"
+                className="mb-module rounded-2xl py-8 md:py-12 flex flex-col items-center justify-center gap-3 md:gap-4 cursor-pointer group transition-all"
               >
                 <SmoothFade delay={2.0 + (0.1 * i)} as={item.Icon} className={`w-8 h-8 group-hover:opacity-60 transition-opacity text-[var(--foreground)]`} />
                 <span className="text-[19px] font-medium text-[var(--foreground)] group-hover:text-[var(--muted-text)] transition-colors">
@@ -276,9 +276,9 @@ export default function DashboardClient({ initialProfile }) {
                 <span className="text-[var(--foreground)] font-medium text-[16px]">
                   <RevealText text={t("Spaced Repetition")} baseDelay={3.0}  />
                 </span>
-                <span className="text-[var(--muted-text)] text-[14.5px] leading-relaxed">
-                  <RevealText text={t("Power through your due SRS reviews. The algorithm determines exactly what you need to study for optimal long-term retention. If your queue is empty, you'll automatically start a random") + " " + (lang === 'ja' ? toKanji(autoJlptLevel).replace('N', 'Ｎ') : autoJlptLevel) + " " + t("deck.")} baseDelay={3.2} charDelay={0.015}  />
-                </span>
+                <SmoothFade as="p" delay={3.2} className="text-[var(--muted-text)] text-[14.5px] leading-relaxed">
+                  {t("Power through your due SRS reviews. The algorithm determines exactly what you need to study for optimal long-term retention. If your queue is empty, you'll automatically start a random") + " " + (lang === 'ja' ? toKanji(autoJlptLevel).replace('N', 'Ｎ') : autoJlptLevel) + " " + t("deck.")}
+                </SmoothFade>
               </div>
             </div>
             <div className="mt-8">

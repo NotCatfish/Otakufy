@@ -31,7 +31,7 @@ export default function SuggestionsBoard() {
     <div className="flex flex-col gap-8 w-full">
         
         {/* Top Level Tabs */}
-        <div className="flex items-center gap-6 border-b border-[var(--strong-border)] pb-4 overflow-x-auto hide-scrollbar">
+        <div className="flex items-center gap-4 md:gap-6 border-b border-[var(--strong-border)] pb-4 overflow-x-auto hide-scrollbar">
             {[
                 { id: 'board', label: 'Suggestions' },
                 { id: 'roadmap', label: 'Roadmap' },
@@ -41,7 +41,7 @@ export default function SuggestionsBoard() {
                 <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`text-lg md:text-xl font-medium tracking-wide whitespace-nowrap transition-colors ${
+                    className={`text-base md:text-xl font-medium tracking-wide whitespace-nowrap transition-colors ${
                         activeTab === tab.id 
                             ? 'text-white' 
                             : 'text-white/30 hover:text-white/50'
@@ -53,8 +53,8 @@ export default function SuggestionsBoard() {
         </div>
 
         {/* Header & Controls */}
-        <div className="flex flex-col gap-2 mb-2">
-            <h2 className="text-2xl font-semibold tracking-tight text-white">
+        <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2 mb-2">
+            <h2 className="text-xl md:text-2xl font-semibold tracking-tight text-white">
                 {activeTab === 'board' ? t('Community Suggestions') : activeTab === 'roadmap' ? t('Coming Soon') : activeTab === 'shipped' ? t('Recently Released') : t('Declined Ideas')}
             </h2>
             <p className="text-[14px] text-white/50">
@@ -84,7 +84,7 @@ export default function SuggestionsBoard() {
                 {session?.user ? (
                     <button 
                         onClick={() => setShowForm(true)}
-                        className="flex items-center gap-2 px-5 py-2 bg-white text-black font-medium text-[13px] rounded-lg hover:bg-white/90 transition-all shrink-0"
+                        className="flex items-center justify-center gap-2 px-5 py-2.5 sm:py-2 bg-white text-black font-medium text-[13px] rounded-lg hover:bg-white/90 transition-all shrink-0 w-full sm:w-auto"
                     >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4"></path></svg>
                         {t("New Suggestion")}

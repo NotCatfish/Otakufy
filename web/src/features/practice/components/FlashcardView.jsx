@@ -8,7 +8,7 @@ import SaveProgressModal from './SaveProgressModal';
 
 export default function FlashcardView({ category, currentTheme, engineState, renderWithUnderline }) {
   const { lang } = useLanguage();
-  
+
   const tLocal = (str) => {
     if (lang !== 'ja') return str;
     const map = {
@@ -52,7 +52,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
   const {
     appState, setAppState, queue, currentIndex, status, initialQueueLength,
     readingInput, setReadingInput, meaningInput, setMeaningInput,
-    validationError, setValidationError, showSaveModal, setShowSaveModal, 
+    validationError, setValidationError, showSaveModal, setShowSaveModal,
     saveName, setSaveName, saveAndQuit,
     handleVocabAnswer, handleSubmit, handleSkip, handleNext, saves
   } = engineState;
@@ -60,17 +60,17 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
   const [selectedOption, setSelectedOption] = useState(null);
   const [totalDbCount, setTotalDbCount] = useState(null);
   const [showFurigana, setShowFurigana] = useState(() => {
-      return getSetting(SETTINGS_KEYS.SHOW_FURIGANA, true);
+    return getSetting(SETTINGS_KEYS.SHOW_FURIGANA, true);
   });
 
   // Reset to global setting when moving to the next card
   useEffect(() => {
-      setShowFurigana(getSetting(SETTINGS_KEYS.SHOW_FURIGANA, true));
+    setShowFurigana(getSetting(SETTINGS_KEYS.SHOW_FURIGANA, true));
   }, [currentIndex]);
 
   const toggleFurigana = () => {
-      const newVal = !showFurigana;
-      setShowFurigana(newVal);
+    const newVal = !showFurigana;
+    setShowFurigana(newVal);
   };
 
   const [toastMessage, setToastMessage] = useState('');
@@ -96,36 +96,36 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
   useEffect(() => {
     if (appState === 'playing' && queue && queue.length > 0) {
       const textsToFetch = new Set();
-      
+
       queue.forEach(card => {
-         if (card.text) textsToFetch.add(card.text);
-         if (card.kanji) textsToFetch.add(card.kanji);
-         if (card.passage) {
-            card.passage.split('\n').forEach(p => textsToFetch.add(p));
-         }
-         if (card.question) textsToFetch.add(card.question);
-         if (card.title) textsToFetch.add(card.title);
-         if (card.options && Array.isArray(card.options)) {
-            card.options.forEach(o => textsToFetch.add(o));
-         }
+        if (card.text) textsToFetch.add(card.text);
+        if (card.kanji) textsToFetch.add(card.kanji);
+        if (card.passage) {
+          card.passage.split('\n').forEach(p => textsToFetch.add(p));
+        }
+        if (card.question) textsToFetch.add(card.question);
+        if (card.title) textsToFetch.add(card.title);
+        if (card.options && Array.isArray(card.options)) {
+          card.options.forEach(o => textsToFetch.add(o));
+        }
       });
-      
+
       const missingTexts = Array.from(textsToFetch);
       updateFuriganaBatch(missingTexts);
     }
   }, [appState, queue]);
 
   const isFuriganaAllowed = useMemo(() => {
-      if (status !== 'idle') return true;
-      
-      // If it's a Flashcard (typing card without options), hide Furigana so we don't give away the reading
-      // Note: kanji_reading and kanji_writing have options, so they will pass this check
-      if (!currentCard?.options || !Array.isArray(currentCard.options) || currentCard.options.length === 0) {
-          if (currentCard?.type === 'kanji_reading' || currentCard?.type === 'kanji_writing') return true; // Just in case it's a flashcard variant
-          return false;
-      }
-      
-      return true;
+    if (status !== 'idle') return true;
+
+    // If it's a Flashcard (typing card without options), hide Furigana so we don't give away the reading
+    // Note: kanji_reading and kanji_writing have options, so they will pass this check
+    if (!currentCard?.options || !Array.isArray(currentCard.options) || currentCard.options.length === 0) {
+      if (currentCard?.type === 'kanji_reading' || currentCard?.type === 'kanji_writing') return true; // Just in case it's a flashcard variant
+      return false;
+    }
+
+    return true;
   }, [currentCard, status]);
 
   const effectiveShowFurigana = isFuriganaAllowed && showFurigana;
@@ -172,28 +172,28 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
   const playAudio = () => {
     if (status === 'idle' && displayCategory === 'kanji') {
-        showToast("Audio can only be played after the question is answered.");
-        return;
+      showToast("Audio can only be played after the question is answered.");
+      return;
     }
     if (!currentCard || typeof window === 'undefined') return;
-    
+
     let textToSpeak = '';
-    
+
     if (currentCard.kanji) {
-        textToSpeak = currentCard.kanji;
+      textToSpeak = currentCard.kanji;
     } else if (displayCategory === 'comprehension') {
-        textToSpeak = `${currentCard.title}。${currentCard.passage}`;
+      textToSpeak = `${currentCard.title}。${currentCard.passage}`;
     } else {
-        let text = currentCard.text || '';
-        if (text.includes('{}') && typeof currentCard.answer === 'string') {
-            text = text.replace('{}', currentCard.answer);
-        }
-        text = text.replace(/_+/g, '、、、'); // Use commas to force TTS to pause gracefully
-        textToSpeak = text.replace(/[{}]/g, '');
+      let text = currentCard.text || '';
+      if (text.includes('{}') && typeof currentCard.answer === 'string') {
+        text = text.replace('{}', currentCard.answer);
+      }
+      text = text.replace(/_+/g, '、、、'); // Use commas to force TTS to pause gracefully
+      textToSpeak = text.replace(/[{}]/g, '');
     }
-    
+
     if (!textToSpeak) return;
-    
+
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = 'ja-JP';
     window.speechSynthesis.cancel();
@@ -201,68 +201,72 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
   };
 
   useEffect(() => {
-      if (status !== 'idle' && typeof window !== 'undefined') {
-          if (getSetting(SETTINGS_KEYS.AUTO_AUDIO, false)) {
-              playAudio();
-          }
+    if (status !== 'idle' && typeof window !== 'undefined') {
+      if (getSetting(SETTINGS_KEYS.AUTO_AUDIO, false)) {
+        playAudio();
       }
+    }
   }, [status]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (showSaveModal) {
-          if (e.key === 'Escape') {
-              e.preventDefault();
-              e.stopImmediatePropagation();
-              setShowSaveModal(false);
-          }
-          return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          setShowSaveModal(false);
+        }
+        return;
       }
 
       // Ignore if typing in an input field
       if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-          if (e.key === 'Enter' && status !== 'idle') {
-              e.preventDefault();
-              handleNext();
-          }
-          return;
-      }
-      
-      if (e.key === 'Enter' && status !== 'idle') {
+        if (e.key === 'Enter' && status !== 'idle') {
           e.preventDefault();
           handleNext();
+        }
+        return;
+      }
+
+      if (e.key === 'Enter' && status !== 'idle') {
+        e.preventDefault();
+        handleNext();
       } else if (e.key === 'Spacebar' || e.key === ' ') {
-          e.preventDefault(); 
-          if (status !== 'idle' || displayCategory !== 'kanji') {
-              playAudio();
-          } else {
-              showToast("Audio can only be played after the question is answered.");
-          }
+        e.preventDefault();
+        if (status !== 'idle' || displayCategory !== 'kanji') {
+          playAudio();
+        } else {
+          showToast("Audio can only be played after the question is answered.");
+        }
       } else if (e.key === 'ArrowRight') {
-          e.preventDefault();
-          if (status === 'idle') handleSkip();
-      } else if (['1','2','3','4'].includes(e.key)) {
-          e.preventDefault();
-          if (status === 'idle' && displayOptions.length >= parseInt(e.key)) {
-              handleVocabAnswer(displayOptions[parseInt(e.key) - 1]);
-          }
+        e.preventDefault();
+        if (status === 'idle') handleSkip();
+      } else if (['1', '2', '3', '4'].includes(e.key)) {
+        e.preventDefault();
+        if (status === 'idle' && displayOptions.length >= parseInt(e.key)) {
+          handleVocabAnswer(displayOptions[parseInt(e.key) - 1]);
+        }
       }
     };
-    
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [status, displayOptions, currentCard, playAudio, showSaveModal]);
 
-  // Converts {} to underlined blank and {word} to (word) for vocab question display
+  // Converts {} to underlined blank and {word} to underlined word for vocab question display
   const renderVocabText = (text) => {
     if (!text) return null;
-    const parts = text.split(/(\{[^}]*\}|_{2,}|＿{2,})/);
+    const parts = text.split(/(\{[^}]*\}|_{2,}|＿{2,}|\(\s*\)|（\s*）)/);
     return parts.map((part, i) => {
-      if (part === '{}' || /^_{2,}$/.test(part) || /^＿{2,}$/.test(part)) {
-        return <span key={i} className="inline-block mx-1 border-b-2 border-sakura-dark/70 dark:border-white/80 font-bold" style={{minWidth: '3rem'}}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
+      if (part === '{}' || /^_{2,}$/.test(part) || /^＿{2,}$/.test(part) || /^\(\s*\)$/.test(part) || /^（\s*）$/.test(part)) {
+        return <span key={i} className="inline-block mx-1 border-b-[2.5px] border-sakura-dark/70 dark:border-white/80 font-bold" style={{ minWidth: '3rem' }}>&nbsp;&nbsp;&nbsp;&nbsp;</span>;
       }
       if (part.startsWith('{') && part.endsWith('}')) {
-        return <span key={i} className="text-sakura-dark dark:text-white">({part.slice(1, -1)})</span>;
+        return (
+          <span key={i} className="inline-block mx-1 border-b-[2.5px] border-sakura dark:border-white pb-1 text-sakura-dark dark:text-white">
+            <FuriganaText text={part.slice(1, -1)} showFurigana={false} />
+          </span>
+        );
       }
       return <FuriganaText key={i} text={part} showFurigana={effectiveShowFurigana} />;
     });
@@ -272,26 +276,26 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
   return (
     <div className="w-full max-w-2xl mx-auto py-6 px-4 sm:px-6 animate-fade-in flex flex-col items-center min-h-screen relative z-10 font-light text-white/80">
-      
+
       {/* Settings / Toggles */}
       <div className="absolute top-4 right-4 flex gap-3 z-20">
-         {isFuriganaAllowed && (
-             <button 
-                type="button"
-                onClick={toggleFurigana}
-                className={`min-h-[44px] px-4 py-2 text-xs font-bold rounded-full border transition-all flex items-center justify-center ${showFurigana ? 'bg-sakura dark:bg-white text-white dark:text-black border-sakura dark:border-white' : 'bg-transparent text-sakura-dark dark:text-white/60 border-sakura/40 dark:border-white/20 hover:border-sakura dark:hover:border-white/50'}`}
-             >
-                {tLocal('Furigana: ')}{showFurigana ? tLocal('ON') : tLocal('OFF')}
-             </button>
-         )}
-         <button 
+        {isFuriganaAllowed && (
+          <button
             type="button"
-            onClick={playAudio}
-            className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-bold rounded-full border transition-all flex items-center justify-center ${(status === 'idle' && displayCategory === 'kanji') ? 'border-sakura/20 dark:border-white/10 text-sakura/40 dark:text-white/20 cursor-not-allowed' : 'border-sakura/40 dark:border-white/20 text-sakura-dark dark:text-white/60 hover:bg-sakura dark:hover:bg-white hover:text-white dark:hover:text-black'}`}
-            title={tLocal("Play Audio (Spacebar)")}
-         >
-            {tLocal("🔊 Audio")}
-         </button>
+            onClick={toggleFurigana}
+            className={`min-h-[44px] px-4 py-2 text-xs font-bold rounded-full border transition-all flex items-center justify-center ${showFurigana ? 'bg-sakura dark:bg-white text-white dark:text-black border-sakura dark:border-white' : 'bg-transparent text-sakura-dark dark:text-white/60 border-sakura/40 dark:border-white/20 hover:border-sakura dark:hover:border-white/50'}`}
+          >
+            {tLocal('Furigana: ')}{showFurigana ? tLocal('ON') : tLocal('OFF')}
+          </button>
+        )}
+        <button
+          type="button"
+          onClick={playAudio}
+          className={`min-h-[44px] min-w-[44px] px-4 py-2 text-xs font-bold rounded-full border transition-all flex items-center justify-center ${(status === 'idle' && displayCategory === 'kanji') ? 'border-sakura/20 dark:border-white/10 text-sakura/40 dark:text-white/20 cursor-not-allowed' : 'border-sakura/40 dark:border-white/20 text-sakura-dark dark:text-white/60 hover:bg-sakura dark:hover:bg-white hover:text-white dark:hover:text-black'}`}
+          title={tLocal("Play Audio (Spacebar)")}
+        >
+          {tLocal("🔊 Audio")}
+        </button>
       </div>
 
       {/* Toast Notification */}
@@ -314,25 +318,25 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
       {/* Progress Counter */}
       <div className="w-full max-w-xl mx-auto flex flex-col justify-center items-center mb-2">
-        <div className="text-sakura-dark dark:text-white/50 font-medium text-sm uppercase tracking-[0.2em] mb-1 mt-6">
+        <div className="text-sakura-dark dark:text-white/50 font-medium text-sm uppercase tracking-[0.2em] mb-1 mt-14 md:mt-6">
           <span className="font-bold text-sakura-dark dark:text-white">{Math.max(0, Math.min(initialQueueLength, initialQueueLength - (queue.length - currentIndex)))}</span> / {initialQueueLength} {tLocal("CLEARED")}
         </div>
-        
+
         {isSrsMode && srsStats && srsStats.attempts > 0 && !(srsStats.attempts === 1 && srsStats.points === 1) && (
-            <div className="flex flex-col items-center mt-2 opacity-80 animate-fade-in transition-all duration-500">
-                <div className="text-[10px] uppercase tracking-[0.2em] mb-1 flex items-center gap-2">
-                    <span className="text-white">{tLocal("Points: ")}{srsStats.points || 0}</span> 
-                    <span className="opacity-50">{tLocal("/ 4 required")}</span>
-                </div>
-                <div className="flex gap-1 mt-1">
-                    {[1, 2, 3, 4].map((point) => (
-                        <div 
-                            key={point}
-                            className={`w-8 h-1.5 rounded-full transition-all duration-700 ${(srsStats.points || 0) >= point ? 'bg-green-400' : 'bg-white/10'}`}
-                        />
-                    ))}
-                </div>
+          <div className="flex flex-col items-center mt-2 opacity-80 animate-fade-in transition-all duration-500">
+            <div className="text-[10px] uppercase tracking-[0.2em] mb-1 flex items-center gap-2">
+              <span className="text-white">{tLocal("Points: ")}{srsStats.points || 0}</span>
+              <span className="opacity-50">{tLocal("/ 4 required")}</span>
             </div>
+            <div className="flex gap-1 mt-1">
+              {[1, 2, 3, 4].map((point) => (
+                <div
+                  key={point}
+                  className={`w-8 h-1.5 rounded-full transition-all duration-700 ${(srsStats.points || 0) >= point ? 'bg-green-400' : 'bg-white/10'}`}
+                />
+              ))}
+            </div>
+          </div>
         )}
       </div>
 
@@ -347,62 +351,69 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
       <div className="flex flex-col items-center justify-center w-full mb-8 min-h-[150px]">
         {(displayCategory === 'vocabulary' || displayCategory === 'grammar' || displayCategory === 'comprehension') ? (
           <div className="flex flex-col items-center w-full max-w-4xl text-center">
-             <span className="text-sm uppercase tracking-[0.3em] text-sakura-dark/40 dark:text-white/40 mb-6">{tLocal(currentCard.type) !== currentCard.type ? tLocal(currentCard.type) : (currentCard.type || '').replace(/_/g, ' ')}</span>
-             
-             {displayCategory === 'comprehension' && (
-                 <div className="w-full bg-sakura/5 dark:bg-black/20 border border-sakura/20 dark:border-white/10 rounded-xl p-6 md:p-10 mb-8 text-left">
-                    <h3 className="text-2xl font-bold text-sakura-dark dark:text-white mb-6 border-b border-sakura/20 dark:border-white/10 pb-4 tracking-wide"><FuriganaText text={currentCard.title} showFurigana={effectiveShowFurigana} /></h3>
-                    {currentCard.passage.split('\n').map((para, i) => (
-                       <p key={i} className="mb-4 last:mb-0 text-lg md:text-xl font-light leading-relaxed tracking-wide text-sakura-dark/90 dark:text-white/90">
-                         <FuriganaText text={para} showFurigana={effectiveShowFurigana} />
-                       </p>
-                     ))}
-                 </div>
-             )}
-             {currentCard.type === 'usage' ? (
-                  <span className="text-6xl sm:text-7xl font-normal mb-4 tracking-wider text-sakura dark:text-white dark:font-light leading-tight">
-                      {renderVocabText(currentCard.text)}
-                  </span>
-             ) : displayCategory === 'comprehension' ? (
-                 <div className="text-2xl sm:text-3xl font-normal dark:font-light tracking-wider text-sakura-dark dark:text-white/90">
-                   <FuriganaText text={currentCard.text || currentCard.question} showFurigana={effectiveShowFurigana} />
-                 </div>
-             ) : (
-                 <p className="text-4xl sm:text-5xl font-light leading-relaxed tracking-wide text-sakura-dark dark:text-white">
-                     {renderVocabText(currentCard.text)}
-                 </p>
-             )}
+            <span className="text-sm uppercase tracking-[0.3em] text-sakura-dark/40 dark:text-white/40 mb-6">{tLocal(currentCard.type) !== currentCard.type ? tLocal(currentCard.type) : (currentCard.type || '').replace(/_/g, ' ')}</span>
+
+            {displayCategory === 'comprehension' && (
+              <div className="w-full bg-sakura/5 dark:bg-black/40 border border-sakura/20 dark:border-white/10 rounded-xl p-5 md:p-8 mb-8 text-left relative overflow-hidden flex flex-col max-h-[40vh] sm:max-h-[50vh] shadow-inner">
+                <div className="flex-shrink-0">
+                  <h3 className="text-xl sm:text-2xl font-bold text-sakura-dark dark:text-white mb-4 border-b border-sakura/20 dark:border-white/10 pb-3 tracking-wide">
+                    <FuriganaText text={currentCard.title} showFurigana={effectiveShowFurigana} />
+                  </h3>
+                </div>
+                <div className="overflow-y-auto pr-3 -mr-3 pb-6 custom-scrollbar" style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.2) transparent' }}>
+                  {currentCard.passage.split('\n').map((para, i) => (
+                    <p key={i} className={`mb-5 last:mb-0 text-base sm:text-lg md:text-xl font-light tracking-wide text-sakura-dark/90 dark:text-white/90 ${effectiveShowFurigana ? 'leading-[2.5] md:leading-[2.2]' : 'leading-[1.8]'}`}>
+                      <FuriganaText text={para} showFurigana={effectiveShowFurigana} />
+                    </p>
+                  ))}
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[var(--background)] to-transparent pointer-events-none rounded-b-xl opacity-50" />
+              </div>
+            )}
+            {currentCard.type === 'usage' ? (
+              <span className={`font-normal mb-4 tracking-wider text-sakura dark:text-white dark:font-light ${effectiveShowFurigana ? 'leading-[2.2] md:leading-[1.8]' : 'leading-tight'} ${(currentCard.text || '').length > 25 ? 'text-xl sm:text-2xl' : (currentCard.text || '').length > 15 ? 'text-2xl sm:text-3xl' : (currentCard.text || '').length > 8 ? 'text-4xl sm:text-5xl' : 'text-6xl sm:text-7xl'}`}>
+                {renderVocabText(currentCard.text)}
+              </span>
+            ) : displayCategory === 'comprehension' ? (
+              <div className={`font-normal dark:font-light tracking-wider text-sakura-dark dark:text-white/90 ${effectiveShowFurigana ? 'leading-[2.2] md:leading-[1.8]' : 'leading-relaxed'} ${(currentCard.text || currentCard.question || '').length > 50 ? 'text-lg sm:text-xl' : 'text-2xl sm:text-3xl'}`}>
+                <FuriganaText text={currentCard.text || currentCard.question} showFurigana={effectiveShowFurigana} />
+              </div>
+            ) : (
+              <p className={`font-light tracking-wide text-sakura-dark dark:text-white ${effectiveShowFurigana ? 'leading-[2.2] md:leading-[1.8]' : 'leading-relaxed'} ${(currentCard.text || '').length > 30 ? 'text-xl sm:text-2xl' : (currentCard.text || '').length > 15 ? 'text-2xl sm:text-3xl' : (currentCard.text || '').length > 8 ? 'text-3xl sm:text-4xl' : 'text-4xl sm:text-5xl'}`}>
+                {renderVocabText(currentCard.text)}
+              </p>
+            )}
           </div>
         ) : (
           <>
-            <span 
-              className={`font-normal transition-all duration-700 ${status === 'correct' ? 'text-green-500 dark:text-green-400' : status === 'partial' ? 'text-yellow-500 dark:text-yellow-400' : status === 'incorrect' ? 'text-red-500 dark:text-red-400' : 'text-sakura dark:text-white'} dark:font-light ${status !== 'idle' ? 'mb-12' : 'mb-0'}`} 
+            <span
+              className={`font-normal transition-all duration-700 ${status === 'correct' ? 'text-green-500 dark:text-green-400' : status === 'partial' ? 'text-yellow-500 dark:text-yellow-400' : status === 'incorrect' ? 'text-red-500 dark:text-red-400' : 'text-sakura dark:text-white'} dark:font-light ${status !== 'idle' ? 'mb-12' : 'mb-0'}`}
               style={{ fontSize: (currentCard.kanji || currentCard.text || '').length > 20 ? '2.5rem' : (currentCard.kanji || currentCard.text || '').length > 4 ? '4rem' : (currentCard.kanji || currentCard.text || '').length > 2 ? '6rem' : '8rem', lineHeight: effectiveShowFurigana ? '1.5' : '1' }}
             >
               {currentCard.type === 'kanji_reading' || currentCard.type === 'kanji_writing' ? (
-                  (currentCard.kanji || currentCard.text || '').split(/(\(.*?\)|（.*?）)/g).map((part, i) => {
-                      if (part.startsWith('(') || part.startsWith('（')) {
-                          return <span key={i} className="font-bold opacity-90">{part}</span>;
-                      }
-                      return <FuriganaText key={i} text={part} showFurigana={effectiveShowFurigana} />;
-                  })
+                (currentCard.kanji || currentCard.text || '').split(/(\(.*?\)|（.*?）)/g).map((part, i) => {
+                  if (part.startsWith('(') || part.startsWith('（')) {
+                    return <span key={i} className="font-bold opacity-90">{part}</span>;
+                  }
+                  return <FuriganaText key={i} text={part} showFurigana={effectiveShowFurigana} />;
+                })
               ) : (
-                  <FuriganaText text={currentCard.kanji || currentCard.text} showFurigana={effectiveShowFurigana} fallbackReading={getPrimaryKana()} />
+                <FuriganaText text={currentCard.kanji || currentCard.text} showFurigana={effectiveShowFurigana} fallbackReading={getPrimaryKana()} />
               )}
             </span>
-            
+
             {status !== 'idle' && (
               <div className="flex flex-col items-center w-full animate-fade-in">
                 {displayExample && (
                   <div className="flex flex-col items-center max-w-md text-center mb-8">
                     <span className="text-base text-sakura-dark dark:text-white opacity-90 mb-2">
-                        {renderVocabText(displayExample.ja)}
+                      {renderVocabText(displayExample.ja)}
                     </span>
                     <span className="text-sm italic text-[var(--muted-text)] mb-1">{safeRenderWithUnderline(displayExample.ro)}</span>
                     <span className="text-sm text-[var(--muted-text)]">{safeRenderWithUnderline(displayExample.en)}</span>
                   </div>
                 )}
-                
+
                 <div className="flex gap-16 mb-8">
                   <div className="flex flex-col items-center">
                     <span className="text-xs uppercase tracking-[0.2em] text-[var(--muted-text)] mb-2">{tLocal("Reading")}</span>
@@ -426,8 +437,17 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
             {displayOptions.map((opt, i) => {
               const cleanOpt = typeof opt === 'string' ? opt.replace(/[{}]/g, '') : String(opt || '');
               const cleanAnswer = typeof currentCard.answer === 'string' ? currentCard.answer.replace(/[{}]/g, '') : String(currentCard.answer || '');
+              const optLen = cleanOpt.length;
               
-              let btnClass = "min-h-[52px] py-4 px-6 border rounded-xl text-2xl md:text-3xl transition-all duration-300 text-center relative flex items-center justify-center ";
+              const textSizeClass = optLen > 30 ? "text-base sm:text-lg md:text-xl px-4 py-5" 
+                                  : optLen > 15 ? "text-lg sm:text-xl md:text-2xl px-5 py-4" 
+                                  : optLen > 8 ? "text-xl sm:text-2xl md:text-3xl px-6 py-4"
+                                  : "text-2xl md:text-3xl px-6 py-4";
+                                  
+              const leadingClass = effectiveShowFurigana && optLen > 15 ? "leading-[2.5]" : "leading-normal";
+
+              let btnClass = `min-h-[52px] border rounded-xl transition-all duration-300 text-center relative flex items-center justify-center w-full ${textSizeClass} ${leadingClass} `;
+              
               if (status === 'idle') {
                 const isSelected = selectedOption === opt;
                 btnClass += isSelected
@@ -443,7 +463,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
                 }
               }
               return (
-                <button 
+                <button
                   key={i}
                   disabled={status !== 'idle'}
                   onClick={() => handleVocabAnswer(opt)}
@@ -457,17 +477,17 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
           </div>
 
           <div className="flex flex-col gap-3 w-full max-w-sm mx-auto">
-             {status === 'idle' ? (
-                <p className="text-center text-[10px] uppercase tracking-widest text-sakura-dark dark:text-white/50 font-medium mb-2">
-                   <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">1-4</kbd> {tLocal("Select")} &nbsp;•&nbsp; 
-                   <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">→</kbd> {tLocal("Skip")}
-                </p>
-             ) : (
-                <p className="text-center text-[10px] uppercase tracking-widest text-sakura-dark dark:text-white/50 font-medium mb-2">
-                   <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">Enter</kbd> {tLocal("Next")}
-                </p>
-             )}
-             
+            {status === 'idle' ? (
+              <p className="text-center text-[10px] uppercase tracking-widest text-sakura-dark dark:text-white/50 font-medium mb-2">
+                <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">1-4</kbd> {tLocal("Select")} &nbsp;•&nbsp;
+                <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">→</kbd> {tLocal("Skip")}
+              </p>
+            ) : (
+              <p className="text-center text-[10px] uppercase tracking-widest text-sakura-dark dark:text-white/50 font-medium mb-2">
+                <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">Enter</kbd> {tLocal("Next")}
+              </p>
+            )}
+
             {status === 'idle' ? (
               <div className="flex gap-4 w-full">
                 <button
@@ -494,7 +514,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
               </div>
             ) : (
               <div className="flex flex-col gap-3 w-full animate-fade-in">
-                <button 
+                <button
                   type="button"
                   onClick={handleNext}
                   className="w-full min-h-[48px] py-4 bg-sakura dark:bg-white text-white dark:text-black rounded-full text-xs uppercase tracking-[0.2em] hover:bg-sakura-dark dark:hover:bg-white/90 transition-all font-bold flex items-center justify-center shadow-md dark:shadow-none"
@@ -530,9 +550,9 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
           )}
 
           <div className="flex flex-col mb-8">
-            <input 
+            <input
               id="reading-input"
-              type="text" 
+              type="text"
               placeholder={tLocal("Reading (Romaji / Kana)")}
               value={readingInput}
               onChange={(e) => setReadingInput(wanakana.toKana(e.target.value, { IMEMode: true }))}
@@ -549,9 +569,9 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
           </div>
 
           <div className="flex flex-col mb-8">
-            <input 
+            <input
               id="meaning-input"
-              type="text" 
+              type="text"
               placeholder={tLocal("English Meaning")}
               value={meaningInput}
               onChange={(e) => setMeaningInput(e.target.value)}
@@ -559,22 +579,22 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
               className="w-full bg-transparent border-b border-sakura/40 dark:border-white/20 py-3 text-center text-lg font-medium dark:font-light text-sakura-dark dark:text-white placeholder-sakura/60 dark:placeholder-white/30 focus:outline-none focus:border-sakura-dark dark:focus:border-white transition-colors disabled:opacity-50"
             />
           </div>
-          
+
           <div className="flex justify-center w-full">
             {status === 'idle' ? (
               <div className="flex flex-col gap-4 w-full">
                 <p className="text-center text-[10px] uppercase tracking-widest text-sakura-dark dark:text-white/50 font-medium mb-0 mt-[-10px]">
-                   <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">Enter</kbd> {tLocal("Submit")} &nbsp;•&nbsp; 
-                   <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">→</kbd> {tLocal("Skip")}
+                  <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">Enter</kbd> {tLocal("Submit")} &nbsp;•&nbsp;
+                  <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">→</kbd> {tLocal("Skip")}
                 </p>
                 <div className="flex gap-6 w-full">
-                  <button 
+                  <button
                     type="submit"
                     className="flex-1 py-3 border border-sakura dark:border-white/20 rounded-full text-xs uppercase tracking-[0.2em] bg-sakura dark:bg-transparent text-white hover:bg-sakura-dark dark:hover:bg-white dark:hover:text-black transition-all font-bold shadow-md dark:shadow-none"
                   >
                     {tLocal("Submit")}
                   </button>
-                  <button 
+                  <button
                     type="button"
                     onClick={handleSkip}
                     className="flex-1 py-3 border border-sakura/40 dark:border-white/20 rounded-full text-xs uppercase tracking-[0.2em] hover:bg-sakura dark:hover:bg-white hover:text-white dark:hover:text-black transition-all text-sakura-dark dark:text-white/60 font-medium"
@@ -584,14 +604,14 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
                 </div>
                 {/* QUIT and SAVE below Submit/Skip */}
                 <div className="flex gap-4 w-full">
-                  <button 
+                  <button
                     type="button"
                     onClick={() => { setValidationError(''); engineState.navigateBack(); }}
                     className="flex-1 py-3 border border-sakura/40 dark:border-white/20 rounded-full text-xs uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white hover:border-red-500 transition-all text-sakura-dark dark:text-white/60 font-medium"
                   >
                     {tLocal("Quit")}
                   </button>
-                  <button 
+                  <button
                     type="button"
                     onClick={() => setShowSaveModal(true)}
                     className="flex-1 py-3 border border-sakura/40 dark:border-white/20 rounded-full text-xs uppercase tracking-[0.2em] hover:bg-sakura dark:hover:bg-white hover:text-white dark:hover:text-black transition-all text-sakura-dark dark:text-white/60 font-medium"
@@ -603,9 +623,9 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
             ) : (
               <div className="flex flex-col gap-2 w-full">
                 <p className="text-center text-[10px] uppercase tracking-widest text-sakura-dark dark:text-white/50 font-medium mb-0">
-                   <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">Enter</kbd> {tLocal("Next")}
+                  <kbd className="px-1.5 py-0.5 border border-sakura/40 dark:border-white/20 rounded mx-1 bg-sakura/10 dark:bg-transparent font-mono font-bold text-sakura dark:text-white">Enter</kbd> {tLocal("Next")}
                 </p>
-                <button 
+                <button
                   type="button"
                   onClick={handleNext}
                   className="w-full py-4 bg-sakura dark:bg-white text-white dark:text-black rounded-full text-xs uppercase tracking-[0.2em] hover:bg-sakura-dark dark:hover:bg-white/90 transition-all font-bold shadow-md dark:shadow-none"
