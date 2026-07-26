@@ -42,7 +42,6 @@ export function TransitionProvider({ children }) {
       setIsExiting(true);
       const isAnimDisabled = getSetting(SETTINGS_KEYS.DISABLE_UI_ANIMATIONS, false);
       setTimeout(() => {
-        setIsExiting(false);
         resolve();
       }, isAnimDisabled ? 0 : exitDurationMs);
     });

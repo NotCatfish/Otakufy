@@ -9,22 +9,34 @@ export default function EmailVerificationCloser() {
     if (typeof window === "undefined") return;
 
     // Check if the URL hash contains the email change token or confirmation message
-    const hash = window.location.hash;
-    if (hash && (hash.includes("type=email_change") || hash.includes("message=Confirmation") || hash.includes("message="))) {
+    const hash = window.location.hash || '';
+    const search = window.location.search || '';
+    
+    if (
+      hash.includes("type=email_change") || 
+      hash.includes("type=signup") || 
+      hash.includes("message=Confirmation") || 
+      hash.includes("message=") ||
+      hash.includes("access_token=") ||
+      search.includes("code=") ||
+      search.includes("token_hash=")
+    ) {
       setIsVerifying(true);
       
-      // Give Supabase a split second to parse the token
+      // Try to close at exactly 0.1s (100ms) as requested
       setTimeout(() => {
         try {
+          // Hack to trick some browsers into allowing window.close()
+          window.open('', '_self', '');
           window.close();
         } catch(e) {}
         
-        // If window.close is blocked, just dismiss the overlay and let them see the site
+        // If window.close is blocked by browser security, just dismiss the overlay
         setIsVerifying(false);
         if (typeof window !== 'undefined') {
           window.history.replaceState(null, '', window.location.pathname);
         }
-      }, 300);
+      }, 100);
     }
   }, []);
 

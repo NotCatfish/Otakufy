@@ -282,7 +282,7 @@ export default function DashboardClient({ initialProfile }) {
               </div>
             </div>
             <div className="mt-8">
-              <SmoothFade delay={3.4} as="a" href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity`}>
+              <SmoothFade delay={3.4} as={Link} href={`/practice/random?state=setup&level=SRS&fallback=${autoJlptLevel}`} className={`inline-flex items-center justify-center w-full py-3.5 rounded-md bg-[var(--foreground)] text-[var(--background)] text-[14.5px] font-semibold hover:opacity-85 transition-opacity`}>
                 <Play className="w-4 h-4 mr-2 fill-[var(--background)]" />
                 <RevealText text={t("Start SRS Review")} baseDelay={3.4}  />
               </SmoothFade>

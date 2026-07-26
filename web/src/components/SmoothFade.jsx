@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTransitionContext } from '@/context/TransitionContext';
 import { useSkipPageAnimation } from '@/context/PageAnimationContext';
 
-export default function SmoothFade({ children, delay = 0, className = "", as: Component = "div", disabled = false, forceAnimate = false, ignoreExit = false, ...props }) {
+export default function SmoothFade({ children, delay = 0, className = "", as: Component = "div", disabled = false, forceAnimate = false, ignoreExit = false, animationClass = 'animate-gentle-fade-up', ...props }) {
   const transitionContext = useTransitionContext();
   const rawIsExiting = transitionContext ? transitionContext.isExiting : false;
   const contextDisableUiAnim = transitionContext ? transitionContext.disableUiAnim : false;
@@ -38,7 +38,7 @@ export default function SmoothFade({ children, delay = 0, className = "", as: Co
   return (
     <Component 
       suppressHydrationWarning
-      className={`${isExiting ? 'opacity-0 translate-y-5 blur-[8px] transition-all duration-700 ease-in-out' : (isFinalState ? 'opacity-100' : 'opacity-0 animate-gentle-fade-up')} ${className}`}
+      className={`${isExiting ? 'opacity-0 transition-opacity duration-[800ms] ease-in-out' : (isFinalState ? 'opacity-100' : `opacity-0 ${animationClass}`)} ${className}`}
       style={{
         [isExiting ? 'transitionDelay' : 'animationDelay']: `${isExiting ? 0 : delay}s`,
         ...(isExiting ? {} : { animationFillMode: 'forwards' })

@@ -12,18 +12,11 @@ A highly interactive, gamified Japanese learning web application inspired by the
 ## 📖 Documentation Directory
 To keep this repository clean and adhere to the **Atomic Feature Documentation Protocol (`antigravityrule.txt` Rule #3 & #8)**, all architectural documentation is organized chronologically:
 
-1. **[Chronological Feature State & AI Sync Log](./summaryofpreviouschats.md)**
+1. **[Chronological Feature State & AI Sync Log](./chat_history.md)**
    *Read this first for an exact chronological inventory of features implemented from Phase 1 (Core Engine) through Phase 12 (Frontend Optimization & Feature Redundancy Refactoring).*
 
-2. **[Atomic Feature Documentation Hub](./features/)**
-   *Exploratory architecture documentation organized in chronological implementation order:*
-   - `phase_01_auth_and_identity/`: Multi-modal login, Google OAuth linking, and SSR session hydration.
-   - `phase_02_quiz_and_srs_engine/`: Quiz state machine, Furigana pedagogical masking, and SRS fractional progress.
-   - `phase_03_database_and_pipeline/`: PostgreSQL schema (`16/16` RLS tables), `get_random_deck` anti-DoS CTE slicing, and data pipeline seeds.
-   - `phase_04_ui_and_jlpt_typography/`: Developer Matte `#0a0a0a` palette, Official Japanese Ministry of Education font stack (`公式 JLPT 試験体 / 教科書体`), and SPA history navigation.
-   - `phase_06_to_10_security_and_anti_cheat/`: Full 30/30 Master Security verification audit, enterprise headers, IDOR guards, and consolidated secret vault management (`sensitivedata`).
-   - `phase_11_atomic_row_locking/`: Postgres `FOR UPDATE` lock prevention for double-spending API race conditions.
-   - `phase_12_frontend_optimization/`: DRY architecture improvements, hook abstraction (`useSuggestions`, `validationUtils`), and modularized component design (`FlashcardView`).
+2. **[Atomic Feature Documentation Archive](./feature_archive.md)**
+   *Consolidated architecture documentation of all implementation phases.*
 
 ---
 

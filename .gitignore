@@ -1,14 +1,14 @@
 # Environment & Sensitive Vault Files
 .env*
 *.env
-sensitivedata*
-/sensitivedata*
+sensitive_vault*
+/sensitive_vault*
 client_secret_*.json
 *.credentials.json
 
 # Local Data and Configs
-OldDb/
-rawdata/
+legacy_db/
+raw_data/
 antigravityrule.txt
 
 # Dependencies

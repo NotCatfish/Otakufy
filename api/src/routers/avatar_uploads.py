@@ -1,9 +1,13 @@
 import uuid
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
-from src.config.security import upload_rate_limiter, verify_csrf_token, extract_unverified_jwt_token
+from src.config.security import upload_rate_limiter, get_secure_deps
 from src.config.settings import settings
 
-router = APIRouter(prefix="/upload", tags=["Security & Uploads"])
+router = APIRouter(
+    prefix="/upload",
+    tags=["Security & Uploads"],
+    dependencies=get_secure_deps(upload_rate_limiter),
+)
 
 
 class FileValidator:
@@ -30,7 +34,7 @@ class FileValidator:
         return secure_filename
 
 
-@router.post("/avatar", dependencies=[Depends(verify_csrf_token), Depends(extract_unverified_jwt_token), Depends(upload_rate_limiter)])
+@router.post("/avatar")
 async def secure_avatar_upload(file: UploadFile = File(...)) -> dict[str, str]:
     """Zero-Trust avatar upload verifying magic bytes, enforcing 2MB limit, and saving as UUID."""
     return {"status": "success", "file_id": await FileValidator.validate_and_save(file)}

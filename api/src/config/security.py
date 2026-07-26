@@ -1,5 +1,5 @@
 import time
-from fastapi import Header, HTTPException, Request
+from fastapi import Header, HTTPException, Request, Depends
 
 
 class RateLimiter:
@@ -65,3 +65,12 @@ def extract_unverified_jwt_token(authorization: str = Header(...)) -> str:
     if len(token.split(".")) != 3:
         raise HTTPException(status_code=401, detail="Malformed JWT token structure.")
     return token
+
+
+def get_secure_deps(rate_limiter: RateLimiter) -> list:
+    """Helper to return the standard array of security dependencies for routers."""
+    return [
+        Depends(verify_csrf_token),
+        Depends(extract_unverified_jwt_token),
+        Depends(rate_limiter),
+    ]

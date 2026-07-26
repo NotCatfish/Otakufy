@@ -38,8 +38,11 @@ export async function proxy(request) {
   const { pathname } = request.nextUrl
 
   // Protected routes requiring active authentication
-  const isProtectedRoute = pathname.startsWith('/profile') ||
-                           pathname.startsWith('/friends')
+  const protectedPaths = [
+    '/profile',
+    '/friends'
+  ]
+  const isProtectedRoute = protectedPaths.some(p => pathname.startsWith(p))
 
   if (isProtectedRoute && !user) {
     const redirectUrl = new URL('/login', request.url)

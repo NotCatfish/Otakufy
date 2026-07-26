@@ -47,17 +47,7 @@ class ChangeEmailRoute extends BaseApiRoute {
     }
     updatedUser = updatedData || currentUser;
 
-    // Unlink any non-email identities (like Google) so the old OAuth account can't access this profile anymore
-    if (currentUser.identities && Array.isArray(currentUser.identities)) {
-      for (const identity of currentUser.identities) {
-        if (identity.provider !== 'email') {
-          const { error: unlinkError } = await supabaseAnon.auth.unlinkIdentity(identity);
-          if (unlinkError) {
-            console.error(`Failed to unlink identity ${identity.provider}:`, unlinkError);
-          }
-        }
-      }
-    }
+
 
     verificationMessage = `Verification Mail Sent! We've dispatched a confirmation link to ${cleanTargetEmail}. Check your primary inbox (or spam/promotions folder) to confirm your new address.`;
 

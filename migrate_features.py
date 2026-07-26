@@ -34,13 +34,11 @@ def migrate():
                     new_content = re.sub(r'@source\s+["\'].*features["\'];', '@source "../features";', new_content)
                 else:
                     # Fix imports of features
-                    # Matches from '.../features/...' or from ".../features/..."
-                    new_content = re.sub(r'from\s+[\'"](\.\./)+features/([^\'"]+)[\'"]', r"from '@/features/\2'", new_content)
-                    new_content = re.sub(r'import\s+[\'"](\.\./)+features/([^\'"]+)[\'"]', r"import '@/features/\2'", new_content)
+                    # Matches 'from' or 'import' starting with '../features/'
+                    new_content = re.sub(r'(from|import)\s+[\'"](\.\./)+features/([^\'"]+)[\'"]', r"\1 '@/features/\3'", new_content)
                     
                     # Fix imports of web/src
-                    new_content = re.sub(r'from\s+[\'"](\.\./)+web/src/([^\'"]+)[\'"]', r"from '@/\2'", new_content)
-                    new_content = re.sub(r'import\s+[\'"](\.\./)+web/src/([^\'"]+)[\'"]', r"import '@/\2'", new_content)
+                    new_content = re.sub(r'(from|import)\s+[\'"](\.\./)+web/src/([^\'"]+)[\'"]', r"\1 '@/\3'", new_content)
                 
                 if new_content != content:
                     print(f"Updated imports in {filepath}")

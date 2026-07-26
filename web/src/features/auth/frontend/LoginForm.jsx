@@ -81,7 +81,7 @@ export default function LoginForm() {
         if (error) {
           console.warn("Auth Terminal Log [Registration Error]:", error);
           if (error.status === 429 || error.message?.toLowerCase().includes('rate limit')) {
-            setErrorMsg("Supabase email rate limit reached (Free tier allows 4 emails/hour). Please wait shortly or check your inbox if already sent.");
+            setErrorMsg("Security rate limit reached. Please wait a moment before trying again, or check your inbox if you recently requested a code.");
           } else {
             setErrorMsg(error.message || "Could not complete registration right now.");
           }

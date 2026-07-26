@@ -43,7 +43,7 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
         const entranceDelay = baseDelay + (index * charDelay);
         const exitDelay = ((chars.length - index - 1) * charDelay * 0.5);
         
-        const isExitingClasses = 'opacity-0 blur-[8px] transition-all duration-1000 ease-in-out';
+        const isExitingClasses = 'opacity-0 transition-opacity duration-[800ms] ease-in-out';
         const entranceClasses = skipEntrance.current ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
         const spanClass = isExiting ? isExitingClasses : entranceClasses;
         
