@@ -19,6 +19,10 @@ Otakufy is built with a modern, serverless architecture that separates the front
 - **Database & Auth:** Supabase (PostgreSQL)
 - **Deployment & Hosting:** Optimized for Vercel / Node.js environments
 
+## 🤖 AI-Assisted Development
+
+Transparency is important! The entire codebase for Otakufy was generated and architected through **AI-assisted development**. While the vision, UX design, feature requirements, and project direction were driven by a human, the actual underlying code was written by an advanced AI coding assistant. This project serves as a showcase of what can be accomplished by directing cutting-edge AI tools to build a full-stack, complex web application from scratch.
+
 ## 🚀 How to Run Locally
 
 If you'd like to run the Otakufy web application on your local machine, follow these steps:
