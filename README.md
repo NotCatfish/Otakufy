@@ -1,6 +1,6 @@
 # Otakufy 🌸
 
-🚀 **[Click here to visit the live site!](https://your-live-website-url.com)**
+🚀 **[Click here to visit the live site!](https://otakufy.vercel.app/)**
 
 Welcome to **Otakufy**, a comprehensive Japanese learning platform designed to help users master Japanese vocabulary, grammar, kanji, and reading comprehension through spaced repetition, gamified progress, and interactive quizzes.
 
