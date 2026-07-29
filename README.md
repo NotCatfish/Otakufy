@@ -2,7 +2,7 @@
 
 🚀 **[Click here to visit the live site!](https://otakufy.vercel.app/)**
 
-Welcome to **Otakufy**, a comprehensive Japanese learning platform designed to help users master Japanese vocabulary, grammar, kanji, and reading comprehension through spaced repetition, gamified progress, and interactive quizzes.
+Welcome to **Otakufy**, a comprehensive Japanese learning platform designed to help users master Japanese vocabulary, grammar, kanji, and reading comprehension through spaced repetition, gamified progress, and interactive quizzes—all beautifully tailored to help you conquer the JLPT at your specific level.
 
 ## 🏗️ System Design Overview
 
