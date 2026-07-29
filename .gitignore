@@ -10,6 +10,8 @@ client_secret_*.json
 legacy_db/
 raw_data/
 antigravityrule.txt
+docs/
+migrate_features.py
 
 # Dependencies
 node_modules/
