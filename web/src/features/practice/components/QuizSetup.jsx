@@ -28,7 +28,8 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
       'Slot': 'スロット',
       'is empty': 'は空です',
       'Progress': '進捗',
-      'Resume': '再開'
+      'Resume': '再開',
+      'Mid-quiz saves are stored locally in this browser. They do not sync to the cloud and will be lost if you clear your site data.': 'クイズの中断データはブラウザのローカルに保存されます。クラウドには同期されないため、サイトデータを消去すると失われます。'
     };
     return map[str] || t(str);
   };
@@ -69,7 +70,7 @@ export default function QuizSetup({ category, currentTheme, engineState }) {
     };
     return String(str).replace(/[0-9,]+/g, (match) => {
       if (match === ',') return match;
-      return numToKanji(parseInt(match.replace(/,/g, ''), 10));
+      return numToKanji(match);
     }).replace('N', 'Ｎ');
   };
 

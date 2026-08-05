@@ -11,7 +11,9 @@ import QuizSetup from '../components/QuizSetup';
 import FlashcardView from '../components/FlashcardView';
 import SessionSummary from '../components/SessionSummary';
 import ConfirmModal from '../components/ConfirmModal';
+import ReturnButton from '../components/ReturnButton';
 import EmptyState from '@/components/ui/EmptyState';
+import SmoothFade from '@/components/SmoothFade';
 import { CheckCircle2, Lock, BookOpen, AlertCircle } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { PageAnimationGate } from '@/context/PageAnimationContext';
@@ -126,14 +128,23 @@ export default function QuizEngine({ category }) {
           />
         </div>
       ) : appState === 'srs_unauth' ? (
-        <div className="max-w-2xl mx-auto py-16 animate-fade-in relative z-10 px-4">
-          <EmptyState
-            icon={Lock}
-            title={tLocal("Sign In Required for SRS")}
-            description={tLocal("Spaced Repetition (SRS) tracks your personal memory intervals and retention history over time. Please sign in or create a free account to unlock this feature.")}
-            actionLabel={tLocal("Sign In / Register")}
-            actionHref="/login"
-          />
+        <div className="max-w-3xl mx-auto py-16 animate-fade-in relative z-10 px-4 w-full flex flex-col items-center">
+          <SmoothFade delay={0.1} className="w-full flex justify-center mb-8">
+            <ReturnButton onClick={async () => {
+              if (isExiting) return;
+              await triggerExitTransition();
+              engineState.navigateBack();
+            }} />
+          </SmoothFade>
+          <div className="w-full max-w-2xl mx-auto">
+            <EmptyState
+              icon={Lock}
+              title={tLocal("Sign In Required for SRS")}
+              description={tLocal("Spaced Repetition (SRS) tracks your personal memory intervals and retention history over time. Please sign in or create a free account to unlock this feature.")}
+              actionLabel={tLocal("Sign In / Register")}
+              actionHref="/login"
+            />
+          </div>
         </div>
       ) : appState === 'deck_empty' ? (
         <div className="max-w-2xl mx-auto py-16 animate-fade-in relative z-10 px-4">

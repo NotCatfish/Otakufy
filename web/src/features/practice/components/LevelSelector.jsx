@@ -39,7 +39,7 @@ export default function LevelSelector({ category, currentTheme, engineState }) {
 
       <SmoothFade delay={0.1} className="flex flex-col items-center">
         <SmoothFade as="h1" delay={0.2} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight capitalize text-white">
-          {lang === 'ja' ? (category === 'vocabulary' ? '単語' : category === 'grammar' ? '文法' : category === 'kanji' ? '漢字' : category === 'reading' ? '読解' : category === 'random' ? 'ランダム' : category) : category}
+          {lang === 'ja' ? (category === 'vocabulary' ? '単語' : category === 'grammar' ? '文法' : category === 'kanji' ? '漢字' : category === 'comprehension' ? '読解' : category === 'random' ? 'ランダム' : category) : category}
         </SmoothFade>
         <p className="text-xl md:text-2xl font-medium opacity-60 mb-20 text-white">
           <RevealText text={lang === 'ja' ? '開始するレベルを選択してください' : 'Select a proficiency level to begin'} baseDelay={0.3} charDelay={0.02} />

@@ -8,6 +8,7 @@ export const FuriganaText = ({ text, showFurigana, fallbackReading }) => {
     useEffect(() => {
         if (showFurigana && typeof text === 'string' && text) {
             if (furiganaCache.has(text) && furiganaCache.get(text) !== '__loading__') {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
                 setHtml(furiganaCache.get(text));
                 return;
             }

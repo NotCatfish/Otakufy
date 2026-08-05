@@ -101,6 +101,7 @@ export const useQuizEngine = (category) => {
                   loadLevelData(level);
               }
           } else {
+              // eslint-disable-next-line react-hooks/set-state-in-effect
               setAppState('select_level');
               setLevel(null);
               setVocabType(null);

@@ -22,7 +22,15 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
   }, [rawIsExiting, ignoreExit]);
 
   const skipPageAnim = useSkipPageAnimation();
-  const skipEntrance = { current: skipPageAnim };
+  const hasMountedRef = useRef(false);
+
+  useEffect(() => {
+    hasMountedRef.current = true;
+  }, []);
+
+  // Skip entrance if context says so, or if we've already mounted (e.g., text changed due to language switch)
+  const shouldSkipEntrance = (!forceAnimate && (skipPageAnim || hasMountedRef.current));
+  
   const prevText = useRef(text);
 
   if (typeof text !== 'string') return <span suppressHydrationWarning className={className}>{text}</span>;
@@ -44,10 +52,10 @@ export default function RevealText({ text = "", baseDelay = 0, charDelay = 0.035
         const exitDelay = ((chars.length - index - 1) * charDelay * 0.5);
         
         const isExitingClasses = 'opacity-0 transition-opacity duration-[800ms] ease-in-out';
-        const entranceClasses = skipEntrance.current ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
+        const entranceClasses = shouldSkipEntrance ? 'opacity-100' : 'opacity-0 animate-blur-reveal';
         const spanClass = isExiting ? isExitingClasses : entranceClasses;
         
-        const style = (skipEntrance.current && !isExiting) ? {} : { 
+        const style = (shouldSkipEntrance && !isExiting) ? {} : { 
           [isExiting ? 'transitionDelay' : 'animationDelay']: `${isExiting ? exitDelay : entranceDelay}s`,
           ...(isExiting ? {} : { animationFillMode: 'forwards' })
         };

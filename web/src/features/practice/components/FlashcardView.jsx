@@ -59,12 +59,18 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [totalDbCount, setTotalDbCount] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
   const [showFurigana, setShowFurigana] = useState(() => {
     return getSetting(SETTINGS_KEYS.SHOW_FURIGANA, true);
   });
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Reset to global setting when moving to the next card
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowFurigana(getSetting(SETTINGS_KEYS.SHOW_FURIGANA, true));
   }, [currentIndex]);
 
@@ -132,8 +138,10 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
   const displayOptions = useMemo(() => {
     if (!currentCard || !currentCard.options || !Array.isArray(currentCard.options)) return [];
+    if (!isMounted) return [...currentCard.options];
+    // eslint-disable-next-line react-hooks/purity
     return [...currentCard.options].sort(() => 0.5 - Math.random());
-  }, [currentCard?.id, currentIndex]);
+  }, [currentCard?.id, currentIndex, isMounted]);
 
   const isSrsMode = engineState.level === 'SRS';
   const currentItemId = currentCard?.parent_id || currentCard?.id;
@@ -166,6 +174,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
   // totalDbCount is now fetched in useQuizEngine and exposed via engineState
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedOption(null);
     window.scrollTo(0, 0);
   }, [currentIndex]);
@@ -203,6 +212,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
   useEffect(() => {
     if (status !== 'idle' && typeof window !== 'undefined') {
       if (getSetting(SETTINGS_KEYS.AUTO_AUDIO, false)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         playAudio();
       }
     }
