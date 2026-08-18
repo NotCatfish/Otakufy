@@ -565,7 +565,7 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
               type="text"
               placeholder={tLocal("Reading (Romaji / Kana)")}
               value={readingInput}
-              onChange={(e) => setReadingInput(wanakana.toKana(e.target.value, { IMEMode: true }))}
+              onChange={(e) => setReadingInput(wanakana.toKana(e.target.value.toLowerCase(), { IMEMode: true }))}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault();
@@ -574,6 +574,10 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
               }}
               disabled={status !== 'idle' || showSaveModal}
               autoFocus
+              autoCapitalize="none"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
               className="w-full bg-transparent border-b border-sakura/40 dark:border-white/20 py-3 text-center text-lg font-medium dark:font-light text-sakura-dark dark:text-white placeholder-sakura/60 dark:placeholder-white/30 focus:outline-none focus:border-sakura-dark dark:focus:border-white transition-colors disabled:opacity-50"
             />
           </div>
