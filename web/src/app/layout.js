@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://otakufy.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://otakufy.vercel.app'),
   title: {
     default: "Otakufy | Master Japanese with SRS & Gamified Learning",
     template: "%s | Otakufy",

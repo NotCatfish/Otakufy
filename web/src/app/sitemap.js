@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://otakufy.app';
+  const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://otakufy.vercel.app';
   const now = new Date().toISOString();
 
   return [
