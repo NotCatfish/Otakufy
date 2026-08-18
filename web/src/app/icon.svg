@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Sunset Sky Gradient -->
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF4B72" />
+      <stop offset="50%" stop-color="#FF9B54" />
+      <stop offset="100%" stop-color="#FFD166" />
+    </linearGradient>
+    
+    <!-- Glowing Sun Gradient -->
+    <linearGradient id="sun" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF2A4D" />
+      <stop offset="100%" stop-color="#FF7A3D" />
+    </linearGradient>
+    
+    <!-- Deep Purple/Blue Mountain Gradients -->
+    <linearGradient id="mountain" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#1E1B4B" />
+    </linearGradient>
+    <linearGradient id="mountain-light" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#312E81" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background / Sky (Rounded for perfect App Icon look) -->
+  <rect width="512" height="512" rx="112" fill="url(#sky)" />
+  
+  <!-- Glowing Sun & Halo -->
+  <circle cx="256" cy="240" r="160" fill="#FF2A4D" opacity="0.15" />
+  <circle cx="256" cy="240" r="120" fill="url(#sun)" opacity="0.95" />
+  
+  <!-- Subtle Flat Clouds -->
+  <path d="M 80 230 Q 110 210 140 230 Q 180 220 200 240" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.3" />
+  <path d="M 330 200 Q 360 180 390 200 Q 430 190 450 210" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.3" />
+  
+  <!-- Mountain (Mt Fuji) Right Shadow Side -->
+  <path d="M -40 512 L 256 160 L 552 512 Z" fill="url(#mountain)" />
+  
+  <!-- Mountain Highlights (Left side) -->
+  <path d="M -40 512 L 256 160 L 256 512 Z" fill="url(#mountain-light)" />
+  
+  <!-- Snow Cap -->
+  <path d="M 180 252 L 256 160 L 332 252 Q 310 280 285 245 Q 270 270 256 250 Q 235 275 210 245 Q 190 270 180 252 Z" fill="#FFFFFF" />
+  
+  <!-- Snow Cap shadow (Left side) -->
+  <path d="M 180 252 L 256 160 L 256 250 Q 235 275 210 245 Q 190 270 180 252 Z" fill="#F8FAFC" />
+  
+  <!-- Foreground Silhouette: Sakura Branches -->
+  <!-- Left Branch -->
+  <path d="M -20 380 Q 70 350 140 420" fill="none" stroke="#1E1B4B" stroke-width="16" stroke-linecap="round" />
+  <path d="M 40 365 Q 90 310 120 310" fill="none" stroke="#1E1B4B" stroke-width="10" stroke-linecap="round" />
+  
+  <!-- Sakura Petals on Left Branch -->
+  <circle cx="140" cy="420" r="14" fill="#FDA4AF" />
+  <circle cx="132" cy="412" r="10" fill="#F43F5E" />
+  
+  <circle cx="120" cy="310" r="14" fill="#FDA4AF" />
+  <circle cx="112" cy="302" r="10" fill="#F43F5E" />
+  
+  <circle cx="70" cy="350" r="12" fill="#FDA4AF" />
+  
+  <!-- Right Branch -->
+  <path d="M 532 280 Q 450 300 400 240" fill="none" stroke="#1E1B4B" stroke-width="16" stroke-linecap="round" />
+  <path d="M 470 290 Q 430 360 380 390" fill="none" stroke="#1E1B4B" stroke-width="10" stroke-linecap="round" />
+  
+  <!-- Sakura Petals on Right Branch -->
+  <circle cx="400" cy="240" r="14" fill="#FDA4AF" />
+  <circle cx="408" cy="232" r="10" fill="#F43F5E" />
+  
+  <circle cx="380" cy="390" r="14" fill="#FDA4AF" />
+  <circle cx="388" cy="382" r="10" fill="#F43F5E" />
+  
+  <!-- Falling Petals scattered -->
+  <path d="M 330 310 Q 345 295 350 315 Q 335 330 330 310" fill="#FDA4AF" />
+  <path d="M 180 390 Q 195 375 200 395 Q 185 410 180 390" fill="#F43F5E" />
+  <path d="M 260 440 Q 275 425 280 445 Q 265 460 260 440" fill="#FDA4AF" />
+  <path d="M 440 180 Q 455 165 460 185 Q 445 200 440 180" fill="#F43F5E" />
+
+</svg>
