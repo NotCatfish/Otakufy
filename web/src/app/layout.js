@@ -58,8 +58,8 @@ export const metadata = {
     creator: "@otakufy",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
     apple: "/apple-icon",
   },
   manifest: "/manifest.json",

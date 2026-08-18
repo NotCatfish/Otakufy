@@ -1,81 +1,73 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs>
-    <!-- Sunset Sky Gradient -->
-    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FF4B72" />
-      <stop offset="50%" stop-color="#FF9B54" />
-      <stop offset="100%" stop-color="#FFD166" />
-    </linearGradient>
+  <g stroke="#334155" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
     
-    <!-- Glowing Sun Gradient -->
-    <linearGradient id="sun" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FF2A4D" />
-      <stop offset="100%" stop-color="#FF7A3D" />
-    </linearGradient>
+    <!-- Base Line -->
+    <line x1="120" y1="395" x2="392" y2="395" fill="none" />
+
+    <!-- Stone Path -->
+    <path d="M 210 410 L 302 410 L 292 425 L 220 425 Z" fill="#E2E8F0" />
+    <path d="M 195 435 L 265 435 L 255 450 L 185 450 Z" fill="#E2E8F0" />
+    <path d="M 280 435 L 320 435 L 335 450 L 295 450 Z" fill="#E2E8F0" />
+    <path d="M 160 460 L 352 460 L 342 485 L 170 485 Z" fill="#E2E8F0" />
     
-    <!-- Deep Purple/Blue Mountain Gradients -->
-    <linearGradient id="mountain" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#4F46E5" />
-      <stop offset="100%" stop-color="#1E1B4B" />
-    </linearGradient>
-    <linearGradient id="mountain-light" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#6366F1" />
-      <stop offset="100%" stop-color="#312E81" />
-    </linearGradient>
-  </defs>
+    <!-- Grass Tufts -->
+    <!-- Far Left -->
+    <path d="M 130 395 Q 120 380 115 370 Q 130 380 140 395" fill="#86EFAC" />
+    <path d="M 140 395 Q 145 375 140 365 Q 155 380 150 395" fill="#86EFAC" />
+    <!-- Far Right -->
+    <path d="M 382 395 Q 392 380 397 370 Q 382 380 372 395" fill="#86EFAC" />
+    <path d="M 372 395 Q 367 375 372 365 Q 357 380 362 395" fill="#86EFAC" />
+    <!-- Path Left -->
+    <path d="M 185 450 Q 175 435 170 425 Q 185 440 195 450" fill="#86EFAC" />
+    <!-- Path Right -->
+    <path d="M 335 450 Q 345 435 350 425 Q 335 440 325 450" fill="#86EFAC" />
 
-  <!-- Background / Sky (Rounded for perfect App Icon look) -->
-  <rect width="512" height="512" rx="112" fill="url(#sky)" />
-  
-  <!-- Glowing Sun & Halo -->
-  <circle cx="256" cy="240" r="160" fill="#FF2A4D" opacity="0.15" />
-  <circle cx="256" cy="240" r="120" fill="url(#sun)" opacity="0.95" />
-  
-  <!-- Subtle Flat Clouds -->
-  <path d="M 80 230 Q 110 210 140 230 Q 180 220 200 240" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.3" />
-  <path d="M 330 200 Q 360 180 390 200 Q 430 190 450 210" fill="none" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" opacity="0.3" />
-  
-  <!-- Mountain (Mt Fuji) Right Shadow Side -->
-  <path d="M -40 512 L 256 160 L 552 512 Z" fill="url(#mountain)" />
-  
-  <!-- Mountain Highlights (Left side) -->
-  <path d="M -40 512 L 256 160 L 256 512 Z" fill="url(#mountain-light)" />
-  
-  <!-- Snow Cap -->
-  <path d="M 180 252 L 256 160 L 332 252 Q 310 280 285 245 Q 270 270 256 250 Q 235 275 210 245 Q 190 270 180 252 Z" fill="#FFFFFF" />
-  
-  <!-- Snow Cap shadow (Left side) -->
-  <path d="M 180 252 L 256 160 L 256 250 Q 235 275 210 245 Q 190 270 180 252 Z" fill="#F8FAFC" />
-  
-  <!-- Foreground Silhouette: Sakura Branches -->
-  <!-- Left Branch -->
-  <path d="M -20 380 Q 70 350 140 420" fill="none" stroke="#1E1B4B" stroke-width="16" stroke-linecap="round" />
-  <path d="M 40 365 Q 90 310 120 310" fill="none" stroke="#1E1B4B" stroke-width="10" stroke-linecap="round" />
-  
-  <!-- Sakura Petals on Left Branch -->
-  <circle cx="140" cy="420" r="14" fill="#FDA4AF" />
-  <circle cx="132" cy="412" r="10" fill="#F43F5E" />
-  
-  <circle cx="120" cy="310" r="14" fill="#FDA4AF" />
-  <circle cx="112" cy="302" r="10" fill="#F43F5E" />
-  
-  <circle cx="70" cy="350" r="12" fill="#FDA4AF" />
-  
-  <!-- Right Branch -->
-  <path d="M 532 280 Q 450 300 400 240" fill="none" stroke="#1E1B4B" stroke-width="16" stroke-linecap="round" />
-  <path d="M 470 290 Q 430 360 380 390" fill="none" stroke="#1E1B4B" stroke-width="10" stroke-linecap="round" />
-  
-  <!-- Sakura Petals on Right Branch -->
-  <circle cx="400" cy="240" r="14" fill="#FDA4AF" />
-  <circle cx="408" cy="232" r="10" fill="#F43F5E" />
-  
-  <circle cx="380" cy="390" r="14" fill="#FDA4AF" />
-  <circle cx="388" cy="382" r="10" fill="#F43F5E" />
-  
-  <!-- Falling Petals scattered -->
-  <path d="M 330 310 Q 345 295 350 315 Q 335 330 330 310" fill="#FDA4AF" />
-  <path d="M 180 390 Q 195 375 200 395 Q 185 410 180 390" fill="#F43F5E" />
-  <path d="M 260 440 Q 275 425 280 445 Q 265 460 260 440" fill="#FDA4AF" />
-  <path d="M 440 180 Q 455 165 460 185 Q 445 200 440 180" fill="#F43F5E" />
+    <!-- Torii Gate -->
+    <!-- Bases -->
+    <path d="M 145 340 L 195 340 L 185 395 L 135 395 Z" fill="#64748B" />
+    <path d="M 317 340 L 367 340 L 377 395 L 327 395 Z" fill="#64748B" />
 
+    <!-- Left Pillar -->
+    <polygon points="152,150 188,150 188,340 152,340" fill="#EF4444" />
+    <!-- Right Pillar -->
+    <polygon points="324,150 360,150 360,340 324,340" fill="#EF4444" />
+
+    <!-- Lower Crossbar (Nuki) -->
+    <rect x="120" y="215" width="272" height="26" fill="#EF4444" />
+    <!-- Side wedges -->
+    <polygon points="120,205 152,215 152,241 120,241" fill="#EF4444" />
+    <polygon points="392,205 360,215 360,241 392,241" fill="#EF4444" />
+
+    <!-- Center Support (Gaku-zuka) -->
+    <rect x="240" y="180" width="32" height="35" fill="#EF4444" />
+
+    <!-- Upper Crossbar (Shimaki) -->
+    <polygon points="100,150 412,150 400,180 112,180" fill="#EF4444" />
+
+    <!-- Roof (Kasagi) -->
+    <path d="M 80 125 Q 256 160 432 125 L 420 150 L 92 150 Z" fill="#475569" />
+  </g>
+
+  <!-- Sakura Petals Group (No stroke to match image's soft petals) -->
+  <g fill="#FCA5A5">
+    <path d="M 460 50 Q 470 40 475 55 Q 465 65 460 50" />
+    <path d="M 430 70 Q 440 60 445 75 Q 435 85 430 70" />
+    <path d="M 470 90 Q 480 80 485 95 Q 475 105 470 90" />
+    
+    <!-- Mid right -->
+    <path d="M 395 145 Q 405 135 410 150 Q 400 160 395 145" />
+    <path d="M 350 250 Q 360 240 365 255 Q 355 265 350 250" />
+    <path d="M 400 245 Q 410 235 415 250 Q 405 260 400 245" fill="#F43F5E" />
+    <path d="M 420 300 Q 430 290 435 305 Q 425 315 420 300" />
+    
+    <!-- Left side -->
+    <path d="M 205 260 Q 195 250 190 265 Q 200 275 205 260" fill="#F43F5E" />
+    <path d="M 160 320 Q 170 310 175 325 Q 165 335 160 320" />
+    <path d="M 230 300 Q 240 290 245 305 Q 235 315 230 300" fill="#F43F5E" />
+    <path d="M 285 300 Q 295 290 300 305 Q 290 315 285 300" />
+    
+    <!-- Lower left -->
+    <path d="M 70 330 Q 80 320 85 335 Q 75 345 70 330" fill="#F43F5E" />
+    <path d="M 105 345 Q 115 335 120 350 Q 110 360 105 345" />
+  </g>
 </svg>
