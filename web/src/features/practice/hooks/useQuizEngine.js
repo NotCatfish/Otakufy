@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../auth/frontend/supabaseClient';
 import PracticeRepository from '../repositories/PracticeRepository';
 import ProfileRepository from '../../profile/repositories/ProfileRepository';
+import QuestRepository from '../../quests/repositories/QuestRepository';
 import localforage from 'localforage';
 import * as wanakana from 'wanakana';
 import { validateField } from '../utils/validationUtils';
@@ -420,7 +421,7 @@ export const useQuizEngine = (category) => {
 
   const startNewSession = async () => {
     let amount = parseInt(cardAmount);
-    const minRequired = Math.min(10, deckData.length);
+    const minRequired = Math.min(1, deckData.length);
     
     if (isNaN(amount) || amount < minRequired) {
       setValidationError(`Minimum card amount should be ${minRequired}.`);

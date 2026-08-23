@@ -49,7 +49,7 @@ class PracticeRepository extends BaseRepository {
    */
   async awardQuizXp(xpAmount, sessionId) {
     return this.client.rpc('award_quiz_xp', { 
-        p_xp_amount: xpAmount,
+        xp_to_add: xpAmount,
         p_session_id: sessionId || null
     });
   }
