@@ -133,7 +133,7 @@ export default function SessionSummary({ currentTheme, engineState }) {
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
         <button 
-          onClick={() => engineState.navigateBack()}
+          onClick={() => window.location.href = '/'}
           disabled={isSavingXP}
           className={`px-8 py-3 rounded text-[13px] font-bold transition-all duration-300 disabled:opacity-50 w-full sm:w-auto bg-sakura dark:bg-white text-white dark:text-black hover:opacity-80`}
         >
