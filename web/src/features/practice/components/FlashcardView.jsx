@@ -138,10 +138,8 @@ export default function FlashcardView({ category, currentTheme, engineState, ren
 
   const displayOptions = useMemo(() => {
     if (!currentCard || !currentCard.options || !Array.isArray(currentCard.options)) return [];
-    if (!isMounted) return [...currentCard.options];
-    // eslint-disable-next-line react-hooks/purity
-    return [...currentCard.options].sort(() => 0.5 - Math.random());
-  }, [currentCard?.id, currentIndex, isMounted]);
+    return [...currentCard.options];
+  }, [currentCard?.id, currentIndex]);
 
   const isSrsMode = engineState.level === 'SRS';
   const currentItemId = currentCard?.parent_id || currentCard?.id;

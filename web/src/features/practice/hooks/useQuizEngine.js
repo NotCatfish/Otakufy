@@ -661,6 +661,11 @@ export const useQuizEngine = (category) => {
     return isPartial ? Math.floor(baseXP / 2) : baseXP;
   };
 
+  const reshuffleCard = (card) => {
+    if (!card.options || !Array.isArray(card.options)) return card;
+    return { ...card, options: [...card.options].sort(() => 0.5 - Math.random()) };
+  };
+
   const handleVocabAnswer = (selectedOption) => {
     if (status !== 'idle') return;
     
@@ -679,7 +684,7 @@ export const useQuizEngine = (category) => {
         return next;
       });
       if (!passed) {
-          setQueue(prev => [...prev, currentCard]);
+          setQueue(prev => [...prev, reshuffleCard(currentCard)]);
       }
     } else {
       processSRSSync(false, currentCard);
@@ -691,7 +696,7 @@ export const useQuizEngine = (category) => {
         }
         return prev;
       });
-      setQueue(prev => [...prev, currentCard]);
+      setQueue(prev => [...prev, reshuffleCard(currentCard)]);
     }
   };
 
@@ -733,7 +738,7 @@ export const useQuizEngine = (category) => {
         return next;
       });
       if (!passed) {
-          setQueue(prev => [...prev, currentCard]);
+          setQueue(prev => [...prev, reshuffleCard(currentCard)]);
       }
     } else if (isReadingCorrect || isMeaningCorrect) {
       processSRSSync(false, currentCard);
@@ -746,7 +751,7 @@ export const useQuizEngine = (category) => {
         }
         return prev;
       });
-      setQueue(prev => [...prev, currentCard]);
+      setQueue(prev => [...prev, reshuffleCard(currentCard)]);
     } else {
       processSRSSync(false, currentCard);
       setStatus('incorrect');
@@ -757,7 +762,7 @@ export const useQuizEngine = (category) => {
         }
         return prev;
       });
-      setQueue(prev => [...prev, currentCard]);
+      setQueue(prev => [...prev, reshuffleCard(currentCard)]);
     }
   };
 
@@ -773,7 +778,7 @@ export const useQuizEngine = (category) => {
       }
       return prev;
     });
-    setQueue(prev => [...prev, queue[currentIndex]]);
+    setQueue(prev => [...prev, reshuffleCard(queue[currentIndex])]);
   };
 
   const isTransitioning = useRef(false);
