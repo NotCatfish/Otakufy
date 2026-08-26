@@ -1,67 +1,175 @@
-# Otakufy 🌸
+# 🌸 Otakufy | Full-Stack Japanese Learning Platform
 
 🚀 **[Click here to visit the live site!](https://otakufy.vercel.app/)**
 
-Welcome to **Otakufy**, a comprehensive Japanese learning platform designed to help users master Japanese vocabulary, grammar, kanji, and reading comprehension through spaced repetition, gamified progress, and interactive quizzes—all beautifully tailored to help you conquer the JLPT at your specific level.
+A modern, full-stack Japanese learning platform engineered to help students conquer the **JLPT (N5 through N1)**. Built with **Next.js 16, React 19, Tailwind CSS v4, and Supabase (PostgreSQL)**, Otakufy features an intelligent Spaced Repetition System (SRS), dynamic furigana masking, gamified XP progression, competitive leaderboards, and enterprise-grade anti-cheat security.
 
-## 🏗️ System Design Overview
+---
 
-Otakufy is built with a modern, serverless architecture that separates the frontend presentation layer from the backend database and authentication layers.
+## ⚡ Key Highlights & Engineering Wins
 
-- **Frontend Interface:** A highly responsive, animated, and dynamic web application built to feel like a native mobile app. It handles the quiz engine, UI state, dark/light mode theming, and multi-language support locally.
-- **Backend & Database:** We utilize a managed backend-as-a-service to securely handle user authentication, store progression (XP, levels, streaks), and maintain leaderboards.
-- **Data Pipeline:** Japanese learning data (JLPT N5-N1 vocabulary, kanji, reading passages) is pre-processed and served statically or dynamically based on the learning mode to ensure lightning-fast quiz load times.
+- 📚 **14,187+ JLPT Question Bank:** Pre-processed and indexed N5–N1 database across Vocabulary, Kanji, Grammar, and Reading Comprehension.
+- 🧠 **Custom Spaced Repetition Engine (SRS):** Calculates review intervals based on user recall accuracy with automatic `sessionStorage` and IndexedDB recovery.
+- 🈲 **Dynamic Furigana Masking:** Enforces strict JLPT pedagogical standards by dynamically hiding ruby text (`{}`) during active testing and restoring it during reviews without leaking hints.
+- 🛡️ **30/30 Security Hardening Suite:** Enterprise-level security including **16/16 tables with PostgreSQL Row Level Security (RLS)**, DOMPurify HTML/SVG injection sanitization, IDOR guards, and anti-cheat database triggers (`award_quiz_xp` cooldowns).
+- 🎨 **Official Textbook Typography:** Styled with a solid `#0a0a0a` matte aesthetic and official Japanese Ministry of Education textbook typography (`Noto Serif JP`, `Noto Sans JP`).
+- 📱 **Desktop-First & Fully Responsive:** Engineered desktop-first with seamless responsiveness across mobile and tablet viewports.
 
-## 🛠️ Tech Stack
+---
 
-- **Framework:** [Next.js](https://nextjs.org/) (React)
-- **Styling:** Tailwind CSS (with custom animations and glassmorphism UI)
-- **Database & Auth:** Supabase (PostgreSQL)
-- **Deployment & Hosting:** Optimized for Vercel / Node.js environments
+## 📖 Table of Contents
+- [📐 System Architecture](#system-architecture)
+- [🛠️ Tech Stack](#tech-stack)
+- [🌟 Core Learning Modules](#core-learning-modules)
+- [🛡️ Security & Anti-Cheat Architecture](#security-anti-cheat-architecture)
+- [📁 Repository Structure](#repository-structure)
+- [🤖 AI Agent / IDE Directive](#ai-agent-directive)
+- [💻 Getting Started & Local Setup](#getting-started-local-setup)
+- [🤖 AI Orchestration Note](#ai-orchestration-note)
+- [👤 Author & Connect](#author-connect)
+- [📄 License](#license)
 
-## 🤖 AI-Assisted Development
+---
 
-Transparency is important! The entire codebase for Otakufy was generated and architected through **AI-assisted development**. While the vision, UX design, feature requirements, and project direction were driven by a human, the actual underlying code was written by an advanced AI coding assistant. This project serves as a showcase of what can be accomplished by directing cutting-edge AI tools to build a full-stack, complex web application from scratch.
+## <a id="system-architecture"></a>📐 System Architecture
 
-## 🚀 How to Run Locally
+Otakufy decouples client-side state machine mechanics from database persistence and background services:
 
-If you'd like to run the Otakufy web application on your local machine, follow these steps:
+```mermaid
+flowchart TD
+    Client["Next.js 16 (React 19) Frontend"]
+    
+    Client -->|"Auth & Sessions"| Auth["Supabase Auth"]
+    Client -->|"14,187+ Cards (RLS)"| DB[("PostgreSQL 16 DB")]
+    Client -->|"Furigana Tokenizer"| NLP["Kuroshiro + Wanakana"]
+    Client -->|"SRS State Cache"| Cache["LocalForage (IndexedDB)"]
+    Client -->|"Telemetry"| Sentry["Sentry Tracker"]
+    
+    DB -->|"Anti-Cheat Triggers"| Triggers["Postgres Sanitizer & Locks"]
+```
+
+---
+
+## <a id="tech-stack"></a>🛠️ Tech Stack
+
+- **Frontend:** Next.js 16 (`16.2.11`), React 19 (`19.2.7`), Tailwind CSS v4
+- **Backend & Database:** Supabase, PostgreSQL 16 (16/16 RLS Policies, SQL Triggers & CTE Queries)
+- **Japanese NLP & Morphology:** Kuroshiro, Kuromoji Analyzer, Wanakana
+- **Security & Sanitization:** DOMPurify, CSP & HSTS Headers, Rate Limiting (LRU Cache)
+- **Observability:** Sentry (`@sentry/nextjs`)
+- **State & Storage:** LocalForage (IndexedDB), SessionStorage checkpoints
+- **Icons & UI:** Lucide React
+
+---
+
+## <a id="core-learning-modules"></a>🌟 Core Learning Modules
+
+### 1. 🗂️ JLPT Level-Mapped Study Decks (N5–N1)
+- Thousands of curated Japanese words, readings (Kana/Kanji), and English definitions.
+- Dynamic Furigana masking that prevents premature hints during active practice.
+
+### 2. ⚡ State-Machine Quiz Engine
+- Multiple quiz modalities: Multiple Choice, Kana-to-Romaji, Kanji Identification, and Timed Marathons.
+- Anti-DoS indexed queries (`get_random_deck`) capable of shuffling and slicing 14,000+ questions in milliseconds without slow `ORDER BY random()`.
+
+### 3. 🏆 Gamification & Social Identity
+- **PII-Proof Signup Generator:** Postgres triggers automatically assign new accounts randomized anime handles (`Adjective + Noun`, e.g., `SakuraRonin#4821`) to prevent email prefix leaks.
+- Daily streak counters, XP level progression, and real-time global leaderboards.
+
+---
+
+## <a id="security-anti-cheat-architecture"></a>🛡️ Security & Anti-Cheat Architecture
+
+The platform incorporates a 30-point security audit covering every layer of the stack:
+
+1. **Row-Level Security (RLS):** 100% of tables enforce strict policies (`auth.uid() = id`).
+2. **Anti-Cheat Database Triggers:** Profile XP updates and timestamps are protected by PostgreSQL triggers (`tr_protect_profile_fields`), rejecting unauthorized client-side XP manipulation.
+3. **Input Sanitization:** Multi-tier sanitization using `DOMPurify` on the client and `tr_sanitize_profiles` in Postgres prevents XSS, XML Injection, and malicious SVG uploads.
+4. **Rate Limiting & DoS Protection:** Edge middleware and in-memory LRU rate-limiters protect search endpoints and dictionary lookups from scrapers.
+
+---
+
+## <a id="repository-structure"></a>📁 Repository Structure
+
+```text
+otakufy/
+├── web/                    # Next.js 16 frontend application
+│   ├── src/
+│   │   ├── app/            # App Router pages (Dashboard, Practice, Dictionary, Leaderboard)
+│   │   ├── components/     # Atomic UI components
+│   │   ├── features/       # Modular business logic (auth, practice, profile, quests)
+│   │   └── lib/            # Utilities (sanitization, Supabase client, rate limiting)
+├── data_pipeline/          # Seed datasets and SQL migrations for JLPT N5-N1 decks
+├── raw_data/               # Source Japanese vocabulary and kanji files
+├── docs/                   # Consolidated architecture archives and changelogs
+├── package.json
+└── README.md
+```
+
+---
+
+## <a id="ai-agent-directive"></a>🤖 AI Agent / IDE Directive
+
+If you are an AI assistant (Cursor, Windsurf, Copilot, or terminal agent) modifying or extending this repository:
+
+```text
+[AGENT DIRECTIVE]:
+1. Frontend Directory: All Next.js source code lives inside `web/`.
+2. Frontend Setup: `cd web && npm install && npm run dev`
+3. Styling Rules: Strictly use Tailwind CSS v4 tokens and solid matte backgrounds (#0a0a0a).
+4. Japanese Typography: Ensure Japanese text inherits `Noto Serif JP` or `Noto Sans JP` classes.
+5. Security Constraint: Always sanitize user inputs and SVGs using `DOMPurify` (`lib/sanitize.js`).
+6. Build Verification: Run `cd web && npm run build` to verify clean compilation before commits.
+```
+
+---
+
+## <a id="getting-started-local-setup"></a>💻 Getting Started & Local Setup
 
 ### Prerequisites
-- Make sure you have **Node.js** (v18+) and **npm** installed on your machine.
-- You will need a Supabase project if you wish to run the authentication and database features.
+- Node.js (v18+) & npm
+- A free [Supabase](https://supabase.com/) project
 
-### 1. Clone the repository
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/NotCatfish/otakufy.git
 cd otakufy
 ```
 
-### 2. Install dependencies
-Navigate to the web directory where the Next.js application lives and install the required packages:
-```bash
-cd web
-npm install
-```
-
-### 3. Environment Variables
-To get the database and authentication working, create a `.env.local` file inside the `web/` directory and add your Supabase credentials:
-
+### 2. Configure Environment Variables
+Create a `.env.local` file inside the `web/` directory:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-### 4. Run the Development Server
-Start the local development server:
+### 3. Run the Next.js Frontend
 ```bash
+cd web
+npm install
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## 🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
+*Open [http://localhost:3000](http://localhost:3000) in your browser.*
 
 ---
-*Stay consistent, and continue your path to fluency!*
+
+## <a id="ai-orchestration-note"></a>🤖 AI Orchestration Note
+
+This project is a showcase of **AI-Assisted Full-Stack Development**. The vision, pedagogical structure, UI design, and security requirements were directed by a human, while the underlying Next.js and API code was iteratively generated and hardened through advanced AI coding models.
+
+---
+
+## <a id="author-connect"></a>👤 Author & Connect
+
+**Indraneel Samanta**  
+*Aspiring Data & AI Engineer | B.Tech in AIML @ DJSCE*
+
+- 🌐 **Portfolio**: [indraneelsamanta.vercel.app](https://indraneelsamanta.vercel.app/)
+- 🔗 **LinkedIn**: [linkedin.com/in/indraneel-samanta](https://www.linkedin.com/in/indraneel-samanta/)
+- 🐙 **GitHub**: [@NotCatfish](https://github.com/NotCatfish)
+
+---
+
+## <a id="license"></a>📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).
