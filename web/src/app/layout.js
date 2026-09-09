@@ -6,6 +6,8 @@ import GlobalKeyHandler from "@/components/GlobalKeyHandler";
 import { LanguageProvider } from "@/context/LanguageContext";
 
 import DynamicSeasonalAnimation from "@/components/DynamicSeasonalAnimation";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const notoSerif = Noto_Serif_JP({
   variable: "--font-noto-serif",
@@ -147,6 +149,8 @@ export default function RootLayout({ children }) {
             <Footer />
           </TransitionProvider>
         </LanguageProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
