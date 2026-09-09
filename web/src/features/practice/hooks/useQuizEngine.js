@@ -240,14 +240,14 @@ export const useQuizEngine = (category) => {
     let dbType = typeId ? getDbVocabType(typeId) : null;
     
     if (category === 'random') {
-        cacheKey = `otakufy_cache_random_v13_${selectedLevel}`;
+        cacheKey = `otakufy_cache_random_v14_${selectedLevel}`;
         saveKey = `${category}_${selectedLevel}`;
     } else if (category === 'kanji' || category === 'comprehension') {
-        cacheKey = `otakufy_cache_${category}_v13_${selectedLevel}`;
+        cacheKey = `otakufy_cache_${category}_v14_${selectedLevel}`;
         saveKey = `${category}_${selectedLevel}`;
     } else {
         saveKey = `${category}_${selectedLevel}_${typeId}`;
-        cacheKey = `otakufy_cache_${category}_v13_${selectedLevel}_${typeId}`;
+        cacheKey = `otakufy_cache_${category}_v14_${selectedLevel}_${typeId}`;
     }
 
     // 1. Check cache first (Bypass if SRS)
