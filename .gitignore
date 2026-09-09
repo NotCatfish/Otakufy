@@ -13,6 +13,7 @@ raw_data/
 antigravityrule.txt
 docs/
 migrate_features.py
+security_audit_report.md
 
 # Dependencies
 node_modules/
