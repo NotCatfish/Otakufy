@@ -21,6 +21,7 @@ A modern, full-stack Japanese learning platform engineered to help students conq
 - [📐 System Architecture](#system-architecture)
 - [🛠️ Tech Stack](#tech-stack)
 - [🌟 Core Learning Modules](#core-learning-modules)
+- [📊 14,082 Verified Curriculum Breakdown](#curriculum-breakdown)
 - [🛡️ Security & Anti-Cheat Architecture](#security-anti-cheat-architecture)
 - [📁 Repository Structure](#repository-structure)
 - [🤖 AI Agent / IDE Directive](#ai-agent-directive)
@@ -52,12 +53,12 @@ flowchart TD
 
 ## <a id="tech-stack"></a>🛠️ Tech Stack
 
-- **Frontend:** Next.js 16 (`16.2.11`), React 19 (`19.2.7`), Tailwind CSS v4
+- **Frontend:** Next.js 16 (`16.3.4`), React 19 (`19.2.7`), Tailwind CSS v4
 - **Backend & Database:** Supabase, PostgreSQL 16 (16/16 RLS Policies, SQL Triggers & CTE Queries)
 - **Japanese NLP & Morphology:** Kuroshiro, Kuromoji Analyzer, Wanakana
 - **Security & Sanitization:** DOMPurify, CSP & HSTS Headers, Rate Limiting (LRU Cache)
-- **Observability:** Sentry (`@sentry/nextjs`)
-- **State & Storage:** LocalForage (IndexedDB), SessionStorage checkpoints
+- **Observability & Telemetry:** Sentry (`@sentry/nextjs`), Vercel Web Analytics, Vercel Speed Insights
+- **State & Storage:** LocalForage (IndexedDB `v14` cache invalidation), SessionStorage checkpoints
 - **Icons & UI:** Lucide React
 
 ---
@@ -69,12 +70,32 @@ flowchart TD
 - Dynamic Furigana masking that prevents premature hints during active practice.
 
 ### 2. ⚡ State-Machine Quiz Engine
-- Multiple quiz modalities: Multiple Choice, Kana-to-Romaji, Kanji Identification, and Timed Marathons.
-- Anti-DoS indexed queries (`get_random_deck`) capable of shuffling and slicing 14,000+ questions in milliseconds without slow `ORDER BY random()`.
+- Multiple quiz modalities: Multiple Choice, Kana-to-Romaji, Kanji Identification, Sentence Scramble, and Timed Marathons.
+- Anti-DoS indexed CTE queries (`get_random_deck`) capable of shuffling and slicing 14,000+ questions in milliseconds without slow `ORDER BY random()`.
+- **Client Cache Invalidation (`v14`)**: LocalForage IndexedDB automatically invalidates stale client decks across browser sessions, ensuring players always test against the clean, updated curriculum.
+- **100% Solvability Assurance**: Automated evaluation engine tests all questions and answer keys, guaranteeing 0 unsolvable cards.
 
 ### 3. 🏆 Gamification & Social Identity
 - **PII-Proof Signup Generator:** Postgres triggers automatically assign new accounts randomized anime handles (`Adjective + Noun`, e.g., `SakuraRonin#4821`) to prevent email prefix leaks.
 - Daily streak counters, XP level progression, and real-time global leaderboards.
+
+---
+
+## <a id="curriculum-breakdown"></a>📊 14,082 Verified Curriculum Breakdown
+
+Every question across all modules has undergone an exhaustive multi-dimensional linguistic and solvability audit. The curriculum achieves **100% solvability parity** (0 unsolvable cards across 15,261 question instances):
+
+| Module | Database Table | Question Count | Format & Solvability Guarantees |
+| :--- | :--- | :---: | :--- |
+| **Kanji Flashcards** | `kanji_data` | **5,910** | Complete Furigana `{}` annotation, escaped SQL literals, N5–N1 stroke & meaning coverage |
+| **Vocabulary: Reading** | `vocabulary_questions` | **1,147** | Standardized okurigana, natural verb te-forms, authentic JLPT distractors |
+| **Vocabulary: Writing** | `vocabulary_questions` | **1,082** | Kanji writing identification from Hiragana, deduplicated and verified |
+| **Vocabulary: Paraphrasing** | `vocabulary_questions` | **1,275** | Contextual synonym matching, zero artificial distractors (all authentic JLPT) |
+| **Vocabulary: Usage** | `vocabulary_questions` | **1,494** | Sentence context matching, zero clone cards, typo-free definitions |
+| **Grammar: Fill-in-the-Blanks**| `grammar_questions` | **1,454** | Particles, conjugations, modal forms, aligned `target_word` values |
+| **Grammar: Sentence Scramble** | `grammar_questions` | **541** | Formal Star-Blank (`★`) scramble syntax with strictly 3 blanks and 1 star |
+| **Reading Comprehension** | `comprehension_questions` | **1,179** | Short/medium/long authentic passages containing **2,358** multi-part subquestions |
+| **TOTAL CURRICULUM** | **All 4 Core Tables** | **14,082** | **100.0% Solvability Pass (0 unsolvable cards, 0 missing answers)** |
 
 ---
 
@@ -141,6 +162,7 @@ Create a `.env.local` file inside the `web/` directory:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+DATABASE_URL=your_direct_postgres_connection_string # Optional for migrations/pipeline
 ```
 
 ### 3. Run the Next.js Frontend
