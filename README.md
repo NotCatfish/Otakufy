@@ -8,7 +8,7 @@ A modern, full-stack Japanese learning platform engineered to help students conq
 
 ## ⚡ Key Highlights & Engineering Wins
 
-- 📚 **14,187+ JLPT Question Bank:** Pre-processed and indexed N5–N1 database across Vocabulary, Kanji, Grammar, and Reading Comprehension.
+- 📚 **14,082 Verified JLPT Question Bank:** 100% audited and solvability-verified N5–N1 database across Vocabulary, Kanji, Grammar, and Reading Comprehension with zero unsolvable cards.
 - 🧠 **Custom Spaced Repetition Engine (SRS):** Calculates review intervals based on user recall accuracy with automatic `sessionStorage` and IndexedDB recovery.
 - 🈲 **Dynamic Furigana Masking:** Enforces strict JLPT pedagogical standards by dynamically hiding ruby text (`{}`) during active testing and restoring it during reviews without leaking hints.
 - 🛡️ **30/30 Security Hardening Suite:** Enterprise-level security including **16/16 tables with PostgreSQL Row Level Security (RLS)**, DOMPurify HTML/SVG injection sanitization, IDOR guards, and anti-cheat database triggers (`award_quiz_xp` cooldowns).
@@ -40,7 +40,7 @@ flowchart TD
     Client["Next.js 16 (React 19) Frontend"]
     
     Client -->|"Auth & Sessions"| Auth["Supabase Auth"]
-    Client -->|"14,187+ Cards (RLS)"| DB[("PostgreSQL 16 DB")]
+    Client -->|"14,082 Cards (RLS)"| DB[("PostgreSQL 16 DB")]
     Client -->|"Furigana Tokenizer"| NLP["Kuroshiro + Wanakana"]
     Client -->|"SRS State Cache"| Cache["LocalForage (IndexedDB)"]
     Client -->|"Telemetry"| Sentry["Sentry Tracker"]
@@ -99,7 +99,7 @@ otakufy/
 │   │   ├── components/     # Atomic UI components
 │   │   ├── features/       # Modular business logic (auth, practice, profile, quests)
 │   │   └── lib/            # Utilities (sanitization, Supabase client, rate limiting)
-├── data_pipeline/          # Seed datasets and SQL migrations for JLPT N5-N1 decks
+├── data_pipeline/          # Seed datasets and SQL migrations for JLPT N5-N1 decks (.gitignored)
 ├── raw_data/               # Source Japanese vocabulary and kanji files
 ├── docs/                   # Consolidated architecture archives and changelogs
 ├── package.json
