@@ -35,6 +35,12 @@ dist/
 .idea/
 *.log
 
+# Media / Screen Recordings
+*.mp4
+*.mov
+*.webm
+*.mkv
+
 # Python / FastAPI
 venv/
 __pycache__/
