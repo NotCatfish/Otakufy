@@ -205,19 +205,19 @@ export default function DictionaryPage() {
 
   return (
     <PageAnimationGate pageKey={PAGE_KEYS.DICTIONARY}>
-    <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-white">
+    <PageContainer maxWidth="max-w-[1440px]" className="font-medium text-[var(--foreground)]">
       <SmoothFade as="header" delay={0.1} className="mb-8 md:mb-12 border-b border-[var(--strong-border)] pb-8 flex flex-col items-center md:items-start text-center md:text-left">
-        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-white mb-2">
+        <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-[var(--foreground)] mb-2">
           <RevealText text={t("Dictionary")} baseDelay={0.2} />
         </h1>
-        <p className="text-[14px] text-white/50">{t("Search through over 9,000 Kanji, Vocabulary, and Grammar points.")}</p>
+        <p className="text-[14px] text-[var(--muted-text)]">{t("Search through over 9,000 Kanji, Vocabulary, and Grammar points.")}</p>
       </SmoothFade>
 
       {/* Controls */}
       <SmoothFade delay={0.2} className="flex flex-col gap-4 mb-12">
         <div className="flex flex-col md:flex-row gap-4">
             {/* Search Bar */}
-            <div className="flex-1 relative">
+            <div className="flex-1 min-w-[200px] relative">
                 <Input 
                     type="text" 
                     placeholder={t("Search Japanese or English...")}
@@ -225,7 +225,7 @@ export default function DictionaryPage() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pr-12"
                 />
-                <svg className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <svg className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-[var(--label-text)] pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
 
             {/* Tabs */}
@@ -244,7 +244,7 @@ export default function DictionaryPage() {
             </div>
             
             {/* Level Filter */}
-            <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] w-full max-w-full overflow-x-auto overflow-y-hidden min-h-[46px] items-center hide-scrollbar">
+            <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] w-full md:w-auto md:shrink-0 overflow-x-auto overflow-y-hidden min-h-[46px] items-center hide-scrollbar">
                 {['All', 'N5', 'N4', 'N3', 'N2', 'N1'].map(level => (
                     <Button
                         key={level}
@@ -262,7 +262,7 @@ export default function DictionaryPage() {
         {/* Sub-Filters */}
         {(activeTab === 'vocabulary' || activeTab === 'grammar') && (
             <div className="flex animate-fade-in">
-                <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] w-full max-w-full overflow-x-auto overflow-y-hidden min-h-[46px] items-center hide-scrollbar">
+                <div className="flex bg-[var(--surface)] p-1 rounded-xl border border-[var(--strong-border)] w-full md:w-auto md:shrink-0 overflow-x-auto overflow-y-hidden min-h-[46px] items-center hide-scrollbar">
                     {(activeTab === 'vocabulary' ? ['All', 'Reading', 'Orthography', 'Paraphrase', 'Usage'] : ['All', 'Fill In The Blank', 'Scramble']).map(type => (
                         <Button
                             key={type}
@@ -342,7 +342,7 @@ export default function DictionaryPage() {
 
       {/* Empty State */}
       {!loading && results.length === 0 && (
-          <div className="py-24 text-center text-white/30 uppercase tracking-widest text-[12px]">
+          <div className="py-24 text-center text-[var(--muted-text)] uppercase tracking-widest text-[12px]">
               {t("No results found matching your search.")}
           </div>
       )}
