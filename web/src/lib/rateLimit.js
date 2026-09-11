@@ -1,6 +1,6 @@
 /**
  * Simple in-memory rate limiter with LRU size bound and automatic cleanup.
- * Resets per server restart (good enough for serverless/edge — each instance has its own store).
+ * Resets per server restart (good enough for serverless/edge; each instance has its own store).
  * Key: IP address or user identifier
  * Value: { count, resetAt }
  */

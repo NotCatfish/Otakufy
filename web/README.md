@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Otakufy Web Client
 
-## Getting Started
+The primary Next.js 16 frontend application for Otakufy. Built with React 19, Tailwind CSS v4, and Supabase SSR.
 
-First, run the development server:
+---
 
+## $\color{#F59E0B}{\text{Getting Started}}$
+
+### **$\color{#38BDF8}\text{1. Install Dependencies}$**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
+### **$\color{#38BDF8}\text{2. Local Development}$**
+```bash
+npm run dev
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## $\color{#F59E0B}{\text{Available Scripts}}$
 
-## Learn More
+- **$\color{#38BDF8}\text{npm run dev:}$** Launches Next.js local development server with Hot Module Reloading (HMR).
+- **$\color{#38BDF8}\text{npm run build:}$** Verifies clean compilation and bundles static/SSR pages for production.
+- **$\color{#38BDF8}\text{npm run start:}$** Starts the production server.
+- **$\color{#38BDF8}\text{npm run lint:}$** Runs ESLint 9 checks across all frontend components.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## $\color{#F59E0B}{\text{Architecture and Design Tokens}}$
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **$\color{#38BDF8}\text{Framework:}$** Next.js 16 (`16.3.4`), React 19 (`19.2.7`)
+- **$\color{#38BDF8}\text{Styling:}$** Tailwind CSS v4 with Japanese Ministry of Education typography (`Noto Serif JP`, `Noto Sans JP`)
+- **$\color{#38BDF8}\text{State and Cache:}$** LocalForage IndexedDB (`v14`) and SessionStorage checkpoints
+- **$\color{#38BDF8}\text{Security:}$** DOMPurify HTML sanitization for ruby Furigana rendering

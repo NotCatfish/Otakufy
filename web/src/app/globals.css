@@ -2,13 +2,13 @@
 @source "../features";
 
 :root {
-  /* ===== Sakura Shiro — Cherry Blossom Light Mode ===== */
+  /* ===== Sakura Shiro: Cherry Blossom Light Mode ===== */
   --theme-color: #D94676;
   --theme-rgb: 217, 70, 118;
   --background: #FFF5F7;
-  /* Soft cherry-petal cream — warm, zero glare */
+  /* Soft cherry-petal cream: warm, zero glare */
   --foreground: #26161C;
-  /* Deep cherry calligraphy ink — rich warm contrast */
+  /* Deep cherry calligraphy ink: rich warm contrast */
   --foreground-rgb: 38, 22, 28;
 
   /* Japanese Seasons Palette */
@@ -681,7 +681,7 @@ html {
 
 
 .dark {
-  /* Developer Matte Dark Mode — Glassmorphism */
+  /* Developer Matte Dark Mode: Glassmorphism */
   --background: #000000;
   --foreground: #FAFBFC;
   --color-sakura: #FFFFFF;

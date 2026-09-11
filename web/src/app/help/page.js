@@ -16,7 +16,7 @@ export default function HelpPage() {
   const FAQS = [
     {
       question: t("How does the Spaced Repetition (SRS) work?"),
-      answer: t("Our SRS acts as a 'Mistakes Review Bucket'. When you get a question wrong during practice, it's added to your SRS queue. You'll need to answer it correctly multiple times to clear it. There are no time-based intervals right now—just immediate, relentless practice for your weak spots.")
+      answer: t("Our SRS acts as a 'Mistakes Review Bucket'. When you get a question wrong during practice, it's added to your SRS queue. You'll need to answer it correctly multiple times to clear it. There are no time-based intervals right now; instead, you get immediate practice focused on your weak spots.")
     },
     {
       question: t("When do Daily Quests reset?"),

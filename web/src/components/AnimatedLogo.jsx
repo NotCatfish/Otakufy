@@ -12,7 +12,7 @@ export default function AnimatedLogo({ children, className = "" }) {
     let animId;
 
     const animate = () => {
-      offset -= 0.5; // pixels per frame — controls speed
+      offset -= 0.5; // pixels per frame; controls speed
       el.style.backgroundPosition = `${offset}px center`;
       animId = requestAnimationFrame(animate);
     };

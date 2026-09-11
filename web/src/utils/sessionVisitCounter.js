@@ -7,7 +7,7 @@
 
 const STORAGE_KEY = 'otakufy_visit_counts';
 
-// In-memory cache — populated once from sessionStorage on first access
+// In-memory cache: populated once from sessionStorage on first access
 let cache = null;
 
 function ensureCache() {
@@ -33,13 +33,13 @@ function persistCache() {
     const obj = Object.fromEntries(cache);
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
   } catch (e) {
-    // Storage full or blocked — non-critical
+    // Storage full or blocked (non-critical)
   }
 }
 
 /**
  * Returns the current visit count for a page key (0 if never visited).
- * Synchronous — safe to call during render.
+ * Synchronous: safe to call during render.
  */
 export function getVisitCount(pageKey) {
   if (!pageKey) return 0;
@@ -62,7 +62,7 @@ export function incrementVisit(pageKey) {
 
 /**
  * Returns true if this page has NOT been visited yet in this session.
- * Synchronous — safe to call during render.
+ * Synchronous: safe to call during render.
  */
 export function shouldAnimate(pageKey) {
   return getVisitCount(pageKey) === 0;

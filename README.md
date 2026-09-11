@@ -1,38 +1,37 @@
-# 🌸 Otakufy | Full-Stack Japanese Learning Platform
+# Otakufy | Full-Stack Japanese Learning Platform
 
-🚀 **[Click here to visit the live site!](https://otakufy.vercel.app/)**
+**[Click here to visit the live site](https://otakufy.vercel.app/)**
 
 A modern, full-stack Japanese learning platform engineered to help students conquer the **JLPT (N5 through N1)**. Built with **Next.js 16, React 19, Tailwind CSS v4, and Supabase (PostgreSQL)**, Otakufy features an intelligent Spaced Repetition System (SRS), dynamic furigana masking, gamified XP progression, competitive leaderboards, and enterprise-grade anti-cheat security.
 
 ---
 
-## ⚡ Key Highlights & Engineering Wins
+## $\color{#F59E0B}{\text{Key Highlights and Engineering Wins}}$
 
-- 📚 **14,082 Verified JLPT Question Bank:** 100% audited and solvability-verified N5–N1 database across Vocabulary, Kanji, Grammar, and Reading Comprehension with zero unsolvable cards.
-- 🧠 **Custom Spaced Repetition Engine (SRS):** Calculates review intervals based on user recall accuracy with automatic `sessionStorage` and IndexedDB recovery.
-- 🈲 **Dynamic Furigana Masking:** Enforces strict JLPT pedagogical standards by dynamically hiding ruby text (`{}`) during active testing and restoring it during reviews without leaking hints.
-- 🛡️ **30/30 Security Hardening Suite:** Enterprise-level security including **16/16 tables with PostgreSQL Row Level Security (RLS)**, DOMPurify HTML/SVG injection sanitization, IDOR guards, and anti-cheat database triggers (`award_quiz_xp` cooldowns).
-- 🎨 **Official Textbook Typography:** Styled with a solid `#0a0a0a` matte aesthetic and official Japanese Ministry of Education textbook typography (`Noto Serif JP`, `Noto Sans JP`).
-- 📱 **Desktop-First & Fully Responsive:** Engineered desktop-first with seamless responsiveness across mobile and tablet viewports.
-
----
-
-## 📖 Table of Contents
-- [📐 System Architecture](#system-architecture)
-- [🛠️ Tech Stack](#tech-stack)
-- [🌟 Core Learning Modules](#core-learning-modules)
-- [📊 14,082 Verified Curriculum Breakdown](#curriculum-breakdown)
-- [🛡️ Security & Anti-Cheat Architecture](#security-anti-cheat-architecture)
-- [📁 Repository Structure](#repository-structure)
-- [🤖 AI Agent / IDE Directive](#ai-agent-directive)
-- [💻 Getting Started & Local Setup](#getting-started-local-setup)
-- [🤖 AI Orchestration Note](#ai-orchestration-note)
-- [👤 Author & Connect](#author-connect)
-- [📄 License](#license)
+- **$\color{#38BDF8}\text{14,082 Verified JLPT Question Bank:}$** 100% audited and solvability-verified N5–N1 database across Vocabulary, Kanji, Grammar, and Reading Comprehension with zero unsolvable cards.
+- **$\color{#38BDF8}\text{Custom Spaced Repetition Engine (SRS):}$** Calculates review intervals based on user recall accuracy with automatic `sessionStorage` and IndexedDB recovery.
+- **$\color{#38BDF8}\text{Dynamic Furigana Masking:}$** Enforces strict JLPT pedagogical standards by dynamically hiding ruby text (`{}`) during active testing and restoring it during reviews without leaking hints.
+- **$\color{#38BDF8}\text{30/30 Security Hardening Suite:}$** Enterprise-level security including **16/16 tables with PostgreSQL Row Level Security (RLS)**, DOMPurify HTML/SVG injection sanitization, IDOR guards, and anti-cheat database triggers (`award_quiz_xp` cooldowns).
+- **$\color{#38BDF8}\text{Official Textbook Typography:}$** Styled with a solid `#0a0a0a` matte aesthetic and official Japanese Ministry of Education textbook typography (`Noto Serif JP`, `Noto Sans JP`).
+- **$\color{#38BDF8}\text{Desktop-First and Fully Responsive:}$** Engineered desktop-first with seamless responsiveness across mobile and tablet viewports.
 
 ---
 
-## <a id="system-architecture"></a>📐 System Architecture
+## $\color{#F59E0B}{\text{Table of Contents}}$
+- [System Architecture](#system-architecture)
+- [Tech Stack](#tech-stack)
+- [Core Learning Modules](#core-learning-modules)
+- [14,082 Verified Curriculum Breakdown](#curriculum-breakdown)
+- [Security and Anti-Cheat Architecture](#security-anti-cheat-architecture)
+- [Repository Structure](#repository-structure)
+- [AI Agent / IDE Directive](#ai-agent-directive)
+- [Getting Started and Local Setup](#getting-started-local-setup)
+- [Author and Connect](#author-connect)
+- [License](#license)
+
+---
+
+## <a id="system-architecture"></a>$\color{#F59E0B}{\text{System Architecture}}$
 
 Otakufy decouples client-side state machine mechanics from database persistence and background services:
 
@@ -51,37 +50,37 @@ flowchart TD
 
 ---
 
-## <a id="tech-stack"></a>🛠️ Tech Stack
+## <a id="tech-stack"></a>$\color{#F59E0B}{\text{Tech Stack}}$
 
-- **Frontend:** Next.js 16 (`16.3.4`), React 19 (`19.2.7`), Tailwind CSS v4
-- **Backend & Database:** Supabase, PostgreSQL 16 (16/16 RLS Policies, SQL Triggers & CTE Queries)
-- **Japanese NLP & Morphology:** Kuroshiro, Kuromoji Analyzer, Wanakana
-- **Security & Sanitization:** DOMPurify, CSP & HSTS Headers, Rate Limiting (LRU Cache)
-- **Observability & Telemetry:** Sentry (`@sentry/nextjs`), Vercel Web Analytics, Vercel Speed Insights
-- **State & Storage:** LocalForage (IndexedDB `v14` cache invalidation), SessionStorage checkpoints
-- **Icons & UI:** Lucide React
+- **$\color{#38BDF8}\text{Frontend:}$** Next.js 16 (`16.3.4`), React 19 (`19.2.7`), Tailwind CSS v4
+- **$\color{#38BDF8}\text{Backend and Database:}$** Supabase, PostgreSQL 16 (16/16 RLS Policies, SQL Triggers & CTE Queries)
+- **$\color{#38BDF8}\text{Japanese NLP and Morphology:}$** Kuroshiro, Kuromoji Analyzer, Wanakana
+- **$\color{#38BDF8}\text{Security and Sanitization:}$** DOMPurify, CSP & HSTS Headers, Rate Limiting (LRU Cache)
+- **$\color{#38BDF8}\text{Observability and Telemetry:}$** Sentry (`@sentry/nextjs`), Vercel Web Analytics, Vercel Speed Insights
+- **$\color{#38BDF8}\text{State and Storage:}$** LocalForage (IndexedDB `v14` cache invalidation), SessionStorage checkpoints
+- **$\color{#38BDF8}\text{Icons and UI:}$** Lucide React
 
 ---
 
-## <a id="core-learning-modules"></a>🌟 Core Learning Modules
+## <a id="core-learning-modules"></a>$\color{#F59E0B}{\text{Core Learning Modules}}$
 
-### 1. 🗂️ JLPT Level-Mapped Study Decks (N5–N1)
+### **$\color{#38BDF8}\text{1. JLPT Level-Mapped Study Decks (N5–N1)}$**
 - Thousands of curated Japanese words, readings (Kana/Kanji), and English definitions.
 - Dynamic Furigana masking that prevents premature hints during active practice.
 
-### 2. ⚡ State-Machine Quiz Engine
+### **$\color{#38BDF8}\text{2. State-Machine Quiz Engine}$**
 - Multiple quiz modalities: Multiple Choice, Kana-to-Romaji, Kanji Identification, Sentence Scramble, and Timed Marathons.
 - Anti-DoS indexed CTE queries (`get_random_deck`) capable of shuffling and slicing 14,000+ questions in milliseconds without slow `ORDER BY random()`.
 - **Client Cache Invalidation (`v14`)**: LocalForage IndexedDB automatically invalidates stale client decks across browser sessions, ensuring players always test against the clean, updated curriculum.
 - **100% Solvability Assurance**: Automated evaluation engine tests all questions and answer keys, guaranteeing 0 unsolvable cards.
 
-### 3. 🏆 Gamification & Social Identity
+### **$\color{#38BDF8}\text{3. Gamification and Social Identity}$**
 - **PII-Proof Signup Generator:** Postgres triggers automatically assign new accounts randomized anime handles (`Adjective + Noun`, e.g., `SakuraRonin#4821`) to prevent email prefix leaks.
 - Daily streak counters, XP level progression, and real-time global leaderboards.
 
 ---
 
-## <a id="curriculum-breakdown"></a>📊 14,082 Verified Curriculum Breakdown
+## <a id="curriculum-breakdown"></a>$\color{#F59E0B}{\text{14,082 Verified Curriculum Breakdown}}$
 
 Every question across all modules has undergone an exhaustive multi-dimensional linguistic and solvability audit. The curriculum achieves **100% solvability parity** (0 unsolvable cards across 15,261 question instances):
 
@@ -99,18 +98,18 @@ Every question across all modules has undergone an exhaustive multi-dimensional 
 
 ---
 
-## <a id="security-anti-cheat-architecture"></a>🛡️ Security & Anti-Cheat Architecture
+## <a id="security-anti-cheat-architecture"></a>$\color{#F59E0B}{\text{Security and Anti-Cheat Architecture}}$
 
 The platform incorporates a 30-point security audit covering every layer of the stack:
 
 1. **Row-Level Security (RLS):** 100% of tables enforce strict policies (`auth.uid() = id`).
 2. **Anti-Cheat Database Triggers:** Profile XP updates and timestamps are protected by PostgreSQL triggers (`tr_protect_profile_fields`), rejecting unauthorized client-side XP manipulation.
 3. **Input Sanitization:** Multi-tier sanitization using `DOMPurify` on the client and `tr_sanitize_profiles` in Postgres prevents XSS, XML Injection, and malicious SVG uploads.
-4. **Rate Limiting & DoS Protection:** Edge middleware and in-memory LRU rate-limiters protect search endpoints and dictionary lookups from scrapers.
+4. **Rate Limiting and DoS Protection:** Edge middleware and in-memory LRU rate-limiters protect search endpoints and dictionary lookups from scrapers.
 
 ---
 
-## <a id="repository-structure"></a>📁 Repository Structure
+## <a id="repository-structure"></a>$\color{#F59E0B}{\text{Repository Structure}}$
 
 ```text
 otakufy/
@@ -129,7 +128,7 @@ otakufy/
 
 ---
 
-## <a id="ai-agent-directive"></a>🤖 AI Agent / IDE Directive
+## <a id="ai-agent-directive"></a>$\color{#F59E0B}{\text{AI Agent / IDE Directive}}$
 
 If you are an AI assistant (Cursor, Windsurf, Copilot, or terminal agent) modifying or extending this repository:
 
@@ -145,19 +144,19 @@ If you are an AI assistant (Cursor, Windsurf, Copilot, or terminal agent) modify
 
 ---
 
-## <a id="getting-started-local-setup"></a>💻 Getting Started & Local Setup
+## <a id="getting-started-local-setup"></a>$\color{#F59E0B}{\text{Getting Started and Local Setup}}$
 
 ### Prerequisites
 - Node.js (v18+) & npm
 - A free [Supabase](https://supabase.com/) project
 
-### 1. Clone the Repository
+### **$\color{#38BDF8}\text{1. Clone the Repository}$**
 ```bash
 git clone https://github.com/NotCatfish/otakufy.git
 cd otakufy
 ```
 
-### 2. Configure Environment Variables
+### **$\color{#38BDF8}\text{2. Configure Environment Variables}$**
 Create a `.env.local` file inside the `web/` directory:
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
@@ -165,7 +164,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 DATABASE_URL=your_direct_postgres_connection_string # Optional for migrations/pipeline
 ```
 
-### 3. Run the Next.js Frontend
+### **$\color{#38BDF8}\text{3. Run the Next.js Frontend}$**
 ```bash
 cd web
 npm install
@@ -175,23 +174,17 @@ npm run dev
 
 ---
 
-## <a id="ai-orchestration-note"></a>🤖 AI Orchestration Note
-
-This project is a showcase of **AI-Assisted Full-Stack Development**. The vision, pedagogical structure, UI design, and security requirements were directed by a human, while the underlying Next.js and API code was iteratively generated and hardened through advanced AI coding models.
-
----
-
-## <a id="author-connect"></a>👤 Author & Connect
+## <a id="author-connect"></a>$\color{#F59E0B}{\text{Author and Connect}}$
 
 **Indraneel Samanta**  
 *Aspiring Data & AI Engineer | B.Tech in AIML @ DJSCE*
 
-- 🌐 **Portfolio**: [indraneelsamanta.vercel.app](https://indraneelsamanta.vercel.app/)
-- 🔗 **LinkedIn**: [linkedin.com/in/indraneel-samanta](https://www.linkedin.com/in/indraneel-samanta/)
-- 🐙 **GitHub**: [@NotCatfish](https://github.com/NotCatfish)
+- **Portfolio**: [indraneelsamanta.vercel.app](https://indraneelsamanta.vercel.app/)
+- **LinkedIn**: [linkedin.com/in/indraneel-samanta](https://www.linkedin.com/in/indraneel-samanta/)
+- **GitHub**: [@NotCatfish](https://github.com/NotCatfish)
 
 ---
 
-## <a id="license"></a>📄 License
+## <a id="license"></a>$\color{#F59E0B}{\text{License}}$
 
 This project is open-source and available under the [MIT License](LICENSE).

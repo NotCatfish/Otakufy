@@ -29,7 +29,7 @@ export default function ErrorBoundary({ error, reset }) {
       </div>
 
       <p className="text-sm sm:text-base font-light text-[var(--muted-text)] max-w-md mb-8 leading-relaxed">
-        {t("An unexpected disturbance disrupted your study session. Don't worry — your Satori points and streak data are safe.")}
+        {t("An unexpected disturbance disrupted your study session. Don't worry, your Satori points and streak data are safe.")}
       </p>
 
       {/* Error Details (Only visible if dev or message present) */}

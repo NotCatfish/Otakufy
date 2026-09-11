@@ -79,7 +79,7 @@ export default function SuggestionForm({ onSubmit, existingSuggestions, onClose 
                 <div className="flex flex-col gap-2">
                     {similar.map(s => (
                         <div key={s.id} className="text-[12px] text-[var(--muted-text)] bg-[var(--surface-hover)] px-3 py-2 rounded border border-[var(--card-border)]">
-                            <span className="font-medium text-white">{s.title}</span> — {s.upvotes - s.downvotes} {t("points")}
+                            <span className="font-medium text-white">{s.title}</span> • {s.upvotes - s.downvotes} {t("points")}
                         </div>
                     ))}
                 </div>

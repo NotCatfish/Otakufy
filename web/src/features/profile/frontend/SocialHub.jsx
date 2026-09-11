@@ -228,7 +228,7 @@ export default function SocialHub({ session }) {
           {activeTab === 'add_friend' && addFriendSubTab === 'search' && (
             searchError 
               ? <span className="text-red-400">{t(searchError)}</span>
-              : <span className="text-white/40">{t("Exact match only — enter the full tag including #0000.")}</span>
+              : <span className="text-white/40">{t("Exact match only: enter the full tag including #0000.")}</span>
           )}
         </p>
       </div>
