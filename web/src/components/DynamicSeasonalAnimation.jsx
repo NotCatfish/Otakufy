@@ -198,19 +198,19 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
         this.y = Math.random() * h;
         
         this.size = (Math.random() * 12 + 12) * this.depth; 
-        this.vy = (Math.random() * 1.5 + 0.8) * this.depth; 
-        this.vx = (Math.random() - 0.5) * 1.5 * this.depth;
+        this.vy = (Math.random() * 1.2 + 0.64) * this.depth; 
+        this.vx = (Math.random() - 0.5) * 1.2 * this.depth;
         this.opacity = (Math.random() * 0.6 + 0.4) * this.depth;
         
         this.angle = Math.random() * Math.PI * 2;
-        this.spin = (Math.random() - 0.5) * 0.05;
+        this.spin = (Math.random() - 0.5) * 0.04;
         
         const colors = ['#dc2626', '#ea580c', '#d97706', '#991b1b'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
       update() {
         this.y += this.vy;
-        this.x += this.vx + Math.sin(this.angle) * 0.5 * this.depth;
+        this.x += this.vx + Math.sin(this.angle) * 0.4 * this.depth;
         this.angle += this.spin;
         if (this.y > this.h + this.size) {
           this.y = -20;
@@ -370,17 +370,17 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
         this.x = Math.random() * w;
         this.y = Math.random() * h;
         this.size = (Math.random() * 8 + 12) * this.depth;
-        this.vy = (Math.random() * 1.5 + 0.8) * this.depth;
-        this.vx = (Math.random() - 0.5) * 1.5 * this.depth;
+        this.vy = (Math.random() * 1.2 + 0.64) * this.depth;
+        this.vx = (Math.random() - 0.5) * 1.2 * this.depth;
         this.opacity = (Math.random() * 0.6 + 0.4) * this.depth;
         this.angle = Math.random() * Math.PI * 2;
-        this.spin = (Math.random() - 0.5) * 0.06;
+        this.spin = (Math.random() - 0.5) * 0.048;
         const colors = ['#facc15', '#eab308', '#f59e0b', '#fbbf24'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
       }
       update() {
         this.y += this.vy;
-        this.x += this.vx + Math.sin(this.angle) * 0.5 * this.depth;
+        this.x += this.vx + Math.sin(this.angle) * 0.4 * this.depth;
         this.angle += this.spin;
         if (this.y > this.h + this.size) { this.y = -20; this.x = Math.random() * this.w; }
       }
