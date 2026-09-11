@@ -140,7 +140,7 @@ export default function UserMenu() {
         <div className={`rounded-full flex items-center justify-center ring-2 transition-all overflow-hidden w-9 h-9 ${
           dropdownOpen 
             ? 'ring-[var(--theme-color)] ring-offset-2 ring-offset-[var(--background)]' 
-            : 'ring-[var(--strong-border)] dark:ring-white/15 hover:ring-[var(--theme-color)] dark:hover:ring-white/40'
+            : 'ring-[var(--strong-border)] hover:ring-[var(--theme-color)]'
         }`}>
           <DefaultAvatar src={avatar} name={displayName} seed={user.id} size={36} />
         </div>
@@ -149,18 +149,18 @@ export default function UserMenu() {
       {dropdownOpen && (
         <div 
           data-dropdown="true" 
-          className="absolute top-full right-0 mt-3 w-64 bg-[var(--background)] dark:bg-[#0a0a0a] backdrop-blur-3xl border border-[var(--strong-border)] dark:border-white/15 rounded-2xl shadow-2xl overflow-hidden z-[100] animate-slide-up font-serif divide-y divide-[var(--divider)] dark:divide-white/10"
+          className="absolute top-full right-0 mt-3 w-64 bg-[var(--background)] backdrop-blur-3xl border border-[var(--strong-border)] rounded-2xl shadow-2xl overflow-hidden z-[100] animate-slide-up font-serif divide-y divide-[var(--divider)]"
         >
           {/* User Header Info */}
-          <div className="p-4 bg-[var(--surface)] dark:bg-white/[0.05] flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full shrink-0 overflow-hidden ring-1 ring-[var(--strong-border)] dark:ring-white/20">
+          <div className="p-4 bg-[var(--surface)] flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full shrink-0 overflow-hidden ring-1 ring-[var(--strong-border)]">
               <DefaultAvatar src={avatar} name={displayName} seed={user.id} size={40} />
             </div>
             <div className="min-w-0 flex-1 flex flex-col items-start gap-1.5">
               <div className="text-[14px] font-bold text-[var(--foreground)] truncate font-sans w-full">
                 {displayName}
               </div>
-              <span className="inline-block text-[9px] uppercase font-mono tracking-wider text-[var(--theme-color)] bg-[var(--theme-color)]/15 border border-[var(--theme-color)]/30 dark:text-cyan-400 dark:bg-cyan-950/40 dark:border-cyan-500/30 px-2 py-0.5 rounded-full shrink-0">
+              <span className="inline-block text-[9px] uppercase font-mono tracking-wider text-[var(--theme-color)] bg-[var(--theme-color)]/15 border border-[var(--theme-color)]/30 px-2 py-0.5 rounded-full shrink-0">
                 {t("Otakufy Member")}
               </span>
             </div>
@@ -171,9 +171,9 @@ export default function UserMenu() {
             <Link 
               href="/profile"
               onClick={() => setDropdownOpen(false)}
-              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-medium text-[var(--foreground)]/80 hover:text-[var(--foreground)] hover:bg-[var(--hover-bg)] dark:hover:bg-white/10 transition-all"
+              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-medium text-[var(--muted-text)] hover:text-[var(--foreground)] hover:bg-[var(--hover-bg)] transition-all"
             >
-              <svg className="w-5 h-5 text-[var(--muted-text)] group-hover:text-[var(--theme-color)] dark:group-hover:text-white transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-[var(--muted-text)] group-hover:text-[var(--theme-color)] transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
               <span className="flex-1 text-left">{t("Profile")}</span>
@@ -182,9 +182,9 @@ export default function UserMenu() {
             <Link 
               href="/friends"
               onClick={() => setDropdownOpen(false)}
-              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-medium text-[var(--foreground)]/80 hover:text-[var(--foreground)] hover:bg-[var(--hover-bg)] dark:hover:bg-white/10 transition-all"
+              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-medium text-[var(--muted-text)] hover:text-[var(--foreground)] hover:bg-[var(--hover-bg)] transition-all"
             >
-              <svg className="w-5 h-5 text-[var(--muted-text)] group-hover:text-[var(--theme-color)] dark:group-hover:text-white transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-[var(--muted-text)] group-hover:text-[var(--theme-color)] transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
               <span className="flex-1 text-left">{t("Friends")}</span>
@@ -193,9 +193,9 @@ export default function UserMenu() {
             <Link 
               href="/help"
               onClick={() => setDropdownOpen(false)}
-              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-medium text-[var(--foreground)]/80 hover:text-[var(--foreground)] hover:bg-[var(--hover-bg)] dark:hover:bg-white/10 transition-all"
+              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-medium text-[var(--muted-text)] hover:text-[var(--foreground)] hover:bg-[var(--hover-bg)] transition-all"
             >
-              <svg className="w-5 h-5 text-[var(--muted-text)] group-hover:text-[var(--theme-color)] dark:group-hover:text-white transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-[var(--muted-text)] group-hover:text-[var(--theme-color)] transition-colors shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span className="flex-1 text-left">{t("Help & Support")}</span>
@@ -207,9 +207,9 @@ export default function UserMenu() {
             <button 
               type="button"
               onClick={handleLogout}
-              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-bold text-red-600 dark:text-red-400 hover:bg-red-500/10 transition-all cursor-pointer"
+              className="group w-full px-4 py-3 rounded-xl flex items-center justify-start gap-4 text-[14px] font-bold text-red-600 hover:bg-red-500/10 transition-all cursor-pointer"
             >
-              <svg className="w-5 h-5 text-red-600 dark:text-red-400 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-red-600 group-hover:translate-x-0.5 transition-transform shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
               </svg>
               <span className="flex-1 text-left">{t("Sign Out")}</span>
