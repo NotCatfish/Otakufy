@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { supabase } from './supabaseClient';
 import PasswordChecklist, { isPasswordValid } from './PasswordChecklist';
 import { useLanguage } from '@/context/LanguageContext';
@@ -73,7 +74,9 @@ export default function LoginForm() {
           options: {
             emailRedirectTo: window.location.origin,
             data: {
-              username: emailHandle
+              username: emailHandle,
+              terms_accepted_at: new Date().toISOString(),
+              terms_version: '2026-09'
             }
           }
         });
@@ -281,6 +284,17 @@ export default function LoginForm() {
             <GoogleIcon />
             {t("Continue with Google")}
           </button>
+
+          <p className="text-[11px] text-center text-white/50 pt-2 leading-relaxed font-sans">
+            {t("By signing in, registering, or continuing, you agree to our")}{" "}
+            <Link href="/terms" className="text-[var(--theme-color)] hover:underline font-medium">
+              {t("Terms of Service")}
+            </Link>{" "}
+            {t("and")}{" "}
+            <Link href="/privacy" className="text-[var(--theme-color)] hover:underline font-medium">
+              {t("Privacy Policy")}
+            </Link>.
+          </p>
         </>
       ) : (
         <form onSubmit={handleForgotPassword} className="space-y-4 animate-fade-in">

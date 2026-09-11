@@ -39,5 +39,17 @@ export default function sitemap() {
       changeFrequency: 'monthly',
       priority: 0.4,
     },
+    {
+      url: `${base}/terms`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${base}/privacy`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
   ];
 }

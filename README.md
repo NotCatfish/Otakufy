@@ -106,6 +106,7 @@ The platform incorporates a 30-point security audit covering every layer of the 
 2. **Anti-Cheat Database Triggers:** Profile XP updates and timestamps are protected by PostgreSQL triggers (`tr_protect_profile_fields`), rejecting unauthorized client-side XP manipulation.
 3. **Input Sanitization:** Multi-tier sanitization using `DOMPurify` on the client and `tr_sanitize_profiles` in Postgres prevents XSS, XML Injection, and malicious SVG uploads.
 4. **Rate Limiting and DoS Protection:** Edge middleware and in-memory LRU rate-limiters protect search endpoints and dictionary lookups from scrapers.
+5. **Compliance and Legal Governance:** Standardized Terms of Service (`/terms`) and Privacy Policy (`/privacy`) establishing "AS-IS" educational use, user credential safeguarding responsibilities, cryptographic bcrypt password storage guarantees via Supabase Auth, and automated `terms_accepted_at` sign-in wrap audit telemetry.
 
 ---
 

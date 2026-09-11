@@ -34,3 +34,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **$\color{#38BDF8}\text{Styling:}$** Tailwind CSS v4 with Japanese Ministry of Education typography (`Noto Serif JP`, `Noto Sans JP`)
 - **$\color{#38BDF8}\text{State and Cache:}$** LocalForage IndexedDB (`v14`) and SessionStorage checkpoints
 - **$\color{#38BDF8}\text{Security:}$** DOMPurify HTML sanitization for ruby Furigana rendering
+- **$\color{#38BDF8}\text{Compliance:}$** Dedicated `/terms` and `/privacy` governance routes with sign-in wrap agreement telemetry

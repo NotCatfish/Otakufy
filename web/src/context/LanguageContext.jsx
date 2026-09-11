@@ -35,6 +35,12 @@ export const TRANSLATIONS = {
     "Help": "Help",
     "Active": "Active",
     "Otakufy Member": "Otakufy Member",
+    "Terms of Service": "Terms of Service",
+    "Privacy Policy": "Privacy Policy",
+    "Back to Dashboard": "Back to Dashboard",
+    "By continuing, you agree to our": "By continuing, you agree to our",
+    "By signing in, registering, or continuing, you agree to our": "By signing in, registering, or continuing, you agree to our",
+    "and": "and",
     
     // Dashboard & Objectives
     "Welcome back.": "Welcome back.",
@@ -453,6 +459,12 @@ export const TRANSLATIONS = {
     "Help": "ヘルプ",
     "Active": "選択中",
     "Otakufy Member": "Otakufyメンバー",
+    "Terms of Service": "利用規約",
+    "Privacy Policy": "プライバシーポリシー",
+    "Back to Dashboard": "ダッシュボードに戻る",
+    "By continuing, you agree to our": "続行することにより、以下に同意したものとみなされます：",
+    "By signing in, registering, or continuing, you agree to our": "ログイン、新規登録、または続行することにより、利用者は以下に同意したものとみなされます：",
+    "and": "および",
     
     // Dashboard & Objectives
     "Welcome back.": "お帰りなさいませ",
