@@ -461,7 +461,7 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
         } else if (currentTheme === "LATE_SUMMER") {
           for(let i=0; i<12; i++) particles.push(new Lantern(w, h));
         } else if (currentTheme === "AUTUMN") {
-          for(let i=0; i<35; i++) particles.push(new AutumnLeaf(w, h));
+          for(let i=0; i<31; i++) particles.push(new AutumnLeaf(w, h));
         } else { // WINTER
           for(let i=0; i<100; i++) particles.push(new Snow(w, h));
         }
@@ -474,7 +474,7 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
         } else if (currentTheme === "LATE_SUMMER") {
           for(let i=0; i<35; i++) particles.push(new BambooLeaf(w, h));
         } else if (currentTheme === "AUTUMN") {
-          for(let i=0; i<35; i++) particles.push(new GinkgoLeaf(w, h));
+          for(let i=0; i<31; i++) particles.push(new GinkgoLeaf(w, h));
         } else { // WINTER
           for(let i=0; i<100; i++) particles.push(new DaySnow(w, h));
         }
