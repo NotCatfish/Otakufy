@@ -618,10 +618,23 @@ const DynamicSeasonalAnimation = memo(function DynamicSeasonalAnimation() {
         targetAlpha = 0.0;
       } else if (action === "normal") {
         isForceStopped = false;
+        isFadingOutState = false;
+        if (getSetting(SETTINGS_KEYS.DISABLE_PARTICLES, false)) return;
+
+        const isDark =
+          document.documentElement.classList.contains("dark") ||
+          document.documentElement.classList.contains("focus-mode") ||
+          document.documentElement.classList.contains("black-text");
+        lastIsDark = isDark;
+
+        if (particles.length === 0 || currentAlpha <= 0.05) {
+          initParticles(false);
+        }
         targetAlpha = 1.0;
         if (!isActive) {
           isActive = true;
-          checkTheme();
+          if (animId) cancelAnimationFrame(animId);
+          animate();
         }
       } else if (action === "fade_out") {
         isForceStopped = true;
